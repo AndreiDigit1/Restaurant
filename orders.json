@@ -1,0 +1,25 @@
+[
+  {
+    "id": "101",
+    "firstname": "John",
+    "lastname": "Doe",
+    "age": 16,
+    "products": {
+      "dishes": [
+        "pui",
+        "orez"
+      ],
+      "drinks": []
+    }
+  },
+  {
+    "id": "102",
+    "firstname": "Jane",
+    "lastname": "Smith",
+    "age": 28,
+    "products": {
+      "dishes": [],
+      "drinks": []
+    }
+  }
+]
