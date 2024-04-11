@@ -5,10 +5,7 @@
     "lastname": "Doe",
     "age": 16,
     "products": {
-      "dishes": [
-        "pui",
-        "orez"
-      ],
+      "dishes": [],
       "drinks": []
     }
   },

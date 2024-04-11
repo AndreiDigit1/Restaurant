@@ -40,7 +40,7 @@
         input[type="text"]::placeholder {
             color: #999;
         }
-        input[type="submit"], #btn_view_clients, #btn_view_menu {
+        input[type="submit"], #btn_view_clients, #btn_view_menu, #btn_add_reservation {
             background-color: #4CAF50;
             color: white;
             padding: 10px 20px;
@@ -64,7 +64,6 @@
         }
         .menu-container {
             font-size: 14px;
-            text-align: center;
             padding: 5px;
             border: 5px dashed green;
             border-radius: 5px;
@@ -84,6 +83,7 @@
         <h1>Restaurant</h1>
         <a href="/users"><button id="btn_view_clients">View clients</button></a>
         <a href="/menu_route"><button id="btn_view_menu">View menu</button></a>
+        <a href="/createReservation"><button id="btn_add_reservation">Add Reservation</button></a>
         <div class="menu-container">
             {{ menu | safe }}
         </div>
