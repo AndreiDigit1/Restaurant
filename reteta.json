@@ -1,0 +1,423 @@
+{
+    "retete": [
+        {
+            "nume": "Omletă",
+            "ingrediente": [
+                {"nume": "Ouă", "cantitate": "3"},
+                {"nume": "Brânză", "cantitate": "50g"}
+            ],
+            "pret": 12.0,
+            "valori_nutritionale": {"calorii": 250.0, "cantitate": 200.0},
+            "rating": {"valoare": 70, "evaluari": 1}
+        },
+        {
+            "nume": "Clătite cu gem",
+            "ingrediente": [
+                {"nume": "Clătite", "cantitate": "3"},
+                {"nume": "Gem de fructe", "cantitate": "100g"}
+            ],
+            "pret": 10.0,
+            "valori_nutritionale": {"calorii": 300.0, "cantitate": 180.0},
+            "rating": {"valoare": 75, "evaluari": 2}
+        },
+        {
+            "nume": "Ouă ochiuri",
+            "ingrediente": [
+                {"nume": "Ouă", "cantitate": "2"},
+                {"nume": "Pâine", "cantitate": "2 felii"},
+                {"nume": "Roșii", "cantitate": "2"}
+            ],
+            "pret": 14.0,
+            "descriere": "Ouă ochiuri prăjite în pâine, servite cu roșii și cașcaval.",
+            "timp_preparare": 10,
+            "valori_nutritionale": {"calorii": 280.0, "cantitate": 150.0},
+            "rating": {"valoare": 30, "evaluari": 3}
+        },
+        {
+            "nume": "Bruschete",
+            "ingrediente": [
+                {"nume": "Feliciori de pâine", "cantitate": "6"},
+                {"nume": "Roșii", "cantitate": "200g"},
+                {"nume": "Usturoi", "cantitate": "2 căței"},
+                {"nume": "Busuioc", "cantitate": "50g"}
+            ],
+            "pret": 18.0,
+            "valori_nutritionale": {"calorii": 180.0, "cantitate": 220.0},
+            "rating": {"valoare": 40, "evaluari": 4}
+        },
+        {
+            "nume": "Mini chifteluțe",
+            "ingrediente": [
+                {"nume": "Carne de vită", "cantitate": "200g"},
+                {"nume": "Ceapă", "cantitate": "1"},
+                {"nume": "Usturoi", "cantitate": "2 căței"}
+            ],
+            "pret": 15.0,
+            "valori_nutritionale": {"calorii": 320.0, "cantitate": 150.0},
+            "rating": {"valoare": 50, "evaluari": 5}
+        },
+        {
+            "nume": "Ardei copti umpluti",
+            "ingrediente": [
+                {"nume": "Ardei", "cantitate": "4"},
+                {"nume": "Brânză", "cantitate": "100g"},
+                {"nume": "Mirodenii", "cantitate": "după gust"}
+            ],
+            "pret": 20.0,
+            "descriere": "Ardei copti umpluți cu brânză și mirodenii.",
+            "timp_preparare": 40,
+            "valori_nutritionale": {"calorii": 180.0, "cantitate": 150.0},
+            "rating": {"valoare": 65, "evaluari": 6}
+        },
+        {
+            "nume": "Vinete prajite cu rosii si usturoi",
+            "ingrediente": [
+                {"nume": "Vinete", "cantitate": "2"},
+                {"nume": "Roșii", "cantitate": "3"},
+                {"nume": "Usturoi", "cantitate": "2 căței"}
+            ],
+            "pret": 22.0,
+            "descriere": "Vinete prăjite în ulei de măsline, servite cu roșii și usturoi.",
+            "timp_preparare": 35,
+            "valori_nutritionale": {"calorii": 220.0, "cantitate": 180.0},
+            "rating": {"valoare": 75, "evaluari": 7}
+        },
+        {
+            "nume": "Salata de vinete cu paine prajita",
+            "ingrediente": [
+                {"nume": "Vinete", "cantitate": "2"},
+                {"nume": "Pâine", "cantitate": "2 felii"},
+                {"nume": "Usturoi", "cantitate": "1 cățel"},
+                {"nume": "Ulei de măsline", "cantitate": "2 linguri"}
+            ],
+            "pret": 16.0,
+            "descriere": "Salată de vinete cu bucăți de pâine prăjită și dressing de usturoi.",
+            "timp_preparare": 20,
+            "valori_nutritionale": {"calorii": 180.0, "cantitate": 150.0},
+            "rating": {"valoare": 80, "evaluari": 8}
+        },
+        {
+            "nume": "Mușchiuleț de porc afumat",
+            "ingrediente": [
+                {"nume": "Mușchiuleț de porc", "cantitate": "150g"},
+                {"nume": "Murături", "cantitate": "după gust"}
+            ],
+            "pret": 25.0,
+            "descriere": "Mușchiuleț de porc afumat și feliat, servit cu murături.",
+            "timp_preparare": 15,
+            "valori_nutritionale": {"calorii": 200.0, "cantitate": 120.0},
+            "rating": {"valoare": 60, "evaluari": 9}
+        },
+        {
+            "nume": "Ciorbă de burtă",
+            "ingrediente": [
+                {"nume": "Burtă", "cantitate": "500g"},
+                {"nume": "Legume", "cantitate": "300g"},
+                {"nume": "Smântână", "cantitate": "50g"}
+            ],
+            "pret": 20.0,
+            "valori_nutritionale": {"calorii": 180.0, "cantitate": 300.0},
+            "rating": {"valoare": 10, "evaluari": 10}
+        },
+        {
+            "nume": "Ciorbă de legume",
+            "ingrediente": [
+                {"nume": "Morcov", "cantitate": "200g"},
+                {"nume": "Cartof", "cantitate": "150g"},
+                {"nume": "Ceapă", "cantitate": "100g"}
+            ],
+            "pret": 15.0,
+            "valori_nutritionale": {"calorii": 150.0, "cantitate": 250.0},
+            "rating": {"valoare": 45, "evaluari": 11}
+        },
+        {
+            "nume": "Ciorba de vacuta",
+            "ingrediente": [
+                {"nume": "Carne de vacuta", "cantitate": "400g"},
+                {"nume": "Legume", "cantitate": "300g"},
+                {"nume": "Smântână", "cantitate": "50g"},
+                {"nume": "Ardei iute", "cantitate": "1"}
+            ],
+            "pret": 22.0,
+            "descriere": "Ciorba de vacuta traditionala, servita cu smantana si ardei iute.",
+            "timp_preparare": 75,
+            "valori_nutritionale": {"calorii": 350.0, "cantitate": 300.0},
+            "rating": {"valoare": 10, "evaluari": 12}
+        },
+        {
+            "nume": "Ciorba de fasole in paine",
+            "ingrediente": [
+                {"nume": "Fasole", "cantitate": "200g"},
+                {"nume": "Paine", "cantitate": "1"},
+                {"nume": "Usturoi", "cantitate": "2 căței"},
+                {"nume": "Ardei iute", "cantitate": "1"}
+            ],
+            "pret": 25.0,
+            "descriere": "Ciorba de fasole gatita in paine proaspata, servita cu usturoi si ardei iute.",
+            "timp_preparare": 45,
+            "valori_nutritionale": {"calorii": 280.0, "cantitate": 200.0},
+            "rating": {"valoare": 15, "evaluari": 13}
+        },
+        {
+            "nume": "Salată Caesar",
+            "ingrediente": [
+                {"nume": "Salată verde", "cantitate": "100g"},
+                {"nume": "Piept de pui", "cantitate": "200g"},
+                {"nume": "Crutoane", "cantitate": "50g"},
+                {"nume": "Parmezan", "cantitate": "30g"}
+            ],
+            "pret": 22.0,
+            "valori_nutritionale": {"calorii": 280.0, "cantitate": 150.0},
+            "rating": {"valoare": 10, "evaluari": 14}
+        },
+        {
+            "nume": "Salată Grecească",
+            "ingrediente": [
+                {"nume": "Roșii", "cantitate": "2"},
+                {"nume": "Castraveți", "cantitate": "1"},
+                {"nume": "Ardei gras", "cantitate": "1"},
+                {"nume": "Ceapă roșie", "cantitate": "1"},
+                {"nume": "Masline", "cantitate": "50g"},
+                {"nume": "Brânză feta", "cantitate": "100g"},
+                {"nume": "Ulei de măsline", "cantitate": "2 linguri"},
+                {"nume": "Oțet balsamic", "cantitate": "1 lingură"},
+                {"nume": "Sare", "cantitate": "după gust"},
+                {"nume": "Piper", "cantitate": "după gust"},
+                {"nume": "Oregano", "cantitate": "după gust"}
+            ],
+            "pret": 18.0,
+            "descriere": "Salată tradițională grecească cu roșii, castraveți, ardei gras, ceapă roșie, masline și brânză feta.",
+            "timp_preparare": 15,
+            "valori_nutritionale": {"calorii": 200.0, "cantitate": 150.0},
+            "rating": {"valoare": 60, "evaluari": 15}
+        },
+        {
+            "nume": "Pui la grătar",
+            "ingrediente": [
+                {"nume": "Piept de pui", "cantitate": "300g"},
+                {"nume": "Usturoi", "cantitate": "20g"},
+                {"nume": "Ulei de măsline", "cantitate": "50ml"},
+                {"nume": "Salată verde", "cantitate": "100g"}
+            ],
+            "pret": 25.0,
+            "valori_nutritionale": {"calorii": 320.0, "cantitate": 200.0},
+            "rating": {"valoare": 15, "evaluari": 16}
+        },
+        {
+            "nume": "Ciolan de porc",
+            "ingrediente": [
+                {"nume": "Ciolan de porc", "cantitate": "1"},
+                {"nume": "Garnitură", "cantitate": "1 porție"},
+                {"nume": "Sos", "cantitate": "50g"}
+            ],
+            "pret": 30.0,
+            "valori_nutritionale": {"calorii": 350.0, "cantitate": 300.0},
+            "rating": {"valoare": 10, "evaluari": 17}
+        },
+        {
+            "nume": "Tochitură moldovenească cu mămăliguță și ou",
+            "ingrediente": [
+                {"nume": "Carne de porc", "cantitate": "150g"},
+                {"nume": "Mămăliguță", "cantitate": "200g"},
+                {"nume": "Ou", "cantitate": "1"}
+            ],
+            "pret": 25.0,
+            "valori_nutritionale": {"calorii": 400.0, "cantitate": 400.0},
+            "rating": {"valoare": 20, "evaluari": 18}
+        },
+        {
+            "nume": "Șnițel de pui cu piure",
+            "ingrediente": [
+                {"nume": "Piept de pui", "cantitate": "200g"},
+                {"nume": "Făină", "cantitate": "100g"},
+                {"nume": "Ou", "cantitate": "1"},
+                {"nume": "Piure", "cantitate": "1 porție"}
+            ],
+            "pret": 25.0,
+            "valori_nutritionale": {"calorii": 420.0, "cantitate": 350.0},
+            "rating": {"valoare": 20, "evaluari": 19}
+        },
+        {
+            "nume": "Pastrav prăjit cu mămăliguță și usturoi",
+            "ingrediente": [
+                {"nume": "Pastrav", "cantitate": "1"},
+                {"nume": "Mămăliguță", "cantitate": "200g"},
+                {"nume": "Usturoi", "cantitate": "2 căței"}
+            ],
+            "pret": 35.0,
+            "valori_nutritionale": {"calorii": 390.0, "cantitate": 400.0},
+            "rating": {"valoare": 20, "evaluari": 20}
+        },
+        {
+            "nume": "Ceafă de porc cu cartofi natur",
+            "ingrediente": [
+                {"nume": "Ceafă de porc", "cantitate": "200g"},
+                {"nume": "Cartofi", "cantitate": "300g"},
+                {"nume": "Usturoi", "cantitate": "2 căței"}
+            ],
+            "pret": 28.0,
+            "valori_nutritionale": {"calorii": 480.0, "cantitate": 500.0},
+            "rating": {"valoare": 15, "evaluari": 21}
+        },
+        {
+            "nume": "Mici cu cartofi prăjiți",
+            "ingrediente": [
+                {"nume": "Mici", "cantitate": "5"},
+                {"nume": "Cartofi", "cantitate": "300g"},
+                {"nume": "Muștar", "cantitate": "50g"}
+            ],
+            "pret": 20.0,
+            "valori_nutritionale": {"calorii": 680.0, "cantitate": 450.0},
+            "rating": {"valoare": 80, "evaluari": 22}
+        },
+        {
+            "nume": "Cartofi prăjiți",
+            "ingrediente": [
+                {"nume": "Cartofi", "cantitate": "300g"},
+                {"nume": "Usturoi", "cantitate": "2 căței"}
+            ],
+            "pret": 10.0,
+            "valori_nutritionale": {"calorii": 200.0, "cantitate": 180.0},
+            "rating": {"valoare": 90, "evaluari": 23}
+        },
+        {
+            "nume": "Legume la grătar",
+            "ingrediente": [
+                {"nume": "Ardei", "cantitate": "2"},
+                {"nume": "Zucchini", "cantitate": "2"},
+                {"nume": "Ciuperci", "cantitate": "200g"}
+            ],
+            "pret": 15.0,
+            "valori_nutritionale": {"calorii": 120.0, "cantitate": 300.0},
+            "rating": {"valoare": 25, "evaluari": 24}
+        },
+        {
+            "nume": "Dovlecei pane cu usturoi",
+            "ingrediente": [
+                {"nume": "Dovlecei", "cantitate": "2"},
+                {"nume": "Usturoi", "cantitate": "2 căței"},
+                {"nume": "Făină", "cantitate": "100g"}
+            ],
+            "pret": 18.0,
+            "valori_nutritionale": {"calorii": 280.0, "cantitate": 250.0},
+            "rating": {"valoare": 25, "evaluari": 25}
+        },
+        {
+            "nume": "Cartofi rustici",
+            "ingrediente": [
+                {"nume": "Cartofi", "cantitate": "4"},
+                {"nume": "Ulei", "cantitate": "3 linguri"},
+                {"nume": "Cimbru", "cantitate": "1 linguriță"}
+            ],
+            "pret": 12.0,
+            "valori_nutritionale": {"calorii": 320.0, "cantitate": 300.0},
+            "rating": {"valoare": 35, "evaluari": 26}
+        },
+        {
+            "nume": "Limonadă",
+            "ingrediente": [
+                {"nume": "Suc de lămâie", "cantitate": "100ml"},
+                {"nume": "Apă", "cantitate": "300ml"},
+                {"nume": "Zahăr", "cantitate": "50g"}
+            ],
+            "pret": 12.0,
+            "valori_nutritionale": {"calorii": 120.0, "cantitate": 250.0},
+            "rating": {"valoare": 25, "evaluari": 27}
+        },
+        {
+            "nume": "Cola",
+            "ingrediente": [
+                {"nume": "Cola", "cantitate": "300ml"}
+                    ],
+            "pret": 10.0,
+            "valori_nutritionale": {"calorii": 140.0, "cantitate": 300.0},
+            "rating": {"valoare": 90, "evaluari": 28}
+        },
+        {
+             "nume": "Fanta",
+             "ingrediente": [
+                 {"nume": "Fanta", "cantitate": "300ml"}
+                    ],
+                    "pret": 10.0,
+                    "valori_nutritionale": {"calorii": 160.0, "cantitate": 300.0},
+                    "rating": {"valoare": 60, "evaluari": 29}
+        },
+        {
+             "nume": "Sprite",
+             "ingrediente": [
+                 {"nume": "Sprite", "cantitate": "300ml"}
+                    ],
+                    "pret": 10.0,
+                    "valori_nutritionale": {"calorii": 140.0, "cantitate": 300.0},
+                    "rating": {"valoare": 50, "evaluari": 30}
+                },
+        {
+             "nume": "Cocktail Mojito",
+             "ingrediente": [
+                  {"nume": "Rum", "cantitate": "50ml"},
+                  {"nume": "Mentă", "cantitate": "8 frunze"},
+                  {"nume": "Zahăr", "cantitate": "2 lingurițe"},
+                  {"nume": "Lămâie", "cantitate": "1"}
+                    ],
+                    "pret": 15.0,
+                    "valori_nutritionale": {"calorii": 180.0, "cantitate": 200.0},
+                    "rating": {"valoare": 30, "evaluari": 31}
+                },
+                {
+                    "nume": "Aperol",
+                    "ingrediente": [
+                        {"nume": "Aperol", "cantitate": "100ml"},
+                        {"nume": "Apă tonică", "cantitate": "50ml"},
+                        {"nume": "Lămâie", "cantitate": "1 felie"},
+                        {"nume": "Gheață", "cantitate": "cuburi"}
+                    ],
+                    "pret": 20.0,
+                    "valori_nutritionale": {"calorii": 120.0, "cantitate": 150.0},
+                    "rating": {"valoare": 3, "evaluari": 32}
+                },
+                {
+                    "nume": "Alexandrion",
+                    "ingrediente": [
+                        {"nume": "Alexandrion", "cantitate": "50ml"}
+                    ],
+                    "pret": 15.0,
+                    "valori_nutritionale": {"calorii": 180.0, "cantitate": 50.0},
+                    "rating": {"valoare": 5, "evaluari": 33}
+                },
+
+                {
+                    "nume": "Whiskey Sour",
+                    "ingrediente": [
+                        {"nume": "Bourbon", "cantitate": "50ml"},
+                        {"nume": "Sirop simplu", "cantitate": "25ml"},
+                        {"nume": "Suc de lămâie", "cantitate": "25ml"}
+                    ],
+                    "pret": 20.0,
+                    "valori_nutritionale": {"calorii": 160.0, "cantitate": 200.0},
+                    "rating": {"valoare": 10, "evaluari": 34}
+                },
+                {
+                    "nume": "Margarita",
+                    "ingrediente": [
+                        {"nume": "Tequila", "cantitate": "50ml"},
+                        {"nume": "Triple sec", "cantitate": "20ml"},
+                        {"nume": "Suc de lămâie", "cantitate": "20ml"},
+                        {"nume": "Sare", "cantitate": "pentru margine"}
+                    ],
+                    "pret": 18.0,
+                    "valori_nutritionale": {"calorii": 160.0, "cantitate": 200.0},
+                    "rating": {"valoare": 30, "evaluari": 35}
+                },
+                {
+                    "nume": "Martini",
+                    "ingrediente": [
+                        {"nume": "Gin", "cantitate": "50ml"},
+                        {"nume": "Vermouth uscat", "cantitate": "10ml"},
+                        {"nume": "Măsline", "cantitate": "pentru decor"}
+                    ],
+                    "pret": 18.0,
+                    "valori_nutritionale": {"calorii": 140.0, "cantitate": 200.0},
+                    "rating": {"valoare": 20, "evaluari": 36}
+                }
+    ]
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bun venit la restaurant</title>
+</head>
+<body>
+    <h1>Bun venit la restaurant!</h1>
+    <p>Alegeți ce doriți să faceți:</p>
+
+    <button onclick="loadMenu()">Vezi meniul</button>
+
+    <button onclick="loadRecipes()">Vezi rețetele</button>
+
+
+    <script>
+
+        function loadMenu() {
+
+            window.location.href = "/load_menu";
+        }
+
+
+        function loadRecipes() {
+
+            window.location.href = "/load_recipe";
+        }
+    </script>
+</body>
+</html>
