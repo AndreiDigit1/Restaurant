@@ -275,6 +275,5 @@ class Restaurant:
         self.nr_of_tables = nr_of_tables
         self.nr_of_seats = nr_of_seats
 
-
 if __name__ == '__main__':
     app.run(debug=True)
