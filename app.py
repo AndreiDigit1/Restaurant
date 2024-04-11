@@ -1,11 +1,9 @@
 import json
 
 import requests
-from flask import Flask, jsonify, render_template, request, session
+from flask import Flask, jsonify, render_template, request
 
 app = Flask(__name__)
-
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 LIMIT_AGE = 18
 
@@ -35,6 +33,14 @@ def index():
 
     return render_template('index.html', menu=menu_html, reservations_list=data_reservations)
 
+
+@app.route('/createReservation')
+def addReservation():
+    response_tables = requests.get('http://127.0.0.1:5000/tables')
+    data_tables = response_tables.json()
+    return render_template('reservation.html', tables_data = data_tables)
+
+
 @app.route('/users')
 def users():
     all_clients = []
@@ -52,6 +58,7 @@ def users():
             all_clients.append(client_info)
 
     return jsonify(all_clients)
+
 
 @app.route('/order', methods=['POST'])
 def order():
@@ -185,6 +192,18 @@ def menu_route():
     return jsonify(menu_route_data)
 
 
+@app.route('/tables')
+def tables():
+    tables_data = [
+        {'table': 10, 'state': True, 'number_seats': 5, 'number_seats_available': 2},
+        {'table': 11, 'state': True, 'number_seats': 5, 'number_seats_available': 3},
+        {'table': 12, 'state': False, 'number_seats': 5, 'number_seats_available': 5},
+        {'table': 13, 'state': True, 'number_seats': 5, 'number_seats_available': 1},
+        {'table': 14, 'state': True, 'number_seats': 5, 'number_seats_available': 4},
+    ]
+    return jsonify(tables_data)
+
+
 class Client:
     def __init__(self, client_id, firstname, lastname, age):
         self.id = client_id
@@ -194,8 +213,10 @@ class Client:
 
 
 class Reservation:
-    def __init__(self, id_reservation, number_of_table, list_client):
-        self.id = id_reservation
+    reservation_id = 100
+    def __init__(self, number_of_table, list_client):
+        self.id = Reservation.reservation_id
+        Reservation.reservation_id += 1
         self.numberTable = number_of_table
         self.list_client = list_client
 
