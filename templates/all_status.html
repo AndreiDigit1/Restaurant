@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Clients Status</title>
+</head>
+<body>
+    <h1>All Clients Status</h1>
+
+    <!-- Search Form -->
+    <form action="/search_clients" method="get">
+        <label for="search_name">Search by Name:</label>
+        <input type="text" id="search_name" name="search_name">
+        <input type="submit" value="Search">
+    </form>
+
+    <table>
+        <tr>
+            <th>Client ID</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Age</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Status</th>
+        </tr>
+        {% for item in status_list %}
+        <tr>
+            <td>{{ item.client.id }}</td>
+            <td>{{ item.client.name }}</td>
+            <td>{{ item.client.surname }}</td>
+            <td>{{ item.client.age }}</td>
+            <td>{{ item.client.email }}</td>
+            <td>{{ item.client.phone }}</td>
+            <td>{{ item.status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
