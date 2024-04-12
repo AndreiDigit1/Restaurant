@@ -6,7 +6,10 @@
     "age": 16,
     "products": {
       "dishes": [
-        "pui"
+        {
+          "name": "orez",
+          "rating": 2.0
+        }
       ],
       "drinks": []
     }
@@ -18,7 +21,10 @@
     "age": 28,
     "products": {
       "dishes": [
-        "Pui"
+        {
+          "name": "pui",
+          "rating": 3.0
+        }
       ],
       "drinks": []
     }

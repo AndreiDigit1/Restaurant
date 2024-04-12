@@ -61,6 +61,7 @@ def users():
     return jsonify(all_clients)
 
 @app.route('/order', methods=['POST'])
+
 def order():
     global LIMIT_AGE
     reservations_response = requests.get('http://127.0.0.1:5000/reservations')
@@ -70,7 +71,6 @@ def order():
     menu_data = menu_response.json()
 
     orders_list = []
-
     errors = []
 
     for key in request.form:
@@ -81,26 +81,39 @@ def order():
             order = request.form[key]
             client_age = request.form.get('age_' + reservation_id + '_' + client_id)
             items = [item.strip() for item in order.split(',')]
+            
+            ratings = request.form.getlist('rating_' + reservation_id + '_' + client_id)
 
             valid_items_dishes = []
             valid_items_drinks = []
-            for produs in items:
+            print(ratings)
+
+            for product_index, product in enumerate(items):
                 found = False
                 for category_data in menu_data:
                     for category, items_data in category_data.items():
                         for item in items_data:
-                            if item['name'].lower() == produs.lower():
+                            if item['name'].lower() == product.lower():
                                 found = True
                                 if category == 'dishes' and item['quantity(g)'] > 0:
-                                    valid_items_dishes.append(produs)
+                                    valid_items_dishes.append({
+                                        'name': product,
+                                        'rating': float(ratings[product_index]) if ratings else None
+                                    })
                                 elif category == 'drinks' and item['quantity(ml)'] > 0:
                                     if not item['isAlcohol']:
-                                        valid_items_drinks.append(produs)
+                                        valid_items_drinks.append({
+                                            'name': product,
+                                            'rating': float(ratings[product_index]) if ratings else None
+                                        })
                                     elif item['isAlcohol'] and int(client_age) >= int(LIMIT_AGE):
-                                        valid_items_drinks.append(produs)
+                                        valid_items_drinks.append({
+                                            'name': product,
+                                            'rating': float(ratings[product_index]) if ratings else None
+                                        })
                                 break
                 if not found:
-                    errors.append(f"Invalid order: {produs}")
+                    errors.append(f"Invalid order: {product}")
 
             valid_items = {'dishes': valid_items_dishes, 'drinks': valid_items_drinks}
             orders_list.append({'client_id': client_id, 'order': valid_items, 'reservation_id': reservation_id})
@@ -125,6 +138,7 @@ def order():
                         list_order_client.append(order_client)
 
     dict_list_order_client = []
+
     for order_client in list_order_client:
         client_dict = {
             'id': order_client.id,
