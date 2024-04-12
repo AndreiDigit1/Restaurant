@@ -5,7 +5,9 @@
     "lastname": "Doe",
     "age": 16,
     "products": {
-      "dishes": [],
+      "dishes": [
+        "pui"
+      ],
       "drinks": []
     }
   },
@@ -15,7 +17,9 @@
     "lastname": "Smith",
     "age": 28,
     "products": {
-      "dishes": [],
+      "dishes": [
+        "Pui"
+      ],
       "drinks": []
     }
   }

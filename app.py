@@ -71,33 +71,43 @@ def order():
 
     orders_list = []
 
+    errors = []
+
     for key in request.form:
         if key.startswith('order_'):
             parts = key.split('_')
             reservation_id = parts[1]
             client_id = parts[2]
             order = request.form[key]
-            client_age =  request.form.get('age_' + reservation_id + '_' + client_id)
+            client_age = request.form.get('age_' + reservation_id + '_' + client_id)
             items = [item.strip() for item in order.split(',')]
 
             valid_items_dishes = []
             valid_items_drinks = []
             for produs in items:
+                found = False
                 for category_data in menu_data:
                     for category, items_data in category_data.items():
                         for item in items_data:
                             if item['name'].lower() == produs.lower():
+                                found = True
                                 if category == 'dishes' and item['quantity(g)'] > 0:
                                     valid_items_dishes.append(produs)
                                 elif category == 'drinks' and item['quantity(ml)'] > 0:
-                                     if not item['isAlcohol']:
-                                         valid_items_drinks.append(produs)
-                                     elif item['isAlcohol'] and int(client_age) >= int(LIMIT_AGE):
+                                    if not item['isAlcohol']:
+                                        valid_items_drinks.append(produs)
+                                    elif item['isAlcohol'] and int(client_age) >= int(LIMIT_AGE):
                                         valid_items_drinks.append(produs)
                                 break
+                if not found:
+                    errors.append(f"Invalid order: {produs}")
 
             valid_items = {'dishes': valid_items_dishes, 'drinks': valid_items_drinks}
             orders_list.append({'client_id': client_id, 'order': valid_items, 'reservation_id': reservation_id})
+
+    if errors:
+        error_message = ', '.join(errors)
+        return render_template('order_error.html', error_message=error_message), 400
 
     list_order_client = []
 
@@ -112,7 +122,6 @@ def order():
                     if client['id'] == int(client_id):
                         order_client = OrderClient(client_id, client['firstname'], client['lastname'], client['age'],
                                                    order_items)
-                        print(order_client)
                         list_order_client.append(order_client)
 
     dict_list_order_client = []
@@ -128,7 +137,9 @@ def order():
 
     with open('orders.json', 'w') as file:
         json.dump(dict_list_order_client, file, indent=2)
+
     return jsonify(dict_list_order_client)
+
 
 
 @app.route('/orders')
