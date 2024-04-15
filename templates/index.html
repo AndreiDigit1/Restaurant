@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -28,6 +29,9 @@
         label {
             font-weight: bold;
         }
+        #btn_view_ratings {
+            margin-top: 10px;
+        }
         input[type="text"] {
             width: 200px;
             padding: 8px;
@@ -40,14 +44,14 @@
         input[type="text"]::placeholder {
             color: #999;
         }
-        input[type="submit"], #btn_view_clients, #btn_view_menu, #btn_add_reservation, #btn_restaurant_details {
+        input[type="submit"], #btn_view_clients, #btn_view_menu, #btn_add_reservation, #btn_restaurant_details, #btn_view_ratings {
             background-color: #4CAF50;
             color: white;
             padding: 10px 20px;
             border: none;
             cursor: pointer;
         }
-        input[type="submit"]:hover, #btn_view_clients:hover, #btn_view_menu:hover, #btn_add_reservation:hover, #btn_restaurant_details:hover {
+        input[type="submit"]:hover, #btn_view_clients:hover, #btn_view_menu:hover, #btn_add_reservation:hover, #btn_restaurant_details:hover, #btn_view_ratings:hover {
             background-color: #45a049;
         }
         hr {
@@ -76,6 +80,19 @@
         .menu-item {
             margin-bottom: 10px;
         }
+
+         .rating {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .rating i {
+            color: #ccc;
+        }
+        .rating i:hover,
+        .rating i.active {
+            color: #f8c102; /* Color for filled stars */
+        }
+
     </style>
 </head>
 <body>
@@ -84,9 +101,8 @@
         <a href="/users"><button id="btn_view_clients">View clients</button></a>
         <a href="/menu_route"><button id="btn_view_menu">View menu</button></a>
         <a href="/createReservation"><button id="btn_add_reservation">Add Reservation</button></a>
-
         <a href="/restaurant-details"><button id="btn_restaurant_details">View restaurant info</button></a>
-
+        <a href="/ratings"><button id="btn_view_ratings">View ratings</button></a>
 
         <div class="menu-container">
             <ul>
@@ -117,13 +133,52 @@
                     <!--  in acel for se trimit maxim doua valori(pe care le-am delimitat prin '_')-->
                     <!--  daca vrei sa te folosesti de mai multe valori, poti sa faci un input de tip hidden(care sa nu se afiseze pe ecran) si sa ii pui un name cu valorile pe care le vrei-->
                     <label for="order_{{ reservation['id'] }}_{{ client['id'] }}">Client ID {{ client['id'] }}: {{ client['firstname'] }} {{ client['lastname'] }}</label><br>
-                    <input type="text" id="order_{{ reservation['id'] }}_{{ client['id'] }}" name="order_{{ reservation['id'] }}_{{ client['id'] }}" placeholder="Write here..."><br><br>
                     <input type="hidden" name="age_{{ reservation['id'] }}_{{ client['id'] }}" value="{{ client['age'] }}"><br>
+                    <input type="text" id="order_{{ reservation['id'] }}_{{ client['id'] }}" name="order_{{ reservation['id'] }}_{{ client['id'] }}" placeholder="Write here..."><br><br>
+
+                    <div class="rating">
+                       <i class="far fa-star" data-value="1"></i>
+                       <i class="far fa-star" data-value="2"></i>
+                       <i class="far fa-star" data-value="3"></i>
+                       <i class="far fa-star" data-value="4"></i>
+                       <i class="far fa-star" data-value="5"></i>
+                    </div>
+                    <p class="stars">0 stars selected</p>
+                    <input type="hidden" name="rating_{{ reservation['id'] }}_{{ client['id'] }}" id="rating_{{ reservation['id'] }}_{{ client['id'] }}">
+                    <br>
+
                 {% endfor %}
                 <input type="submit" value="Submit Order">
             </form>
             <hr>
         {% endfor %}
     </div>
+
+    <script>
+    document.querySelectorAll('.rating').forEach(rating => {
+        const stars = rating.querySelectorAll('i');
+        const selectedStars = rating.nextElementSibling;
+
+        stars.forEach(star => {
+            star.addEventListener('click', event => {
+                const value = parseInt(event.target.getAttribute('data-value'));
+
+                selectedStars.textContent = value + " star" + (value !== 1 ? "s" : "") + " selected"
+
+                const hiddenInput = rating.nextElementSibling.nextElementSibling;
+                hiddenInput.value = value;
+                stars.forEach(s => s.classList.remove('active'));
+
+                star.classList.add('active');
+                let prevStar = star.previousElementSibling;
+                while (prevStar) {
+                    prevStar.classList.add('active');
+                    prevStar = prevStar.previousElementSibling;
+                }
+            });
+        });
+    });
+    </script>
+
 </body>
 </html>
