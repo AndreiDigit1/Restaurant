@@ -8,15 +8,14 @@
       "dishes": [
         {
           "name": "pui",
-          "rating": 5.0
+          "rating": 4.0
+        },
+        {
+          "name": "orez",
+          "rating": 4.0
         }
       ],
-      "drinks": [
-        {
-          "name": "cola",
-          "rating": 5.0
-        }
-      ]
+      "drinks": []
     }
   },
   {
@@ -25,13 +24,13 @@
     "lastname": "Smith",
     "age": 28,
     "products": {
-      "dishes": [
+      "dishes": [],
+      "drinks": [
         {
-          "name": "pui",
+          "name": "cola",
           "rating": 3.0
         }
-      ],
-      "drinks": []
+      ]
     }
   }
 ]
