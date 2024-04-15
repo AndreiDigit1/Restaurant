@@ -153,33 +153,6 @@ def order():
     return jsonify(dict_list_order_client)
 
 
-# @app.route("/orders")
-# def orders():
-#     response = requests.post("http://127.0.0.1:5000/order")
-#     order_list = response.json()
-#
-#     orders_data = []
-#
-#     for order in order_list:
-#         order_info = {"id_order": order.id, "table_order": order.table, "clients": []}
-#
-#         for client in order.clients:
-#             client_info = {
-#                 "id": client.id,
-#                 "firstname": client.firstname,
-#                 "lastname": client.lastname,
-#                 "age": client.age,
-#                 "order": [],
-#             }
-#             order_info["clients"].append(client_info)
-#
-#         orders_data.append(order_info)
-#
-#     serialized_orders_data = json.dumps(orders_data)
-#
-#     return serialized_orders_data
-
-
 @app.route("/restaurant-details")
 def restaurant():
     restaurant_data = {
