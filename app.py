@@ -160,6 +160,18 @@ def orders():
 
     return serialized_orders_data
 
+@app.route('/restaurant-details')
+def restaurant():
+    restaurant_data = {
+        'id': 1,
+        'name': 'Bistro Gourmet',
+        'address': '123 Main Street, Bucharest',
+        'opening_hours': '11:00 AM',
+        'closing_hours': '10:00 PM',
+        'num_tables': 20,
+        'num_seats': 120
+    }
+    return jsonify(restaurant_data)
 
 @app.route("/restaurant-details")
 def restaurant():
@@ -303,6 +315,14 @@ class OrderClient(Client):
             "products": self.products,
         }
 
+class Restaurant:
+    def __init__(self, name, addres, open_hour, close_hour, nr_of_tables, nr_of_seats):
+        self.name = name
+        self.address = addres
+        self.open_hour = open_hour
+        self.close_hour = close_hour
+        self.nr_of_tables = nr_of_tables
+        self.nr_of_seats = nr_of_seats
 
 class Restaurant:
     def __init__(self, name, addres, open_hour, close_hour, nr_of_tables, nr_of_seats):
