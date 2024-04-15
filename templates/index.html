@@ -40,14 +40,14 @@
         input[type="text"]::placeholder {
             color: #999;
         }
-        input[type="submit"], #btn_view_clients, #btn_view_menu, #btn_add_reservation {
+        input[type="submit"], #btn_view_clients, #btn_view_menu, #btn_add_reservation, #btn_restaurant_details {
             background-color: #4CAF50;
             color: white;
             padding: 10px 20px;
             border: none;
             cursor: pointer;
         }
-        input[type="submit"]:hover, #btn_view_clients:hover, #btn_view_menu:hover {
+        input[type="submit"]:hover, #btn_view_clients:hover, #btn_view_menu:hover, #btn_add_reservation:hover, #btn_restaurant_details:hover {
             background-color: #45a049;
         }
         hr {
@@ -84,21 +84,41 @@
         <a href="/users"><button id="btn_view_clients">View clients</button></a>
         <a href="/menu_route"><button id="btn_view_menu">View menu</button></a>
         <a href="/createReservation"><button id="btn_add_reservation">Add Reservation</button></a>
-        <a href="/restaurant-details"><button id="btn_add_reservation">View restaurant info</button></a>
+
+        <a href="/restaurant-details"><button id="btn_restaurant_details">View restaurant info</button></a>
+
 
         <div class="menu-container">
-            {{ menu | safe }}
+            <ul>
+                <!-- am transmis meniul din app.py( ruta '/' iar acum parcurgem ceea ce am primit din app.py-->
+                {% for category_data in data_menu %}
+                    {% for category, items in category_data.items() %}
+                        {% for item in items %}
+                            {% if category == 'dishes' %}
+                                <li>Dish: {{ item["name"] }} - Price: {{ item["price"] }} RON - Quantity: {{ item["quantity(g)"] }}g - Nutritional Values: {{ item["nutritional_values(kcal)"] }}kcal</li>
+                            {% elif category == 'drinks' %}
+                                <li>Drink: {{ item["name"] }} - Price: {{ item["price"] }} RON - Quantity: {{ item["quantity(ml)"] }}ml - Nutritional Values: {{ item["nutritional_values(kcal)"] }}kcal - {{ "Alcohol" if item["isAlcohol"] else "Non-alcohol" }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            </ul>
         </div>
         <h2>Place an order</h2>
         <p>Choose the desired products using comma(,) as separator:</p>
+
         {% for reservation in reservations_list %}
             <h2 style="color:brown"><i>Reservation {{ reservation['id'] }}</i></h2>
             <h2>Table {{ reservation['table'] }}</h2>
+                <!--   folosim post ca sa trimitem un request, iar in app.py preluam acel request, in metoda "/order", precum scrie si in action-->
             <form method="post" action="/order">
                 {% for client in reservation['clients'] %}
+                    <!--  prin name="age_...." -> trimitem valori catre app.py("/order", methods=["POST"])-->
+                    <!--  in acel for se trimit maxim doua valori(pe care le-am delimitat prin '_')-->
+                    <!--  daca vrei sa te folosesti de mai multe valori, poti sa faci un input de tip hidden(care sa nu se afiseze pe ecran) si sa ii pui un name cu valorile pe care le vrei-->
                     <label for="order_{{ reservation['id'] }}_{{ client['id'] }}">Client ID {{ client['id'] }}: {{ client['firstname'] }} {{ client['lastname'] }}</label><br>
-                    <input type="hidden" name="age_{{ reservation['id'] }}_{{ client['id'] }}" value="{{ client['age'] }}"><br>
                     <input type="text" id="order_{{ reservation['id'] }}_{{ client['id'] }}" name="order_{{ reservation['id'] }}_{{ client['id'] }}" placeholder="Write here..."><br><br>
+                    <input type="hidden" name="age_{{ reservation['id'] }}_{{ client['id'] }}" value="{{ client['age'] }}"><br>
                 {% endfor %}
                 <input type="submit" value="Submit Order">
             </form>
