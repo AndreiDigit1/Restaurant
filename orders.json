@@ -5,7 +5,16 @@
     "lastname": "Doe",
     "age": 16,
     "products": {
-      "dishes": [],
+      "dishes": [
+        {
+          "name": "pui",
+          "rating": 4.0
+        },
+        {
+          "name": "orez",
+          "rating": 4.0
+        }
+      ],
       "drinks": []
     }
   },
@@ -16,7 +25,12 @@
     "age": 28,
     "products": {
       "dishes": [],
-      "drinks": []
+      "drinks": [
+        {
+          "name": "cola",
+          "rating": 3.0
+        }
+      ]
     }
   }
 ]

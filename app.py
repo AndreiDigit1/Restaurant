@@ -22,6 +22,12 @@ def index():
         "index.html", data_menu=data_menu, reservations_list=data_reservations
     )
 
+@app.route('/ratings')
+def ratings():
+    response_menu = requests.get('http://127.0.0.1:5000/menu_route')
+    menu_data = response_menu.json()
+
+    return render_template('ratings.html', menu=menu_data)
 
 @app.route("/createReservation")
 def addReservation():
@@ -59,6 +65,7 @@ def order():
     menu_data = menu_response.json()
 
     orders_list = []
+    errors = []
 
     # accesam form-ul din index.html: <form method="post" action="/order">
     for key in request.form:
@@ -70,32 +77,43 @@ def order():
             client_age = request.form.get("age_" + reservation_id + "_" + client_id)
             items = [item.strip() for item in order.split(",")]
 
+            ratings = request.form.get('rating_' + reservation_id + '_' + client_id)
+
             valid_items_dishes = []
             valid_items_drinks = []
-            for produs in items:
+            for product in items:
+                found = False
                 for category_data in menu_data:
                     for category, items_data in category_data.items():
                         for item in items_data:
-                            if item["name"].lower() == produs.lower():
-                                if category == "dishes" and item["quantity(g)"] > 0:
-                                    valid_items_dishes.append(produs)
-                                elif category == "drinks" and item["quantity(ml)"] > 0:
-                                    if not item["isAlcohol"]:
-                                        valid_items_drinks.append(produs)
-                                    elif item["isAlcohol"] and int(client_age) >= int(
-                                        LIMIT_AGE
-                                    ):
-                                        valid_items_drinks.append(produs)
+                            if item['name'].lower() == product.lower():
+                                found = True
+                                if category == 'dishes' and item['quantity(g)'] > 0:
+                                    valid_items_dishes.append({
+                                        'name': product,
+                                        'rating': float(ratings) if ratings else None
+                                    })
+                                elif category == 'drinks' and item['quantity(ml)'] > 0:
+                                    if not item['isAlcohol']:
+                                        valid_items_drinks.append({
+                                            'name': product,
+                                            'rating': float(ratings) if ratings else None
+                                        })
+                                    elif item['isAlcohol'] and int(client_age) >= int(LIMIT_AGE):
+                                        valid_items_drinks.append({
+                                            'name': product,
+                                            'rating': float(ratings) if ratings else None
+                                        })
                                 break
+                if not found:
+                    errors.append(f"Invalid order: {product}")
 
-            valid_items = {"dishes": valid_items_dishes, "drinks": valid_items_drinks}
-            orders_list.append(
-                {
-                    "client_id": client_id,
-                    "order": valid_items,
-                    "reservation_id": reservation_id,
-                }
-            )
+            valid_items = {'dishes': valid_items_dishes, 'drinks': valid_items_drinks}
+            orders_list.append({'client_id': client_id, 'order': valid_items, 'reservation_id': reservation_id})
+
+        if errors:
+            error_message = ', '.join(errors)
+            return render_template('order_error.html', error_message=error_message), 400
 
     list_order_client = []
 
@@ -131,47 +149,36 @@ def order():
 
     with open("orders.json", "w") as file:
         json.dump(dict_list_order_client, file, indent=2)
+
     return jsonify(dict_list_order_client)
 
 
-@app.route("/orders")
-def orders():
-    response = requests.post("http://127.0.0.1:5000/order")
-    order_list = response.json()
+# @app.route("/orders")
+# def orders():
+#     response = requests.post("http://127.0.0.1:5000/order")
+#     order_list = response.json()
+#
+#     orders_data = []
+#
+#     for order in order_list:
+#         order_info = {"id_order": order.id, "table_order": order.table, "clients": []}
+#
+#         for client in order.clients:
+#             client_info = {
+#                 "id": client.id,
+#                 "firstname": client.firstname,
+#                 "lastname": client.lastname,
+#                 "age": client.age,
+#                 "order": [],
+#             }
+#             order_info["clients"].append(client_info)
+#
+#         orders_data.append(order_info)
+#
+#     serialized_orders_data = json.dumps(orders_data)
+#
+#     return serialized_orders_data
 
-    orders_data = []
-
-    for order in order_list:
-        order_info = {"id_order": order.id, "table_order": order.table, "clients": []}
-
-        for client in order.clients:
-            client_info = {
-                "id": client.id,
-                "firstname": client.firstname,
-                "lastname": client.lastname,
-                "age": client.age,
-                "order": [],
-            }
-            order_info["clients"].append(client_info)
-
-        orders_data.append(order_info)
-
-    serialized_orders_data = json.dumps(orders_data)
-
-    return serialized_orders_data
-
-@app.route('/restaurant-details')
-def restaurant():
-    restaurant_data = {
-        'id': 1,
-        'name': 'Bistro Gourmet',
-        'address': '123 Main Street, Bucharest',
-        'opening_hours': '11:00 AM',
-        'closing_hours': '10:00 PM',
-        'num_tables': 20,
-        'num_seats': 120
-    }
-    return jsonify(restaurant_data)
 
 @app.route("/restaurant-details")
 def restaurant():
@@ -220,12 +227,14 @@ def menu_route():
                     "price": 10,
                     "quantity(g)": 100,
                     "nutritional_values(kcal)": 200,
+                    'ratings': 4.5,
                 },
                 {
                     "name": "Orez",
                     "price": 16,
                     "quantity(g)": 200,
                     "nutritional_values(kcal)": 400,
+                    'ratings': 3.8,
                 },
             ]
         },
@@ -237,6 +246,7 @@ def menu_route():
                     "quantity(ml)": 300,
                     "nutritional_values(kcal)": 80,
                     "isAlcohol": False,
+                    'ratings': 4.2,
                 },
                 {
                     "name": "Vin",
@@ -244,6 +254,7 @@ def menu_route():
                     "quantity(ml)": 150,
                     "nutritional_values(kcal)": 100,
                     "isAlcohol": True,
+                    'ratings': 4.8,
                 },
             ]
         },
@@ -315,14 +326,6 @@ class OrderClient(Client):
             "products": self.products,
         }
 
-class Restaurant:
-    def __init__(self, name, addres, open_hour, close_hour, nr_of_tables, nr_of_seats):
-        self.name = name
-        self.address = addres
-        self.open_hour = open_hour
-        self.close_hour = close_hour
-        self.nr_of_tables = nr_of_tables
-        self.nr_of_seats = nr_of_seats
 
 class Restaurant:
     def __init__(self, name, addres, open_hour, close_hour, nr_of_tables, nr_of_seats):
