@@ -153,7 +153,6 @@ document.querySelectorAll('.rating').forEach(rating => {
             hiddenInput.value = value;
             stars.forEach(s => s.classList.remove('active'));
 
-            // Add active class to clicked star and all previous stars
             star.classList.add('active');
             let prevStar = star.previousElementSibling;
             while (prevStar) {

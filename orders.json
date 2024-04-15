@@ -7,11 +7,16 @@
     "products": {
       "dishes": [
         {
-          "name": "orez",
-          "rating": 2.0
+          "name": "pui",
+          "rating": 5.0
         }
       ],
-      "drinks": []
+      "drinks": [
+        {
+          "name": "cola",
+          "rating": 5.0
+        }
+      ]
     }
   },
   {

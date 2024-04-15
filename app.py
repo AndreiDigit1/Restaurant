@@ -82,13 +82,13 @@ def order():
             client_age = request.form.get('age_' + reservation_id + '_' + client_id)
             items = [item.strip() for item in order.split(',')]
             
-            ratings = request.form.getlist('rating_' + reservation_id + '_' + client_id)
+            ratings = request.form.get('rating_' + reservation_id + '_' + client_id)
+            print(ratings)
 
             valid_items_dishes = []
             valid_items_drinks = []
-            print(ratings)
 
-            for product_index, product in enumerate(items):
+            for product in items:
                 found = False
                 for category_data in menu_data:
                     for category, items_data in category_data.items():
@@ -98,18 +98,18 @@ def order():
                                 if category == 'dishes' and item['quantity(g)'] > 0:
                                     valid_items_dishes.append({
                                         'name': product,
-                                        'rating': float(ratings[product_index]) if ratings else None
+                                        'rating': float(ratings) if ratings else None
                                     })
                                 elif category == 'drinks' and item['quantity(ml)'] > 0:
                                     if not item['isAlcohol']:
                                         valid_items_drinks.append({
                                             'name': product,
-                                            'rating': float(ratings[product_index]) if ratings else None
+                                            'rating': float(ratings) if ratings else None
                                         })
                                     elif item['isAlcohol'] and int(client_age) >= int(LIMIT_AGE):
                                         valid_items_drinks.append({
                                             'name': product,
-                                            'rating': float(ratings[product_index]) if ratings else None
+                                            'rating': float(ratings) if ratings else None
                                         })
                                 break
                 if not found:
