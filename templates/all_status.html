@@ -8,11 +8,25 @@
 <body>
     <h1>All Clients Status</h1>
 
-    <!-- Search Form -->
+    <!-- Search by Name Form -->
     <form action="/search_clients" method="get">
         <label for="search_name">Search by Name:</label>
         <input type="text" id="search_name" name="search_name">
-        <input type="submit" value="Search">
+        <input type="submit" value="Search by Name">
+    </form>
+
+    <!-- Search by Number of Reservations Form -->
+    <form action="/search_clients" method="get">
+        <label for="search_reservations">Search by Number of Reservations:</label>
+        <input type="number" id="search_reservations" name="search_reservations">
+        <input type="submit" value="Search by Number of Reservations">
+    </form>
+
+    <!-- Search by Number of Reservations Form -->
+    <form action="/search_clients" method="get">
+        <label for="search_phone">Search by Number of Reservations:</label>
+        <input type="number" id="search_phone" name="search_phone">
+        <input type="submit" value="Search by phone number">
     </form>
 
     <table>
@@ -23,6 +37,7 @@
             <th>Age</th>
             <th>Email</th>
             <th>Phone</th>
+            <th>Number of Reservations</th>
             <th>Status</th>
         </tr>
         {% for item in status_list %}
@@ -33,6 +48,7 @@
             <td>{{ item.client.age }}</td>
             <td>{{ item.client.email }}</td>
             <td>{{ item.client.phone }}</td>
+            <td>{{ item.client.num_reservations }}</td>
             <td>{{ item.status }}</td>
         </tr>
         {% endfor %}

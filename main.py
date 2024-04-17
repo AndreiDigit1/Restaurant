@@ -26,9 +26,9 @@ def add_clients():
             age = request.form.get("age")
             phone = request.form.get("phone")
             email = request.form.get("email")
-
+            num_reservations = int(request.form.get("num_reservations"))
             # Create a new Client object with form data
-            client = Client(name, surname, age, email, phone)
+            client = Client(name, surname, age, email, phone,num_reservations)
 
             # Append the client to the clients list
             clients.append(client)
@@ -72,25 +72,70 @@ def check_all_status():
 
 @app.route('/search_clients', methods=['GET'])
 def search_clients():
-    search_query = request.args.get('search_name')
+    search_name = request.args.get('search_name')
+    search_reservations = request.args.get('search_reservations')
+    search_phone = request.args.get('search_phone')
 
-    # Search for clients by name
-    search_results = [client for client in clients if client.name == search_query]
-
-    # Assuming clients have unique names, so there should be only one matching client
-    if search_results:
-        client_id = search_results[0].id  # Get the ID of the matching client
-        # Render search_clients.html with search results and client ID
-        return render_template('search_clients.html', search_results=search_results, search_query=search_query, client_id=client_id)
+    if search_name:
+        # Search for clients by name
+        search_results = [client for client in clients if client.name == search_name]
+    elif search_reservations:
+        # Convert search_reservations to an integer
+        search_reservations = int(search_reservations)
+        # Search for clients by number of reservations
+        search_results = [client for client in clients if client.num_reservations == search_reservations]
+    elif search_phone:
+        # Search for clients by phone number
+        search_results= [client for client in clients if client.phone == search_phone]
     else:
-        # No matching clients found
-        return render_template('search_clients.html', search_results=[], search_query=search_query, client_id=None)
+        # No search criteria provided, return all clients
+        search_results = clients
 
+    # Render the search results template
+    return render_template('search_clients.html', search_results=search_results)
+
+
+# Client page route (to get all clients' data)
 @app.route('/client-page')
 def client_page():
-    client_data = [client.to_dict() for client in clients]
-    return jsonify(client_data)
+    return render_template('client_page.html', clients=clients)
 
+@app.route('/api/delete_client/<int:client_id>', methods=['DELETE'])
+def delete_client_api(client_id):
+    global available_seats
+
+    client = next((client for client in clients if client.id == client_id), None)
+    if client:
+        available_seats += 1
+        clients.remove(client)
+        Client.save_clients_to_file(clients)  # Update the JSON file
+        return jsonify({"message": "Client deleted successfully."}), 200
+    else:
+        return jsonify({"error": "Client not found."}), 404
+
+@app.route('/api/update_client/<int:client_id>', methods=['PUT'])
+def update_client_api(client_id):
+    data = request.json  # Get JSON data from the request body
+    client = next((client for client in clients if client.id == client_id), None)
+    if client:
+        # Update client attributes
+        if 'name' in data:
+            client.name = data['name']
+        if 'surname' in data:
+            client.surname = data['surname']
+        if 'age' in data:
+            client.age = data['age']
+        if 'email' in data:
+            client.email = data['email']
+        if 'phone' in data:
+            client.phone = data['phone']
+
+        # Save updated client list to file
+        Client.save_clients_to_file(clients)
+
+        return jsonify({"message": "Client updated successfully."}), 200
+    else:
+        return jsonify({"error": "Client not found."}), 404
 
 if __name__ == '__main__':
     app.run(debug=True)
