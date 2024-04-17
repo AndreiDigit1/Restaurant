@@ -76,6 +76,7 @@
             align-items:center;
             text-align:center;
         }
+
         .menu-item {
             margin-bottom: 10px;
         }
@@ -98,7 +99,7 @@
     <div class="content">
         <h1>Restaurant</h1>
         <a href="/users"><button id="btn_view_clients">View clients</button></a>
-        <a href="/menu_route"><button id="btn_view_menu">View menu</button></a>
+        <a href="/menu_show"><button id="btn_view_menu">View menu</button></a>
         <a href="/createReservation"><button id="btn_add_reservation">Add Reservation</button></a>
         <a href="/restaurant-details"><button id="btn_restaurant_details">View restaurant info</button></a>
         <a href="/ratings"><button id="btn_view_ratings">View ratings</button></a>
@@ -174,11 +175,9 @@
                     prevStar.classList.add('active');
                     prevStar = prevStar.previousElementSibling;
                 }
-            }
             });
         });
     });
-
     </script>
 
 </body>

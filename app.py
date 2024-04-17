@@ -4,6 +4,8 @@ import requests
 from flask import Flask, jsonify, render_template, request
 
 app = Flask(__name__)
+#To preserve order of inserted keys
+app.json.sort_keys = False
 
 LIMIT_AGE = 18
 
@@ -21,6 +23,12 @@ def index():
         # trimitem meniul prin variabila data_menu si rezervarile prin reservations_list pe care le vom accesa in index.html prin % for %
         "index.html", data_menu=data_menu, reservations_list=data_reservations
     )
+@app.route("/menu_show")
+def show_menu():
+    response_menu = requests.get('http://127.0.0.1:5000/menu_route')
+    menu_data = response_menu.json()
+
+    return render_template('menu.html', menu_data=menu_data)
 
 @app.route('/ratings')
 def ratings():
@@ -133,7 +141,6 @@ def order():
                             client["age"],
                             order_items,
                         )
-                        print(order_client)
                         list_order_client.append(order_client)
 
     dict_list_order_client = []
