@@ -107,8 +107,7 @@
         <div class="menu-container">
             <ul>
                 <!-- am transmis meniul din app.py( ruta '/' iar acum parcurgem ceea ce am primit din app.py-->
-                {% for category_data in data_menu %}
-                    {% for category, items in category_data.items() %}
+                    {% for category, items in data_menu.items() %}
                         {% for item in items %}
                             {% if category == 'dishes' %}
                                 <li>Dish: {{ item["name"] }} - Price: {{ item["price"] }} RON - Quantity: {{ item["quantity(g)"] }}g - Nutritional Values: {{ item["nutritional_values(kcal)"] }}kcal</li>
@@ -117,7 +116,6 @@
                             {% endif %}
                         {% endfor %}
                     {% endfor %}
-                {% endfor %}
             </ul>
         </div>
         <h2>Place an order</h2>
