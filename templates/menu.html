@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            background-image: url('/static/background.jpg');
+            background-size: cover;
+            background-position: center;
+            box-sizing: border-box;
+        }
+        .menu-container {
+            background-image: url('/static/menu.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .category {
+            margin-bottom: 20px;
+        }
+        .category-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .item-name {
+            flex: 1;
+        }
+        .item-price {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+            {% for category, items in menu_data.items() %}
+                <div class="category">
+                    <div class="category-title">{{ category | capitalize }}</div>
+                    {% for item in items %}
+                        <div class="item">
+                            <div class="item-name">{{ item["name"] }}</div>
+                            <div class="item-price">{{ item["price"] }} RON</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+    </div>
+</body>
+</html>
+
