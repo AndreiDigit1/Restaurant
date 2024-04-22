@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+
+    <p>Showing search results for: {{ search_query }}</p>
+
+    {% if search_results %}
+    <table>
+        <tr>
+            <th>Client ID</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Age</th>
+            <th>Email</th>
+            <th>Phone</th>
+        </tr>
+        {% for client in search_results %}
+        <tr>
+            <td>{{ client["id"] }}</td>
+            <td>{{ client["name"] }}</td>
+            <td>{{ client["surname"] }}</td>
+            <td>{{ client["age"] }}</td>
+            <td>{{ client["email"] }}</td>
+            <td>{{ client["phone"] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No matching clients found.</p>
+    {% endif %}
+</body>
+</html>

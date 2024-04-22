@@ -44,14 +44,20 @@
         input[type="text"]::placeholder {
             color: #999;
         }
-        input[type="submit"], #btn_view_clients, #btn_view_menu, #btn_add_reservation, #btn_restaurant_details, #btn_view_ratings {
+        input[type="submit"], #btn_view_clients, #btn_view_menu, #btn_add_reservation,
+        #btn_restaurant_details, #btn_view_ratings, #btn_view_client_data,
+        #btn_check_client_reservation, #btn_payment_note_client, #btn_payment_note_order  {
             background-color: #4CAF50;
             color: white;
             padding: 10px 20px;
             border: none;
             cursor: pointer;
         }
-        input[type="submit"]:hover, #btn_view_clients:hover, #btn_view_menu:hover, #btn_add_reservation:hover, #btn_restaurant_details:hover, #btn_view_ratings:hover {
+        input[type="submit"]:hover, #btn_view_clients:hover, #btn_view_menu:hover,
+         #btn_add_reservation:hover, #btn_restaurant_details:hover,
+          #btn_view_ratings:hover, #btn_view_client_data:hover,
+           #btn_check_client_reservation:hover, #btn_payment_note_client:hover, #btn_payment_note_order:hover {
+
             background-color: #45a049;
         }
         hr {
@@ -100,10 +106,19 @@
         <h1>Restaurant</h1>
         <a href="/users"><button id="btn_view_clients">View clients</button></a>
         <a href="/menu_route"><button id="btn_view_menu">View menu</button></a>
-        <a href="/createReservation"><button id="btn_add_reservation">Add Reservation</button></a>
+        <form method="POST" action="/createReservation">
+            <label for="number_clients">Number Clients:</label><br>
+            <input type="number" id="number_clients" name="number_clients" placeholder="Enter clients number" required><br><br>
+            <button id="btn_add_reservation">Add Reservation</button>
+        </form>
+
+
         <a href="/restaurant-details"><button id="btn_restaurant_details">View restaurant info</button></a>
         <a href="/ratings"><button id="btn_view_ratings">View ratings</button></a>
-
+        <a href="/client-page"><button id="btn_view_client_data">View Client Data</button></a>
+        <a href="/check_all_status"><button id="btn_check_client_reservation">Check client reservation</button></a>
+        <a href="/payment_note_client"><button id="btn_payment_note_client">View payment client</button></a>
+        <a href="/payment_note_order"><button id="btn_payment_note_order">View payment order</button></a>
         <div class="menu-container">
             <ul>
                 <!-- am transmis meniul din app.py( ruta '/' iar acum parcurgem ceea ce am primit din app.py-->
@@ -126,13 +141,12 @@
         {% for reservation in reservations_list %}
             <h2 style="color:brown"><i>Reservation {{ reservation['id'] }}</i></h2>
             <h2>Table {{ reservation['table'] }}</h2>
+            <h2>Number of clients {{ reservation['number_clients'] }}</h2>
+            <h2>Date {{ reservation['reservation_time'] }}</h2>
                 <!--   folosim post ca sa trimitem un request, iar in app.py preluam acel request, in metoda "/order", precum scrie si in action-->
             <form method="post" action="/order">
                 {% for client in reservation['clients'] %}
-                    <!--  prin name="age_...." -> trimitem valori catre app.py("/order", methods=["POST"])-->
-                    <!--  in acel for se trimit maxim doua valori(pe care le-am delimitat prin '_')-->
-                    <!--  daca vrei sa te folosesti de mai multe valori, poti sa faci un input de tip hidden(care sa nu se afiseze pe ecran) si sa ii pui un name cu valorile pe care le vrei-->
-                    <label for="order_{{ reservation['id'] }}_{{ client['id'] }}">Client ID {{ client['id'] }}: {{ client['firstname'] }} {{ client['lastname'] }}</label><br>
+                    <label for="order_{{ reservation['id'] }}_{{ client['id'] }}">Client ID {{ client['id'] }}: {{ client['name'] }} {{ client['surname'] }}</label><br>
                     <input type="hidden" name="age_{{ reservation['id'] }}_{{ client['id'] }}" value="{{ client['age'] }}"><br>
                     <input type="text" id="order_{{ reservation['id'] }}_{{ client['id'] }}" name="order_{{ reservation['id'] }}_{{ client['id'] }}" placeholder="Write here..."><br><br>
 
@@ -178,6 +192,14 @@
             });
         });
     });
+    function redirectToCreateReservation() {
+        var numberClientsInput = document.getElementById('number_clients');
+        var numberClientsValue = numberClientsInput.value;
+
+        var url = "/createReservation?number_clients=" + numberClientsValue;
+
+        window.location.href = url;
+    }
     </script>
 
 </body>

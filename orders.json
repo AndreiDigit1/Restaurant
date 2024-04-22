@@ -1,17 +1,15 @@
 [
   {
-    "id": "101",
-    "firstname": "John",
-    "lastname": "Doe",
-    "age": 16,
+    "id": 1,
+    "name": "Andreea",
+    "surname": "Ana",
+    "age": 23,
+    "email": "andreea@gmail.com",
+    "phone": "07658343553",
     "products": {
       "dishes": [
         {
           "name": "pui",
-          "rating": 4.0
-        },
-        {
-          "name": "orez",
           "rating": 4.0
         }
       ],
@@ -19,15 +17,17 @@
     }
   },
   {
-    "id": "102",
-    "firstname": "Jane",
-    "lastname": "Smith",
-    "age": 28,
+    "id": 2,
+    "name": "Robert",
+    "surname": "Mihai",
+    "age": 25,
+    "email": "mihai@gmail.com",
+    "phone": "0764876376",
     "products": {
       "dishes": [],
       "drinks": [
         {
-          "name": "cola",
+          "name": "vin",
           "rating": 3.0
         }
       ]

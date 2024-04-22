@@ -1,0 +1,26 @@
+[
+  {
+    "id": 14,
+    "table": 14,
+    "number_clients": 2,
+    "reservation_time": "2024-04-24",
+    "clients": [
+      {
+        "id": 100,
+        "name": "Andreea",
+        "surname": "Ana",
+        "age": 23,
+        "phone": "07658343553",
+        "email": "andreea@gmail.com"
+      },
+      {
+        "id": 101,
+        "name": "Robert",
+        "surname": "Mihai",
+        "age": 25,
+        "phone": "0764876376",
+        "email": "mihai@gmail.com"
+      }
+    ]
+  }
+]

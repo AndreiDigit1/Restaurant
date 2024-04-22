@@ -1,11 +1,20 @@
 import json
 
 import requests
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, redirect, url_for
+from client import Client
+from datetime import datetime, time
+
+opening_time = time(9, 0)
+closing_time = time(21, 0)
 
 app = Flask(__name__)
 
 LIMIT_AGE = 18
+
+reservations_data = []
+clients = []
+available_seats = 5
 
 
 @app.route("/")
@@ -29,11 +38,19 @@ def ratings():
 
     return render_template('ratings.html', menu=menu_data)
 
-@app.route("/createReservation")
+
+@app.route("/createReservation", methods=["POST", "GET"])
 def addReservation():
-    response_tables = requests.get("http://127.0.0.1:5000/tables")
-    data_tables = response_tables.json()
-    return render_template("reservation.html", tables_data=data_tables)
+    if request.method == "POST":
+        response_tables = requests.get("http://127.0.0.1:5000/tables")
+        data_tables = response_tables.json()
+        number_clients = request.form.get('number_clients')
+        print(number_clients)
+        if number_clients is not None:
+            number_clients = int(number_clients)
+        return render_template("reservation.html", number_clients=number_clients, tables_data=data_tables)
+    elif request.method == "GET":
+        return render_template("reservation.html")
 
 
 @app.route("/users")
@@ -46,16 +63,18 @@ def users():
         for client in reservation["clients"]:
             client_info = {
                 "id": client["id"],
-                "firstname": client["firstname"],
-                "lastname": client["lastname"],
+                "name": client["name"],
+                "surname": client["surname"],
                 "age": client["age"],
+                "email": client["email"],
+                "phone": client["phone"]
             }
             all_clients.append(client_info)
 
     return jsonify(all_clients)
 
 
-@app.route("/order", methods=["POST"])
+@app.route("/order", methods=["POST","GET"])
 def order():
     global LIMIT_AGE
     reservations_response = requests.get("http://127.0.0.1:5000/reservations")
@@ -127,10 +146,12 @@ def order():
                 for client in reservation["clients"]:
                     if client["id"] == int(client_id):
                         order_client = OrderClient(
-                            client_id,
-                            client["firstname"],
-                            client["lastname"],
+                            client["id"],
+                            client["name"],
+                            client["surname"],
                             client["age"],
+                            client["email"],
+                            client["phone"],
                             order_items,
                         )
                         print(order_client)
@@ -140,9 +161,11 @@ def order():
     for order_client in list_order_client:
         client_dict = {
             "id": order_client.id,
-            "firstname": order_client.firstname,
-            "lastname": order_client.lastname,
+            "name": order_client.name,
+            "surname": order_client.surname,
             "age": order_client.age,
+            "email": order_client.email,
+            "phone": order_client.phone,
             "products": order_client.products,
         }
         dict_list_order_client.append(client_dict)
@@ -151,33 +174,6 @@ def order():
         json.dump(dict_list_order_client, file, indent=2)
 
     return jsonify(dict_list_order_client)
-
-
-# @app.route("/orders")
-# def orders():
-#     response = requests.post("http://127.0.0.1:5000/order")
-#     order_list = response.json()
-#
-#     orders_data = []
-#
-#     for order in order_list:
-#         order_info = {"id_order": order.id, "table_order": order.table, "clients": []}
-#
-#         for client in order.clients:
-#             client_info = {
-#                 "id": client.id,
-#                 "firstname": client.firstname,
-#                 "lastname": client.lastname,
-#                 "age": client.age,
-#                 "order": [],
-#             }
-#             order_info["clients"].append(client_info)
-#
-#         orders_data.append(order_info)
-#
-#     serialized_orders_data = json.dumps(orders_data)
-#
-#     return serialized_orders_data
 
 
 @app.route("/restaurant-details")
@@ -196,24 +192,8 @@ def restaurant():
 
 @app.route("/reservations")
 def reservations():
-    reservations_data = [
-        {
-            "id": 1,
-            "table": 10,
-            "clients": [
-                {"id": 101, "firstname": "John", "lastname": "Doe", "age": 16},
-                {"id": 102, "firstname": "Jane", "lastname": "Smith", "age": 28},
-            ],
-        },
-        {
-            "id": 2,
-            "table": 11,
-            "clients": [
-                {"id": 103, "firstname": "Alice", "lastname": "Johnson", "age": 42},
-                {"id": 104, "firstname": "Bob", "lastname": "Brown", "age": 30},
-            ],
-        },
-    ]
+    with open('reservations.json', 'r') as file:
+        reservations_data = json.load(file)
     return jsonify(reservations_data)
 
 
@@ -275,12 +255,34 @@ def tables():
 
 
 class Client:
-    def __init__(self, client_id, firstname, lastname, age):
-        self.id = client_id
-        self.firstname = firstname
-        self.lastname = lastname
+    last_id = 0  # Class variable to store the last assigned ID
+    def __init__(self, name, surname, age, email, phone):
+        self.id = Client.generate_id()  # Assign the new ID
+        self.name = name
+        self.surname = surname
         self.age = age
+        self.email = email
+        self.phone = phone
 
+    @staticmethod
+    def generate_id():
+        Client.last_id += 1
+        return Client.last_id
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "surname": self.surname,
+            "age": self.age,
+            "email": self.email,
+            "phone": self.phone
+        }
+
+    @staticmethod
+    def save_clients_to_file(clients):
+        with open('clients.json', 'w') as f:
+            json.dump([client.to_dict() for client in clients], f)
 
 class Reservation:
     reservation_id = 100
@@ -310,19 +312,21 @@ class Order:
 
 
 class OrderClient(Client):
-    def __init__(self, client_id, firstname, lastname, age, list_of_products_desired):
-        super().__init__(client_id, firstname, lastname, age)
+    def __init__(self, client_id, name, surname, age, email, phone, list_of_products_desired):
+        super().__init__(name, surname, age, email, phone)
         self.products = list_of_products_desired
 
     def __str__(self):
-        return f"Client: ID: {self.id}, Name: {self.firstname} {self.lastname}, Age: {self.age}, Products: {self.products}"
+        return f"Client: ID: {self.id}, Name: {self.name} , Surname: {self.surname}, Age: {self.age}, Email: {self.email}, Phone: {self.phone}, Products: {self.products}"
 
     def to_json(self):
         return {
             "id": self.id,
-            "firstname": self.firstname,
-            "lastname": self.lastname,
+            "name": self.name,
+            "surname": self.surname,
             "age": self.age,
+            "email": self.email,
+            "phone": self.phone,
             "products": self.products,
         }
 
@@ -336,6 +340,207 @@ class Restaurant:
         self.nr_of_tables = nr_of_tables
         self.nr_of_seats = nr_of_seats
 
+
+all_clients = []
+
+@app.route('/add_client', methods=["GET", "POST"])
+def add_clients():
+    global all_clients
+
+    if request.method == "POST":
+        name = request.form.get("fname")
+        surname = request.form.get("surname")
+        age = request.form.get("age")
+        phone = request.form.get("phone")
+        email = request.form.get("email")
+
+        client = Client(name, surname, age, email, phone)
+
+        all_clients.append(client)
+
+        return redirect(url_for("add_clients"))
+    return render_template("add_client.html")
+
+reservation_details = []
+
+
+@app.route("/add_reservation", methods=["POST"])
+def add_reservation():
+    number_clients = request.form['number_clients']
+    # number_clients = int(request.form.get("number_clients"))
+    id = request.form.get("number_table")
+    number_table = request.form.get("number_table")
+    reservation_time = request.form.get("reservation_time")
+    print(request.form)
+    clients = []
+
+    for i in range(int(number_clients)):
+        client = {
+            "id": int(request.form.get(f"id{i}")),
+            "name": request.form.get(f"name{i}"),
+            "surname": request.form.get(f"surname{i}"),
+            "age": int(request.form.get(f"age{i}")),
+            "phone": request.form.get(f"phone{i}"),
+            "email": request.form.get(f"email{i}")
+        }
+        clients.append(client)
+
+    reservation = {
+        "id": int(id),
+        "table": int(number_table),
+        "number_clients": int(number_clients),
+        "reservation_time": reservation_time,
+        "clients": clients
+    }
+
+    reservation_details.append(reservation)
+
+    with open("reservations.json", "w") as file:
+        json.dump(reservation_details, file, indent=2)
+
+    return jsonify({"reservation": reservation})
+
+
+
+@app.route("/show_reservations", methods=["GET"])
+def show_reservations():
+    return jsonify(reservation_details)
+
+
+@app.route('/check_status/<int:client_id>')
+def check_status(client_id):
+    # Find the client by client_id
+    client = next((client for client in clients if client.id == client_id), None)
+    if client:
+        current_time = datetime.now().time()
+        if opening_time <= current_time <= closing_time:
+            status = "open"
+        else:
+            status = "closed"
+        return render_template('status.html', status=status, client=client)
+    else:
+        return "Client not found"
+
+
+@app.route('/check_all_status')
+def check_all_status():
+    current_time = datetime.now().time()
+    status_list = []
+    for client in clients:
+        if opening_time <= current_time <= closing_time:
+            status = "open"
+        else:
+            status = "closed"
+        status_list.append({'client': client, 'status': status})
+    return render_template('all_status.html', status_list=status_list)
+
+@app.route('/search_clients', methods=['GET'])
+def search_clients():
+    search_query = request.args.get('search_name')
+
+    search_results = []
+    reservations_response = requests.get("http://127.0.0.1:5000/reservations")
+    reservations = reservations_response.json()
+
+    for reservation in reservations:
+        for client in reservation["clients"]:
+            if client["name"] == search_query:
+                search_results.append(client)
+
+
+    # Search for clients by name
+    # search_results = [client for client in clients if client.name == search_query]
+
+    if search_results:
+        client_id = search_results[0]["id"]
+        return render_template('search_clients.html', search_results=search_results, search_query=search_query, client_id=client_id)
+    else:
+        return render_template('search_clients.html', search_results=[], search_query=search_query, client_id=None)
+
+@app.route('/client-page')
+def client_page():
+    client_data = [client.to_dict() for client in clients]
+    return jsonify(client_data)
+
+
+@app.route("/payment_note_client", methods=["GET"])
+def payment_note_on_the_client():
+    average_rating = 4.0
+
+    menu_response = requests.get("http://127.0.0.1:5000/menu_route")
+    menu_route_data = menu_response.json()
+
+    try:
+        with open("orders.json", "r") as file:
+            orders_data = json.load(file)
+
+        payment_details = {}
+
+        for order in orders_data:
+            total_plata = 0
+            for item in menu_route_data:
+                for key, value in item.items():
+                    if key == 'dishes':
+                        for dish_order in order['products']['dishes']:
+                            for dish in value:
+                                if dish['name'].lower() == dish_order['name'].lower():
+                                    total_plata += dish['price']
+                    elif key == 'drinks':
+                        for drink_order in order['products']['drinks']:
+                            for drink in value:
+                                if drink['name'].lower() == drink_order['name'].lower():
+                                    total_plata += drink['price']
+
+            payment_details[order['id']] = total_plata
+            print(f"Totalul de plata pentru clientul {order['id']} este {total_plata}")
+
+        payment_notes = [{"ID client": client_id, "Payment_client": payment} for client_id, payment in payment_details.items()]
+
+        return jsonify(payment_notes)
+    except FileNotFoundError:
+        return jsonify({"message": "No orders found"}), 404
+
+@app.route("/payment_note_order", methods=["GET"])
+def payment_note_on_the_order():
+    average_rating = 4.0
+    total_plata = 0
+    number_clients = 0
+
+    payment_details = []
+    menu_response = requests.get("http://127.0.0.1:5000/menu_route")
+    menu_route_data = menu_response.json()
+
+    try:
+        with open("orders.json", "r") as file:
+            orders_data = json.load(file)
+
+        for order in orders_data:
+            number_clients = number_clients + 1
+            for item in menu_route_data:
+                for key, value in item.items():
+                    if key == 'dishes':
+                        for dish_order in order['products']['dishes']:
+                            for dish in value:
+                                if dish['name'].lower() == dish_order['name'].lower():
+                                    print("Nume mancare:", dish['name'])
+                                    print("Pret mancare:", dish['price'])
+                                    total_plata+=dish['price']
+                    elif key == 'drinks':
+                        for drink_order in order['products']['drinks']:
+                            for drink in value:
+                                if drink['name'].lower() == drink_order['name'].lower():
+                                    print("Nume bautura:", drink['name'])
+                                    print("Pret bautura:", drink['price'])
+                                    total_plata += drink['price']
+
+        payment_details.append({"clients_number": number_clients, "total_payment": total_plata})
+        total_message = f"Totalul de plata pentru cei {number_clients} clienti este {total_plata}"
+        print(total_message)
+
+        return jsonify(payment_details)
+
+    except FileNotFoundError:
+        return jsonify({"message": "No orders found"}), 404
 
 if __name__ == "__main__":
     app.run(debug=True)
