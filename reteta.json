@@ -67,7 +67,7 @@
             "descriere": "Ardei copti umpluți cu brânză și mirodenii.",
             "timp_preparare": 40,
             "valori_nutritionale": {"calorii": 180.0, "cantitate": 150.0},
-            "rating": {"valoare": 65, "evaluari": 6}
+            "rating": {"valoare": 65, "evaluari": 1}
         },
         {
             "nume": "Vinete prajite cu rosii si usturoi",
@@ -80,7 +80,7 @@
             "descriere": "Vinete prăjite în ulei de măsline, servite cu roșii și usturoi.",
             "timp_preparare": 35,
             "valori_nutritionale": {"calorii": 220.0, "cantitate": 180.0},
-            "rating": {"valoare": 75, "evaluari": 7}
+            "rating": {"valoare": 75, "evaluari": 2}
         },
         {
             "nume": "Salata de vinete cu paine prajita",
@@ -94,7 +94,7 @@
             "descriere": "Salată de vinete cu bucăți de pâine prăjită și dressing de usturoi.",
             "timp_preparare": 20,
             "valori_nutritionale": {"calorii": 180.0, "cantitate": 150.0},
-            "rating": {"valoare": 80, "evaluari": 8}
+            "rating": {"valoare": 80, "evaluari": 3}
         },
         {
             "nume": "Mușchiuleț de porc afumat",
@@ -106,7 +106,7 @@
             "descriere": "Mușchiuleț de porc afumat și feliat, servit cu murături.",
             "timp_preparare": 15,
             "valori_nutritionale": {"calorii": 200.0, "cantitate": 120.0},
-            "rating": {"valoare": 60, "evaluari": 9}
+            "rating": {"valoare": 60, "evaluari": 4}
         },
         {
             "nume": "Ciorbă de burtă",
@@ -117,7 +117,7 @@
             ],
             "pret": 20.0,
             "valori_nutritionale": {"calorii": 180.0, "cantitate": 300.0},
-            "rating": {"valoare": 10, "evaluari": 10}
+            "rating": {"valoare": 10, "evaluari": 5}
         },
         {
             "nume": "Ciorbă de legume",
@@ -128,7 +128,7 @@
             ],
             "pret": 15.0,
             "valori_nutritionale": {"calorii": 150.0, "cantitate": 250.0},
-            "rating": {"valoare": 45, "evaluari": 11}
+            "rating": {"valoare": 45, "evaluari": 1}
         },
         {
             "nume": "Ciorba de vacuta",
@@ -142,7 +142,7 @@
             "descriere": "Ciorba de vacuta traditionala, servita cu smantana si ardei iute.",
             "timp_preparare": 75,
             "valori_nutritionale": {"calorii": 350.0, "cantitate": 300.0},
-            "rating": {"valoare": 10, "evaluari": 12}
+            "rating": {"valoare": 10, "evaluari": 2}
         },
         {
             "nume": "Ciorba de fasole in paine",
@@ -156,7 +156,7 @@
             "descriere": "Ciorba de fasole gatita in paine proaspata, servita cu usturoi si ardei iute.",
             "timp_preparare": 45,
             "valori_nutritionale": {"calorii": 280.0, "cantitate": 200.0},
-            "rating": {"valoare": 15, "evaluari": 13}
+            "rating": {"valoare": 15, "evaluari": 3}
         },
         {
             "nume": "Salată Caesar",
@@ -168,7 +168,7 @@
             ],
             "pret": 22.0,
             "valori_nutritionale": {"calorii": 280.0, "cantitate": 150.0},
-            "rating": {"valoare": 10, "evaluari": 14}
+            "rating": {"valoare": 10, "evaluari": 4}
         },
         {
             "nume": "Salată Grecească",
@@ -189,7 +189,7 @@
             "descriere": "Salată tradițională grecească cu roșii, castraveți, ardei gras, ceapă roșie, masline și brânză feta.",
             "timp_preparare": 15,
             "valori_nutritionale": {"calorii": 200.0, "cantitate": 150.0},
-            "rating": {"valoare": 60, "evaluari": 15}
+            "rating": {"valoare": 60, "evaluari": 5}
         },
         {
             "nume": "Pui la grătar",
@@ -201,7 +201,7 @@
             ],
             "pret": 25.0,
             "valori_nutritionale": {"calorii": 320.0, "cantitate": 200.0},
-            "rating": {"valoare": 15, "evaluari": 16}
+            "rating": {"valoare": 15, "evaluari": 1}
         },
         {
             "nume": "Ciolan de porc",
@@ -212,7 +212,7 @@
             ],
             "pret": 30.0,
             "valori_nutritionale": {"calorii": 350.0, "cantitate": 300.0},
-            "rating": {"valoare": 10, "evaluari": 17}
+            "rating": {"valoare": 10, "evaluari": 2}
         },
         {
             "nume": "Tochitură moldovenească cu mămăliguță și ou",
@@ -223,7 +223,7 @@
             ],
             "pret": 25.0,
             "valori_nutritionale": {"calorii": 400.0, "cantitate": 400.0},
-            "rating": {"valoare": 20, "evaluari": 18}
+            "rating": {"valoare": 20, "evaluari": 3}
         },
         {
             "nume": "Șnițel de pui cu piure",
@@ -235,7 +235,7 @@
             ],
             "pret": 25.0,
             "valori_nutritionale": {"calorii": 420.0, "cantitate": 350.0},
-            "rating": {"valoare": 20, "evaluari": 19}
+            "rating": {"valoare": 20, "evaluari": 4}
         },
         {
             "nume": "Pastrav prăjit cu mămăliguță și usturoi",
@@ -246,7 +246,7 @@
             ],
             "pret": 35.0,
             "valori_nutritionale": {"calorii": 390.0, "cantitate": 400.0},
-            "rating": {"valoare": 20, "evaluari": 20}
+            "rating": {"valoare": 20, "evaluari": 5}
         },
         {
             "nume": "Ceafă de porc cu cartofi natur",
@@ -257,7 +257,7 @@
             ],
             "pret": 28.0,
             "valori_nutritionale": {"calorii": 480.0, "cantitate": 500.0},
-            "rating": {"valoare": 15, "evaluari": 21}
+            "rating": {"valoare": 15, "evaluari": 1}
         },
         {
             "nume": "Mici cu cartofi prăjiți",
@@ -268,7 +268,7 @@
             ],
             "pret": 20.0,
             "valori_nutritionale": {"calorii": 680.0, "cantitate": 450.0},
-            "rating": {"valoare": 80, "evaluari": 22}
+            "rating": {"valoare": 80, "evaluari": 2}
         },
         {
             "nume": "Cartofi prăjiți",
@@ -278,7 +278,7 @@
             ],
             "pret": 10.0,
             "valori_nutritionale": {"calorii": 200.0, "cantitate": 180.0},
-            "rating": {"valoare": 90, "evaluari": 23}
+            "rating": {"valoare": 90, "evaluari": 3}
         },
         {
             "nume": "Legume la grătar",
@@ -289,7 +289,7 @@
             ],
             "pret": 15.0,
             "valori_nutritionale": {"calorii": 120.0, "cantitate": 300.0},
-            "rating": {"valoare": 25, "evaluari": 24}
+            "rating": {"valoare": 25, "evaluari": 4}
         },
         {
             "nume": "Dovlecei pane cu usturoi",
@@ -300,7 +300,7 @@
             ],
             "pret": 18.0,
             "valori_nutritionale": {"calorii": 280.0, "cantitate": 250.0},
-            "rating": {"valoare": 25, "evaluari": 25}
+            "rating": {"valoare": 25, "evaluari": 5}
         },
         {
             "nume": "Cartofi rustici",
@@ -311,7 +311,7 @@
             ],
             "pret": 12.0,
             "valori_nutritionale": {"calorii": 320.0, "cantitate": 300.0},
-            "rating": {"valoare": 35, "evaluari": 26}
+            "rating": {"valoare": 35, "evaluari": 1}
         },
         {
             "nume": "Limonadă",
@@ -322,7 +322,7 @@
             ],
             "pret": 12.0,
             "valori_nutritionale": {"calorii": 120.0, "cantitate": 250.0},
-            "rating": {"valoare": 25, "evaluari": 27}
+            "rating": {"valoare": 25, "evaluari": 2}
         },
         {
             "nume": "Cola",
@@ -331,7 +331,7 @@
                     ],
             "pret": 10.0,
             "valori_nutritionale": {"calorii": 140.0, "cantitate": 300.0},
-            "rating": {"valoare": 90, "evaluari": 28}
+            "rating": {"valoare": 90, "evaluari": 3}
         },
         {
              "nume": "Fanta",
@@ -340,7 +340,7 @@
                     ],
                     "pret": 10.0,
                     "valori_nutritionale": {"calorii": 160.0, "cantitate": 300.0},
-                    "rating": {"valoare": 60, "evaluari": 29}
+                    "rating": {"valoare": 60, "evaluari": 4}
         },
         {
              "nume": "Sprite",
@@ -349,7 +349,7 @@
                     ],
                     "pret": 10.0,
                     "valori_nutritionale": {"calorii": 140.0, "cantitate": 300.0},
-                    "rating": {"valoare": 50, "evaluari": 30}
+                    "rating": {"valoare": 50, "evaluari": 5}
                 },
         {
              "nume": "Cocktail Mojito",
@@ -361,7 +361,7 @@
                     ],
                     "pret": 15.0,
                     "valori_nutritionale": {"calorii": 180.0, "cantitate": 200.0},
-                    "rating": {"valoare": 30, "evaluari": 31}
+                    "rating": {"valoare": 30, "evaluari": 1}
                 },
                 {
                     "nume": "Aperol",
@@ -373,7 +373,7 @@
                     ],
                     "pret": 20.0,
                     "valori_nutritionale": {"calorii": 120.0, "cantitate": 150.0},
-                    "rating": {"valoare": 3, "evaluari": 32}
+                    "rating": {"valoare": 3, "evaluari": 2}
                 },
                 {
                     "nume": "Alexandrion",
@@ -382,7 +382,7 @@
                     ],
                     "pret": 15.0,
                     "valori_nutritionale": {"calorii": 180.0, "cantitate": 50.0},
-                    "rating": {"valoare": 5, "evaluari": 33}
+                    "rating": {"valoare": 5, "evaluari": 3}
                 },
 
                 {
@@ -394,7 +394,7 @@
                     ],
                     "pret": 20.0,
                     "valori_nutritionale": {"calorii": 160.0, "cantitate": 200.0},
-                    "rating": {"valoare": 10, "evaluari": 34}
+                    "rating": {"valoare": 10, "evaluari": 4}
                 },
                 {
                     "nume": "Margarita",
@@ -406,7 +406,7 @@
                     ],
                     "pret": 18.0,
                     "valori_nutritionale": {"calorii": 160.0, "cantitate": 200.0},
-                    "rating": {"valoare": 30, "evaluari": 35}
+                    "rating": {"valoare": 30, "evaluari": 5}
                 },
                 {
                     "nume": "Martini",
@@ -417,7 +417,79 @@
                     ],
                     "pret": 18.0,
                     "valori_nutritionale": {"calorii": 140.0, "cantitate": 200.0},
-                    "rating": {"valoare": 20, "evaluari": 36}
+                    "rating": {"valoare": 20, "evaluari": 1}
+                },
+                {
+                    "nume": "Espresso",
+                    "ingrediente": [
+                        {"nume": "Cafea măcinată", "cantitate": "7g"}
+                    ],
+                    "pret": 8.0,
+                    "valori_nutritionale": {"calorii": 2.0, "cantitate": 30.0},
+                    "rating": {"valoare": 90, "evaluari": 2}
+                },
+                {
+                    "nume": "Cappuccino",
+                    "ingrediente": [
+                        {"nume": "Cafea espresso", "cantitate": "1"},
+                        {"nume": "Lapte spumat", "cantitate": "100ml"}
+                    ],
+                    "pret": 12.0,
+                    "valori_nutritionale": {"calorii": 60.0, "cantitate": 200.0},
+                    "rating": {"valoare": 85, "evaluari": 3}
+                },
+                {
+                    "nume": "Latte Macchiato",
+                    "ingrediente": [
+                        {"nume": "Cafea espresso", "cantitate": "1"},
+                        {"nume": "Lapte", "cantitate": "150ml"},
+                        {"nume": "Sirop de vanilie", "cantitate": "după gust"}
+                    ],
+                    "pret": 14.0,
+                    "valori_nutritionale": {"calorii": 120.0, "cantitate": 250.0},
+                    "rating": {"valoare": 80, "evaluari": 4}
+                },
+                {
+                    "nume": "Tiramisu",
+                    "ingrediente": [
+                        {"nume": "Mascarpone", "cantitate": "250g"},
+                        {"nume": "Cafea", "cantitate": "100ml"},
+                        {"nume": "Piscoturi", "cantitate": "150g"},
+                        {"nume": "Cacao", "cantitate": "50g"}
+                    ],
+                    "pret": 30.0,
+                    "descriere": "Desert italian cremos și delicios, cu aromă de cafea și cacao.",
+                    "timp_preparare": 45,
+                    "valori_nutritionale": {"calorii": 350.0, "cantitate": 200.0},
+                    "rating": {"valoare": 90, "evaluari": 5}
+                },
+                {
+                    "nume": "Cheesecake cu fructe de pădure",
+                    "ingrediente": [
+                        {"nume": "Brânză de vaci", "cantitate": "300g"},
+                        {"nume": "Fructe de pădure", "cantitate": "200g"},
+                        {"nume": "Zahăr", "cantitate": "100g"},
+                        {"nume": "Fulgi de ovăz", "cantitate": "100g"}
+                    ],
+                    "pret": 28.0,
+                    "descriere": "Cheesecake cremos cu topping de fructe de pădure și crustă de fulgi de ovăz.",
+                    "timp_preparare": 60,
+                    "valori_nutritionale": {"calorii": 320.0, "cantitate": 180.0},
+                    "rating": {"valoare": 85, "evaluari": 1}
+                },
+                {
+                    "nume": "Panna Cotta",
+                    "ingrediente": [
+                        {"nume": "Gelatină", "cantitate": "10g"},
+                        {"nume": "Smântână lichidă", "cantitate": "500ml"},
+                        {"nume": "Zahăr", "cantitate": "100g"},
+                        {"nume": "Vanilie", "cantitate": "1 băț"}
+                    ],
+                    "pret": 25.0,
+                    "descriere": "Desert italian cremos și delicat, aromat cu vanilie și acoperit cu sos de fructe.",
+                    "timp_preparare": 240,
+                    "valori_nutritionale": {"calorii": 300.0, "cantitate": 150.0},
+                    "rating": {"valoare": 88, "evaluari": 2}
                 }
     ]
 }

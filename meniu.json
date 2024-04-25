@@ -2,7 +2,7 @@
     "sortimente": [
         {
             "nume": "Mic dejun",
-            "retele": [
+            "retete": [
                 {
                     "nume": "Omletă",
                     "pret": 12.0,
@@ -25,7 +25,7 @@
         },
         {
             "nume": "Aperitive",
-            "retele": [
+            "retete": [
                 {
                     "nume": "Bruschete",
                     "pret": 18.0,
@@ -66,7 +66,7 @@
         },
         {
             "nume": "Ciorbe",
-            "retele": [
+            "retete": [
                 {
                     "nume": "Ciorbă de burtă",
                     "pret": 20.0,
@@ -95,7 +95,7 @@
         },
         {
             "nume": "Salate",
-            "retele": [
+            "retete": [
                 {
                     "nume": "Salată Caesar",
                     "pret": 22.0,
@@ -112,7 +112,7 @@
         },
         {
             "nume": "Fel principal",
-            "retele": [
+            "retete": [
                 {
                     "nume": "Pui la grătar",
                     "pret": 25.0,
@@ -159,7 +159,7 @@
         },
         {
             "nume": "Garnituri",
-            "retele": [
+            "retete": [
                 {
                     "nume": "Cartofi prăjiți",
                     "pret": 10.0,
@@ -188,7 +188,7 @@
         },
         {
             "nume": "Răcoritoare",
-            "retele": [
+            "retete": [
                 {
                     "nume": "Limonadă",
                     "pret": 12.0,
@@ -217,7 +217,7 @@
         },
         {
             "nume": "Băuturi",
-            "retele": [
+            "retete": [
                 {
                     "nume": "Cocktail Mojito",
                     "pret": 15.0,
@@ -253,6 +253,53 @@
                     "pret": 18.0,
                     "descriere": "Cocktail clasic, cu gin și vermut, servit cu o măslină.",
                     "timp_preparare": 5
+                }
+            ]
+        },
+        {
+            "nume": "Cafele",
+            "retete": [
+                {
+                    "nume": "Espresso",
+                    "pret": 8.0,
+                    "descriere": "Cafea concentrată, preparată prin trecerea apei fierbinți printr-o cantitate mică de cafea măcinată.",
+                    "timp_preparare": 5
+                },
+                {
+                    "nume": "Cappuccino",
+                    "pret": 10.0,
+                    "descriere": "Cafea espresso combinată cu lapte aburit și spumă de lapte.",
+                    "timp_preparare": 7
+                },
+                {
+                    "nume": "Latte Macchiato",
+                    "pret": 12.0,
+                    "descriere": "Cafea espresso combinată cu lapte aburit și puțină spumă de lapte.",
+                    "timp_preparare": 7
+                }
+
+            ]
+        },
+        {
+            "nume": "Desert",
+            "retete": [
+                {
+                    "nume": "Tiramisu",
+                    "pret": 15.0,
+                    "descriere": "Desert italian clasic, cu straturi de biscuiți înmuiați în cafea, cremă de mascarpone și cacao.",
+                    "timp_preparare": 30
+                },
+                {
+                    "nume": "Cheesecake cu fructe de pădure",
+                    "pret": 18.0,
+                    "descriere": "Cheesecake cremos cu topping de fructe de pădure și sos de fructe roșii.",
+                    "timp_preparare": 40
+                },
+                {
+                    "nume": "Panna Cotta",
+                    "pret": 14.0,
+                    "descriere": "Desert italian din budincă de smântână, servită cu sos de fructe de pădure.",
+                    "timp_preparare": 25
                 }
             ]
         }
