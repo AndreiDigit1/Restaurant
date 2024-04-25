@@ -52,10 +52,38 @@
         .item-price {
             margin-left: 20px;
         }
+        .add-item-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .add-item-button:hover {
+            background-color: #45a049;
+        }
+
+        #popup {
+        display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
     </style>
 </head>
 <body>
     <div class="menu-container">
+            <button class="add-item-button" onclick="showItemsPopup()">Add Item</button>
             {% for category, items in menu_data.items() %}
                 <div class="category">
                     <div class="category-title">{{ category | capitalize }}</div>
@@ -68,6 +96,73 @@
                 </div>
             {% endfor %}
     </div>
+
+    <div id="popup" style="display: none;">
+    <h3>Add Item</h3>
+    <form id="itemForm">
+        <label for="item_type">Type:</label><br>
+        <input type="text" id="item_type" name="item_type"><br><br>
+        <label for="item_name">Name:</label><br>
+        <input type="text" id="item_name" name="item_name"><br><br>
+        <label for="ingredients_name">Ingredients:</label><br>
+        <input type="text" id="ingredients_name" name="ingredients_name"><br><br>
+        <label for="quantities">Quantities:</label><br>
+        <input type="text" id="quantities" name="quantities"><br><br>
+        <input type="button" value="Submit" onclick="submitItems()">
+        <button onclick="hidePopup()">Close</button>
+    </form>
+</div>
+
+<script>
+    function showItemsPopup() {
+        document.getElementById('item_type').value = '';
+        document.getElementById('item_name').value = '';
+        document.getElementById('ingredients_name').value = '';
+        document.getElementById('quantities').value = '';
+        document.getElementById('popup').style.display = 'block';
+    }
+
+    function submitItems() {
+        const type = document.getElementById('item_type').value;
+        const name = document.getElementById('item_name').value;
+        const ingredients = document.getElementById('ingredients_name').value.split(',').map(item => item.trim());
+        const quantities = document.getElementById('quantities').value.split(',').map(item => item.trim());
+
+        if (type && name && ingredients.length > 0 && quantities.length > 0 && ingredients.length === quantities.length) {
+            const recipe = {
+                "ingredients": ingredients,
+                "quantities": quantities
+            };
+
+            const itemData = {
+                "type": type,
+                "name": name,
+                "recipe": recipe
+            };
+
+            fetch('/menu_show/add_item', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(itemData)
+            })
+            .then(response => {
+                console.log('Item added successfully!');
+                document.getElementById('popup').style.display = 'none';
+            })
+            .catch(error => {
+                console.error('Error adding item:', error);
+            });
+        } else {
+            console.error('Please fill in all fields with valid data.');
+        }
+    }
+
+    function hidePopup() {
+        document.getElementById('popup').style.display = 'none';
+    }
+</script>
+
 </body>
 </html>
-

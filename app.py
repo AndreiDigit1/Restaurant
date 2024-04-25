@@ -62,6 +62,90 @@ def users():
 
     return jsonify(all_clients)
 
+@app.route("/menu_show/add_item", methods=["POST"])
+def add_item():
+    # Primește datele JSON din corpul cererii
+    item_data = request.json
+
+    # Verifică dacă sunt furnizate toate câmpurile necesare
+    if "type" not in item_data or "name" not in item_data or "recipe" not in item_data:
+        return jsonify({"error": "Incomplete data"}), 400
+
+    # Extrage informațiile despre element
+    item_type = item_data["type"]
+    item_name = item_data["name"]
+    item_recipe = item_data["recipe"]
+
+    # Verifică dacă lista de ingrediente și cantități are aceeași lungime
+    ingredients = item_recipe.get("ingredients", [])
+    quantities = item_recipe.get("quantities", [])
+
+    if len(ingredients) != len(quantities):
+        return jsonify({"error": "Invalid recipe data"}), 400
+
+    # Creează o listă de dicționare pentru rețetă
+    recipe_list = []
+    for ingredient, quantity in zip(ingredients, quantities):
+        recipe_list.append({"ingredient": ingredient, "quantity": quantity})
+
+    # Creează un dicționar pentru rețetă conform specificațiilor
+    recipe = {
+        "recipe": recipe_list
+    }
+
+    # Încarcă datele actuale din fișierul JSON, dacă există
+    try:
+        with open("menu.json", "r") as file:
+            data = json.load(file)
+    except (FileNotFoundError, json.decoder.JSONDecodeError):
+        data = []
+
+    # Adaugă noul element în lista de elemente
+    data.append({
+        "type": item_type,
+        "name": item_name,
+        **recipe  # Adaugă rețeta la elementul nou
+    })
+
+    # Salvează lista actualizată de elemente înapoi în fișierul JSON
+    with open("menu.json", "w") as file:
+        json.dump(data, file, indent=2)
+
+    # Răspunde cu un mesaj de succes
+    return jsonify({"message": "Item added successfully"}), 201
+
+
+
+
+@app.route("/add_ingredients", methods=["POST"])
+def ingredients():
+    # Primește datele JSON din corpul cererii
+    ingredient_data = request.json
+
+    # Verifică dacă sunt furnizate ambele câmpuri necesare
+    if "ingredient_name" not in ingredient_data or "quantity" not in ingredient_data:
+        return jsonify({"error": "Ingredient name and quantity are required"}), 400
+
+    # Extrage informațiile despre ingredient
+    ingredient_name = ingredient_data["ingredient_name"]
+    quantity = ingredient_data["quantity"]
+
+    # Încarcă datele actuale din fișierul JSON, dacă există
+    try:
+        with open("ingredients.json", "r") as file:
+            ingredients = json.load(file)
+    except FileNotFoundError:
+        ingredients = []
+
+    # Adaugă ingredientul nou la lista de ingrediente
+    ingredients.append({"ingredient_name": ingredient_name, "quantity": quantity})
+
+    # Salvează lista actualizată de ingrediente înapoi în fișierul JSON
+    with open("ingredients.json", "w") as file:
+        json.dump(ingredients, file, indent=2)
+
+    # Răspunde cu un mesaj de succes
+    return jsonify({"message": "Ingredient added successfully"}), 201
 
 @app.route("/order", methods=["POST"])
 def order():
@@ -311,6 +395,11 @@ class Restaurant:
         self.nr_of_tables = nr_of_tables
         self.nr_of_seats = nr_of_seats
 
+
+class Ingredients:
+    def __init__(self, ingredient_name, quantity):
+        self.ingredient_name = ingredient_name
+        self.quantity = quantity
 
 if __name__ == "__main__":
     app.run(debug=True)
