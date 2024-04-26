@@ -1,4 +1,6 @@
 import json
+import random
+import re
 
 import requests
 from flask import Flask, jsonify, render_template, request, redirect, url_for
@@ -38,17 +40,48 @@ def ratings():
 
     return render_template('ratings.html', menu=menu_data)
 
+@app.route("/menu_show")
+def show_menu():
+    response_menu = requests.get('http://127.0.0.1:5000/menu_route')
+    menu_data = response_menu.json()
+
+    return render_template('menu.html', menu_data=menu_data)
 
 @app.route("/createReservation", methods=["POST", "GET"])
 def addReservation():
     if request.method == "POST":
-        response_tables = requests.get("http://127.0.0.1:5000/tables")
-        data_tables = response_tables.json()
+        current_date = datetime.now().strftime("%Y-%m-%d")
         number_clients = request.form.get('number_clients')
+        reservation_time = request.form.get('reservation_time')
+        if reservation_time < current_date:
+            return "The date must be greater than the current date!"
+        if int(number_clients) > 5:
+            return "Maxim five clients for a reservation!"
         print(number_clients)
+        print(reservation_time)
         if number_clients is not None:
             number_clients = int(number_clients)
-        return render_template("reservation.html", number_clients=number_clients, tables_data=data_tables)
+        with open("tables_data_multiple_days.json", "r") as file:
+            tables_data_multiple_days = json.load(file)
+
+        data_tables = None
+        if reservation_time in tables_data_multiple_days:
+            data_tables = tables_data_multiple_days[reservation_time]
+        else:
+            default_data = [
+                {"table": 10, "state": True, "number_seats": 5, "number_seats_available": 5},
+                {"table": 11, "state": True, "number_seats": 5, "number_seats_available": random.randint(1,5)},
+                {"table": 12, "state": True, "number_seats": 5, "number_seats_available": random.randint(1,5)},
+                {"table": 13, "state": True, "number_seats": 5, "number_seats_available": 5},
+                {"table": 14, "state": True, "number_seats": 5, "number_seats_available": 5},
+            ]
+            tables_data_multiple_days[reservation_time] = default_data
+            data_tables = default_data
+
+            with open("tables_data_multiple_days.json", "w") as file:
+                json.dump(tables_data_multiple_days, file, indent=4)
+
+        return render_template("reservation.html", number_clients=number_clients,reservation_time=reservation_time, tables_data=data_tables)
     elif request.method == "GET":
         return render_template("reservation.html")
 
@@ -102,37 +135,36 @@ def order():
             valid_items_drinks = []
             for product in items:
                 found = False
-                for category_data in menu_data:
-                    for category, items_data in category_data.items():
-                        for item in items_data:
-                            if item['name'].lower() == product.lower():
-                                found = True
-                                if category == 'dishes' and item['quantity(g)'] > 0:
-                                    valid_items_dishes.append({
+                for category, items_data in menu_data.items():
+                    for item in items_data:
+                        if item['name'].lower() == product.lower():
+                            found = True
+                            if category == 'dishes' and item['quantity(g)'] > 0:
+                                valid_items_dishes.append({
+                                    'name': product,
+                                    'rating': float(ratings) if ratings else None
+                                })
+                            elif category == 'drinks' and item['quantity(ml)'] > 0:
+                                if not item['isAlcohol']:
+                                    valid_items_drinks.append({
                                         'name': product,
                                         'rating': float(ratings) if ratings else None
                                     })
-                                elif category == 'drinks' and item['quantity(ml)'] > 0:
-                                    if not item['isAlcohol']:
-                                        valid_items_drinks.append({
-                                            'name': product,
-                                            'rating': float(ratings) if ratings else None
-                                        })
-                                    elif item['isAlcohol'] and int(client_age) >= int(LIMIT_AGE):
-                                        valid_items_drinks.append({
-                                            'name': product,
-                                            'rating': float(ratings) if ratings else None
-                                        })
-                                break
-                if not found:
-                    errors.append(f"Invalid order: {product}")
+                                elif item['isAlcohol'] and int(client_age) >= int(LIMIT_AGE):
+                                    valid_items_drinks.append({
+                                        'name': product,
+                                        'rating': float(ratings) if ratings else None
+                                    })
+                            break
+            if not found:
+                errors.append(f"Invalid order: {product}")
 
-            valid_items = {'dishes': valid_items_dishes, 'drinks': valid_items_drinks}
-            orders_list.append({'client_id': client_id, 'order': valid_items, 'reservation_id': reservation_id})
+    valid_items = {'dishes': valid_items_dishes, 'drinks': valid_items_drinks}
+    orders_list.append({'client_id': client_id, 'order': valid_items, 'reservation_id': reservation_id})
 
-        if errors:
-            error_message = ', '.join(errors)
-            return render_template('order_error.html', error_message=error_message), 400
+    if errors:
+        error_message = ', '.join(errors)
+        return render_template('order_error.html', error_message=error_message), 400
 
     list_order_client = []
 
@@ -154,7 +186,6 @@ def order():
                             client["phone"],
                             order_items,
                         )
-                        print(order_client)
                         list_order_client.append(order_client)
 
     dict_list_order_client = []
@@ -199,65 +230,56 @@ def reservations():
 
 @app.route("/menu_route")
 def menu_route():
-    menu_route_data = [
-        {
-            "dishes": [
-                {
-                    "name": "Pui",
-                    "price": 10,
-                    "quantity(g)": 100,
-                    "nutritional_values(kcal)": 200,
-                    'ratings': 4.5,
-                },
-                {
-                    "name": "Orez",
-                    "price": 16,
-                    "quantity(g)": 200,
-                    "nutritional_values(kcal)": 400,
-                    'ratings': 3.8,
-                },
-            ]
-        },
-        {
-            "drinks": [
-                {
-                    "name": "Cola",
-                    "price": 20,
-                    "quantity(ml)": 300,
-                    "nutritional_values(kcal)": 80,
-                    "isAlcohol": False,
-                    'ratings': 4.2,
-                },
-                {
-                    "name": "Vin",
-                    "price": 30,
-                    "quantity(ml)": 150,
-                    "nutritional_values(kcal)": 100,
-                    "isAlcohol": True,
-                    'ratings': 4.8,
-                },
-            ]
-        },
-    ]
+    menu_route_data = {
+        "dishes": [
+            {
+                "name": "Pui",
+                "price": 10,
+                "quantity(g)": 100,
+                "nutritional_values(kcal)": 200,
+                'ratings': 4.5,
+            },
+            {
+                "name": "Orez",
+                "price": 16,
+                "quantity(g)": 200,
+                "nutritional_values(kcal)": 400,
+                'ratings': 3.8,
+            },
+        ],
+        "drinks": [
+            {
+                "name": "Cola",
+                "price": 20,
+                "quantity(ml)": 300,
+                "nutritional_values(kcal)": 80,
+                "isAlcohol": False,
+                'ratings': 4.2,
+            },
+            {
+                "name": "Vin",
+                "price": 30,
+                "quantity(ml)": 150,
+                "nutritional_values(kcal)": 100,
+                "isAlcohol": True,
+                'ratings': 4.8,
+            },
+        ]
+    }
+
     return jsonify(menu_route_data)
 
 
 @app.route("/tables")
 def tables():
-    tables_data = [
-        {"table": 10, "state": True, "number_seats": 5, "number_seats_available": 2},
-        {"table": 11, "state": True, "number_seats": 5, "number_seats_available": 3},
-        {"table": 12, "state": False, "number_seats": 5, "number_seats_available": 5},
-        {"table": 13, "state": True, "number_seats": 5, "number_seats_available": 1},
-        {"table": 14, "state": True, "number_seats": 5, "number_seats_available": 4},
-    ]
+    with open("tables_data.json", "r") as file:
+        tables_data = json.load(file)
     return jsonify(tables_data)
 
-
 class Client:
-    last_id = 0  # Class variable to store the last assigned ID
+    last_id = 0
     def __init__(self, name, surname, age, email, phone):
-        self.id = Client.generate_id()  # Assign the new ID
+        self.id = Client.generate_id()
         self.name = name
         self.surname = surname
         self.age = age
@@ -367,14 +389,67 @@ reservation_details = []
 @app.route("/add_reservation", methods=["POST"])
 def add_reservation():
     number_clients = request.form['number_clients']
-    # number_clients = int(request.form.get("number_clients"))
+    reservation_time = request.form['reservation_time']
     id = request.form.get("number_table")
     number_table = request.form.get("number_table")
-    reservation_time = request.form.get("reservation_time")
+    if(int(number_table) < 10 or int(number_table) > 14):
+        return "The number table is invalid!"
+
+    with open("tables_data_multiple_days.json", "r") as file:
+        tables_data_multiple_days = json.load(file)
+
+    print(reservation_time)
+
+    if reservation_time in tables_data_multiple_days:
+        tables_data = tables_data_multiple_days[reservation_time]
+
+        for table in tables_data:
+            if table["table"] == int(number_table) and table["state"] == False:
+                return (f"The table {int(number_table)} is full!")
+            if table["table"] == int(number_table) and table["state"] == True:
+                if int(table["number_seats_available"]) != int(table["number_seats"]):
+                    number_taken_seats = int(table["number_seats"]) - int(table["number_seats_available"])
+                    return (f"The table {int(number_table)} is already reserved for {int(number_taken_seats)} people!")
+
+
+    if reservation_time in tables_data_multiple_days:
+        tables_data = tables_data_multiple_days[reservation_time]
+
+        for table in tables_data:
+            if table["table"] == int(number_table) and table["state"] == True:
+                if int(table["number_seats_available"]) >= int(number_clients):
+                    table["number_seats_available"] = int(table["number_seats_available"]) - int(number_clients)
+                    if int(table["number_seats_available"]) == 0:
+                        table["state"] = False
+                    break
+                else:
+                    return jsonify({"error": "Not enough available seats for the chosen table."})
+
+
+        with open("tables_data_multiple_days.json", "w") as file:
+            json.dump(tables_data_multiple_days, file, indent=4)
+
+
     print(request.form)
     clients = []
 
     for i in range(int(number_clients)):
+        name = request.form.get(f"name{i}")
+        surname = request.form.get(f"surname{i}")
+        age = request.form.get(f"age{i}")
+        phone = request.form.get(f"phone{i}")
+
+
+        if not validate_name(name):
+            return "The name must to contains only letters!"
+        if not validate_name(surname):
+            return "The surname must to contains only letters!"
+
+        if not validate_numbers(age) or int(age) < 15 or int(age) > 85:
+            return "The age must to contains only numbers or the age must be in the interval [15-85]!"
+        if not validate_numbers(phone):
+            return "Phone number must to contains only numbers!"
+
         client = {
             "id": int(request.form.get(f"id{i}")),
             "name": request.form.get(f"name{i}"),
@@ -401,6 +476,13 @@ def add_reservation():
     return jsonify({"reservation": reservation})
 
 
+def validate_name(name):
+    regex = "^[a-zA-Z ]+$"
+    return bool(re.match(regex, name))
+
+def validate_numbers(age):
+    regex = "^[0-9]+$"
+    return bool(re.match(regex, age))
 
 @app.route("/show_reservations", methods=["GET"])
 def show_reservations():
@@ -409,7 +491,6 @@ def show_reservations():
 
 @app.route('/check_status/<int:client_id>')
 def check_status(client_id):
-    # Find the client by client_id
     client = next((client for client in clients if client.id == client_id), None)
     if client:
         current_time = datetime.now().time()
@@ -465,7 +546,6 @@ def client_page():
 
 @app.route("/payment_note_client", methods=["GET"])
 def payment_note_on_the_client():
-    average_rating = 4.0
 
     menu_response = requests.get("http://127.0.0.1:5000/menu_route")
     menu_route_data = menu_response.json()
@@ -478,18 +558,16 @@ def payment_note_on_the_client():
 
         for order in orders_data:
             total_plata = 0
-            for item in menu_route_data:
-                for key, value in item.items():
-                    if key == 'dishes':
+            for category, items in menu_route_data.items():
+                for item in items:
+                    if category == 'dishes':
                         for dish_order in order['products']['dishes']:
-                            for dish in value:
-                                if dish['name'].lower() == dish_order['name'].lower():
-                                    total_plata += dish['price']
-                    elif key == 'drinks':
+                            if dish_order['name'].lower() == item['name'].lower():
+                                total_plata += item['price']
+                    elif category == 'drinks':
                         for drink_order in order['products']['drinks']:
-                            for drink in value:
-                                if drink['name'].lower() == drink_order['name'].lower():
-                                    total_plata += drink['price']
+                            if drink_order['name'].lower() == item['name'].lower():
+                                total_plata += item['price']
 
             payment_details[order['id']] = total_plata
             print(f"Totalul de plata pentru clientul {order['id']} este {total_plata}")
@@ -500,9 +578,9 @@ def payment_note_on_the_client():
     except FileNotFoundError:
         return jsonify({"message": "No orders found"}), 404
 
+
 @app.route("/payment_note_order", methods=["GET"])
 def payment_note_on_the_order():
-    average_rating = 4.0
     total_plata = 0
     number_clients = 0
 
@@ -515,23 +593,21 @@ def payment_note_on_the_order():
             orders_data = json.load(file)
 
         for order in orders_data:
-            number_clients = number_clients + 1
-            for item in menu_route_data:
-                for key, value in item.items():
-                    if key == 'dishes':
+            number_clients += 1
+            for category, items in menu_route_data.items():
+                for item in items:
+                    if category == 'dishes':
                         for dish_order in order['products']['dishes']:
-                            for dish in value:
-                                if dish['name'].lower() == dish_order['name'].lower():
-                                    print("Nume mancare:", dish['name'])
-                                    print("Pret mancare:", dish['price'])
-                                    total_plata+=dish['price']
-                    elif key == 'drinks':
+                            if dish_order['name'].lower() == item['name'].lower():
+                                print("Nume mancare:", item['name'])
+                                print("Pret mancare:", item['price'])
+                                total_plata += item['price']
+                    elif category == 'drinks':
                         for drink_order in order['products']['drinks']:
-                            for drink in value:
-                                if drink['name'].lower() == drink_order['name'].lower():
-                                    print("Nume bautura:", drink['name'])
-                                    print("Pret bautura:", drink['price'])
-                                    total_plata += drink['price']
+                            if drink_order['name'].lower() == item['name'].lower():
+                                print("Nume bautura:", item['name'])
+                                print("Pret bautura:", item['price'])
+                                total_plata += item['price']
 
         payment_details.append({"clients_number": number_clients, "total_payment": total_plata})
         total_message = f"Totalul de plata pentru cei {number_clients} clienti este {total_plata}"
@@ -541,6 +617,7 @@ def payment_note_on_the_order():
 
     except FileNotFoundError:
         return jsonify({"message": "No orders found"}), 404
+
 
 if __name__ == "__main__":
     app.run(debug=True)

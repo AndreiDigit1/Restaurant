@@ -1,11 +1,11 @@
 [
   {
     "id": 1,
-    "name": "Andreea",
-    "surname": "Ana",
-    "age": 23,
-    "email": "andreea@gmail.com",
-    "phone": "07658343553",
+    "name": "Mihai",
+    "surname": "Cautis",
+    "age": 22,
+    "email": "mihai@gmail.com",
+    "phone": "0755621890",
     "products": {
       "dishes": [
         {
@@ -14,23 +14,6 @@
         }
       ],
       "drinks": []
-    }
-  },
-  {
-    "id": 2,
-    "name": "Robert",
-    "surname": "Mihai",
-    "age": 25,
-    "email": "mihai@gmail.com",
-    "phone": "0764876376",
-    "products": {
-      "dishes": [],
-      "drinks": [
-        {
-          "name": "vin",
-          "rating": 3.0
-        }
-      ]
     }
   }
 ]

@@ -95,6 +95,7 @@
         <p>Number of Clients: {{ number_clients }}</p>
         <form action="/add_reservation" method="post">
             <input type="hidden" id="number_clients" name="number_clients" value="{{ number_clients }}">
+            <input type="hidden" id="reservation_time" name="reservation_time" value="{{ reservation_time }}">
             <h2>Tables</h2>
             <ul class="tables-container">
                 {% for table in tables_data %}
@@ -115,8 +116,7 @@
             {% for i in range(number_clients | default(2)) %}
             <br>
             <div id="form-container">
-                <label for="id{{ i }}">ID generated:</label>
-                <input type="text" id="id{{ i }}" name="id{{ i }}" placeholder="Id" value="{{ i + 100 }}">
+                <input type="hidden" id="id{{ i }}" name="id{{ i }}" placeholder="Id" value="{{ i + 100 }}">
                 <label for="name{{ i }}">Name:</label>
                 <input type="text" id="name{{ i }}" name="name{{ i }}" placeholder="First Name">
                 <label for="surname{{ i }}">Surname:</label>
@@ -129,8 +129,6 @@
                 <input type="email" id="email{{ i }}" name="email{{ i }}" placeholder="Email">
             </div>
             {% endfor %}
-            <p>When would you like to make the reservation?</p>
-            <input type="date" id="reservation_time" name="reservation_time">
             <br><br>
             <input type="submit" value="Done &#x1F600">
         </form>

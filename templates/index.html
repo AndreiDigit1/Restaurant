@@ -50,6 +50,7 @@
             background-color: #4CAF50;
             color: white;
             padding: 10px 20px;
+            margin: 5px;
             border: none;
             cursor: pointer;
         }
@@ -105,13 +106,16 @@
     <div class="content">
         <h1>Restaurant</h1>
         <a href="/users"><button id="btn_view_clients">View clients</button></a>
-        <a href="/menu_route"><button id="btn_view_menu">View menu</button></a>
+        <a href="/menu_show"><button id="btn_view_menu">View menu</button></a>
         <form method="POST" action="/createReservation">
+            <br>
             <label for="number_clients">Number Clients:</label><br>
             <input type="number" id="number_clients" name="number_clients" placeholder="Enter clients number" required><br><br>
+            <p>When would you like to make the reservation?</p>
+            <input type="date" id="reservation_time" name="reservation_time">
+            <br><br>
             <button id="btn_add_reservation">Add Reservation</button>
         </form>
-
 
         <a href="/restaurant-details"><button id="btn_restaurant_details">View restaurant info</button></a>
         <a href="/ratings"><button id="btn_view_ratings">View ratings</button></a>
@@ -122,8 +126,7 @@
         <div class="menu-container">
             <ul>
                 <!-- am transmis meniul din app.py( ruta '/' iar acum parcurgem ceea ce am primit din app.py-->
-                {% for category_data in data_menu %}
-                    {% for category, items in category_data.items() %}
+                {% for category, items in data_menu.items() %}
                         {% for item in items %}
                             {% if category == 'dishes' %}
                                 <li>Dish: {{ item["name"] }} - Price: {{ item["price"] }} RON - Quantity: {{ item["quantity(g)"] }}g - Nutritional Values: {{ item["nutritional_values(kcal)"] }}kcal</li>
@@ -131,7 +134,6 @@
                                 <li>Drink: {{ item["name"] }} - Price: {{ item["price"] }} RON - Quantity: {{ item["quantity(ml)"] }}ml - Nutritional Values: {{ item["nutritional_values(kcal)"] }}kcal - {{ "Alcohol" if item["isAlcohol"] else "Non-alcohol" }}</li>
                             {% endif %}
                         {% endfor %}
-                    {% endfor %}
                 {% endfor %}
             </ul>
         </div>

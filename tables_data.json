@@ -1,0 +1,32 @@
+[
+    {
+        "table": 10,
+        "state": true,
+        "number_seats": 5,
+        "number_seats_available": 2
+    },
+    {
+        "table": 11,
+        "state": true,
+        "number_seats": 5,
+        "number_seats_available": 3
+    },
+    {
+        "table": 12,
+        "state": false,
+        "number_seats": 5,
+        "number_seats_available": 5
+    },
+    {
+        "table": 13,
+        "state": true,
+        "number_seats": 5,
+        "number_seats_available": 1
+    },
+    {
+        "table": 14,
+        "state": true,
+        "number_seats": 5,
+        "number_seats_available": 4
+    }
+]
