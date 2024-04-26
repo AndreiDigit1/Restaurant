@@ -116,7 +116,7 @@
             <br><br>
             <button id="btn_add_reservation">Add Reservation</button>
         </form>
-
+  
         <a href="/restaurant-details"><button id="btn_restaurant_details">View restaurant info</button></a>
         <a href="/ratings"><button id="btn_view_ratings">View ratings</button></a>
         <a href="/client-page"><button id="btn_view_client_data">View Client Data</button></a>
@@ -126,7 +126,7 @@
         <div class="menu-container">
             <ul>
                 <!-- am transmis meniul din app.py( ruta '/' iar acum parcurgem ceea ce am primit din app.py-->
-                {% for category, items in data_menu.items() %}
+                    {% for category, items in data_menu.items() %}
                         {% for item in items %}
                             {% if category == 'dishes' %}
                                 <li>Dish: {{ item["name"] }} - Price: {{ item["price"] }} RON - Quantity: {{ item["quantity(g)"] }}g - Nutritional Values: {{ item["nutritional_values(kcal)"] }}kcal</li>
@@ -134,7 +134,8 @@
                                 <li>Drink: {{ item["name"] }} - Price: {{ item["price"] }} RON - Quantity: {{ item["quantity(ml)"] }}ml - Nutritional Values: {{ item["nutritional_values(kcal)"] }}kcal - {{ "Alcohol" if item["isAlcohol"] else "Non-alcohol" }}</li>
                             {% endif %}
                         {% endfor %}
-                {% endfor %}
+              
+                    {% endfor %}
             </ul>
         </div>
         <h2>Place an order</h2>

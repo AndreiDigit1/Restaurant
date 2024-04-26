@@ -11,6 +11,8 @@ opening_time = time(9, 0)
 closing_time = time(21, 0)
 
 app = Flask(__name__)
+#To preserve order of inserted keys
+app.json.sort_keys = False
 
 LIMIT_AGE = 18
 
@@ -32,6 +34,12 @@ def index():
         # trimitem meniul prin variabila data_menu si rezervarile prin reservations_list pe care le vom accesa in index.html prin % for %
         "index.html", data_menu=data_menu, reservations_list=data_reservations
     )
+@app.route("/menu_show")
+def show_menu():
+    response_menu = requests.get('http://127.0.0.1:5000/menu_route')
+    menu_data = response_menu.json()
+
+    return render_template('menu.html', menu_data=menu_data)
 
 @app.route('/ratings')
 def ratings():
@@ -118,7 +126,6 @@ def order():
 
     orders_list = []
     errors = []
-
     # accesam form-ul din index.html: <form method="post" action="/order">
     for key in request.form:
         if key.startswith("order_"):
