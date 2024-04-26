@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clients</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+    <!-- Back button -->
+    <a href="/">Back</a>
     <h1>All Clients</h1>
     <table>
         <tr>
@@ -36,6 +40,7 @@
         {% endfor %}
     </table>
 
+
     <!-- JavaScript to handle the AJAX request -->
     <script>
         $(document).ready(function() {
@@ -63,39 +68,42 @@
 
  <!-- JavaScript to handle the update button click event -->
     <script>
-        $(document).ready(function() {
-            $(".update-btn").click(function() {
-                var client_id = $(this).data("id");
-                var new_name = prompt("Enter new name:");
-                var new_surname = prompt("Enter new surname:");
-                var new_age = prompt("Enter new age:");
-                var new_email = prompt("Enter new email:");
-                var new_phone = prompt("Enter new phone:");
+    $(document).ready(function() {
+        $(".update-btn").click(function() {
+            var client_id = $(this).data("id");
 
-                var updateData = {};
-                if (new_name) updateData.name = new_name;
-                if (new_surname) updateData.surname = new_surname;
-                if (new_age) updateData.age = new_age;
-                if (new_email) updateData.email = new_email;
-                if (new_phone) updateData.phone = new_phone;
+            // Ask the user which attribute they want to change
+            var attributeToChange = prompt("Which attribute would you like to change? (name, surname, age, email, phone)");
 
-                // Send PUT request to update client
-                $.ajax({
-                    type: "PUT",
-                    url: "/api/update_client/" + client_id,
-                    contentType: "application/json",
-                    data: JSON.stringify(updateData),
-                    success: function(response) {
-                        alert(response.message);
-                        // Refresh the page after successful update
-                        window.location.reload();
-                    },
-                    error: function(xhr, status, error) {
-                        alert("Error updating client: " + error);
-                    }
-                });
+            // If the user cancels or provides an invalid attribute, do nothing
+            if (!attributeToChange || !["name", "surname", "age", "email", "phone"].includes(attributeToChange.toLowerCase())) {
+                return;
+            }
+
+            // Prompt for the new value of the selected attribute
+            var newValue = prompt("Enter new value for " + attributeToChange + ":");
+
+            // Prepare the data to be sent in the PUT request
+            var updateData = {};
+            updateData[attributeToChange] = newValue;
+
+            // Send PUT request to update client
+            $.ajax({
+                type: "PUT",
+                url: "/api/update_client/" + client_id,
+                contentType: "application/json",
+                data: JSON.stringify(updateData),
+                success: function(response) {
+                    alert(response.message);
+                    // Refresh the page after successful update
+                    window.location.reload();
+                },
+                error: function(xhr, status, error) {
+                    alert("Error updating client: " + error);
+                }
             });
         });
+    });
     </script>
 </body>
 </html>

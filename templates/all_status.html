@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Clients Status</title>
+    <!-- Link to Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Link to custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles_allstatus.css') }}">
 </head>
+    <!-- Back button -->
+    <a href="/">Back</a>
 <body>
     <h1>All Clients Status</h1>
 
@@ -24,7 +30,7 @@
 
     <!-- Search by Number of Reservations Form -->
     <form action="/search_clients" method="get">
-        <label for="search_phone">Search by Number of Reservations:</label>
+        <label for="search_phone">Search by Phone:</label>
         <input type="number" id="search_phone" name="search_phone">
         <input type="submit" value="Search by phone number">
     </form>

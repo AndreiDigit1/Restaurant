@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('background.jpg'); /* Replace 'image.jpg' with the filename of your image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Set the height of the body to 100% of the viewport height */
+    position: relative; /* Set the body's position to relative */
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Set the background color of the table */
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd; /* Add border for table cells */
+}
+
+th {
+    background-color: #f2f2f2; /* Set background color for table header cells */
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Set background color for even rows */
+}
+
+.delete-btn, .update-btn {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.update-btn {
+    background-color: #4caf50;
+    color: white;
+}
+
+
