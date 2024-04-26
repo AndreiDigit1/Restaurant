@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p>Client added successfully!</p>
+    <p>Number of remaining seats: {{ available_seats }}</p>
+    <a href="{{ url_for('index') }}"><button>Home Page</button></a>
+    <a href="{{ url_for('client_page') }}"><button>Client Page</button></a>
+</body>
+</html>

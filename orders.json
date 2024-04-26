@@ -1,36 +1,19 @@
 [
   {
-    "id": "101",
-    "firstname": "John",
-    "lastname": "Doe",
-    "age": 16,
+    "id": 1,
+    "name": "Mihai",
+    "surname": "Cautis",
+    "age": 22,
+    "email": "mihai@gmail.com",
+    "phone": "0755621890",
     "products": {
       "dishes": [
         {
           "name": "pui",
           "rating": 4.0
-        },
-        {
-          "name": "orez",
-          "rating": 4.0
         }
       ],
       "drinks": []
-    }
-  },
-  {
-    "id": "102",
-    "firstname": "Jane",
-    "lastname": "Smith",
-    "age": 28,
-    "products": {
-      "dishes": [],
-      "drinks": [
-        {
-          "name": "cola",
-          "rating": 3.0
-        }
-      ]
     }
   }
 ]
