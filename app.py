@@ -25,8 +25,13 @@ def index():
     )
 @app.route("/menu_show")
 def show_menu():
-    response_menu = requests.get('http://127.0.0.1:5000/menu_route')
-    menu_data = response_menu.json()
+    try:
+        with open("menu.json", "r") as file:
+            menu_data = json.load(file)
+    except FileNotFoundError:
+        return jsonify({"error": "Menu data not found"}), 404
+    except json.decoder.JSONDecodeError:
+        return jsonify({"error": "Invalid JSON format in menu file"}), 500
 
     return render_template('menu.html', menu_data=menu_data)
 
@@ -64,57 +69,59 @@ def users():
 
 @app.route("/menu_show/add_item", methods=["POST"])
 def add_item():
-    # Primește datele JSON din corpul cererii
     item_data = request.json
 
-    # Verifică dacă sunt furnizate toate câmpurile necesare
-    if "type" not in item_data or "name" not in item_data or "recipe" not in item_data:
+    if "name" not in item_data or "recipe" not in item_data or "price" not in item_data or "type" not in item_data:
         return jsonify({"error": "Incomplete data"}), 400
 
-    # Extrage informațiile despre element
     item_type = item_data["type"]
     item_name = item_data["name"]
+    item_isAlcohol = item_data["isAlcohol"]
+    item_price = item_data["price"]
     item_recipe = item_data["recipe"]
 
-    # Verifică dacă lista de ingrediente și cantități are aceeași lungime
     ingredients = item_recipe.get("ingredients", [])
     quantities = item_recipe.get("quantities", [])
 
     if len(ingredients) != len(quantities):
         return jsonify({"error": "Invalid recipe data"}), 400
 
-    # Creează o listă de dicționare pentru rețetă
     recipe_list = []
     for ingredient, quantity in zip(ingredients, quantities):
         recipe_list.append({"ingredient": ingredient, "quantity": quantity})
 
-    # Creează un dicționar pentru rețetă conform specificațiilor
     recipe = {
         "recipe": recipe_list
     }
 
-    # Încarcă datele actuale din fișierul JSON, dacă există
     try:
         with open("menu.json", "r") as file:
-            data = json.load(file)
+            menu_data = json.load(file)
     except (FileNotFoundError, json.decoder.JSONDecodeError):
-        data = []
+        menu_data = {"drinks": [], "dishes": []}
 
-    # Adaugă noul element în lista de elemente
-    data.append({
-        "type": item_type,
-        "name": item_name,
-        **recipe  # Adaugă rețeta la elementul nou
-    })
+    # Verificăm tipul elementului și adăugăm în lista corespunzătoare
+    if item_type == "drinks":
+        menu_data["drinks"].append({
+            "name": item_name,
+            "price": item_price,
+            "isAlcohol": item_isAlcohol,
+            **recipe
+        })
+    elif item_type == "dishes":
+        menu_data["dishes"].append({
+            "name": item_name,
+            "price": item_price,
+            "isAlcohol": item_isAlcohol,
+            **recipe
+        })
+    else:
+        return jsonify({"error": "Invalid item type"}), 400
 
-    # Salvează lista actualizată de elemente înapoi în fișierul JSON
     with open("menu.json", "w") as file:
-        json.dump(data, file, indent=2)
+        json.dump(menu_data, file, indent=2)
 
-    # Răspunde cu un mesaj de succes
     return jsonify({"message": "Item added successfully"}), 201
-
-
 
 
 @app.route("/add_ingredients", methods=["POST"])
@@ -317,8 +324,9 @@ def menu_route():
             },
         ]
     }
-    
+
     return jsonify(menu_route_data)
+
 
 
 @app.route("/tables")

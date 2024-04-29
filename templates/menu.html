@@ -17,16 +17,24 @@
         }
         .menu-container {
             background-image: url('/static/menu.jpg');
-            background-size: contain;
+            background-size: 350px 600px;
             background-repeat: no-repeat;
             background-position: center;
-            max-width: 800px;
+            max-width: 900px;
             margin: 50px auto;
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto
         }
+
+        .new-container {
+            max-height: 520px;
+            padding-right: 20px;
+
+        }
+
         h1 {
             color: #333;
             text-align: center;
@@ -43,8 +51,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
+            margin-top: 10px;
+
+        }
+        .recipe {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
             border-bottom: 1px solid #ccc;
+            margin-top: -8px;
         }
         .item-name {
             flex: 1;
@@ -83,27 +99,54 @@
 </head>
 <body>
     <div class="menu-container">
-            <button class="add-item-button" onclick="showItemsPopup()">Add Item</button>
-            {% for category, items in menu_data.items() %}
-                <div class="category">
-                    <div class="category-title">{{ category | capitalize }}</div>
-                    {% for item in items %}
-                        <div class="item">
-                            <div class="item-name">{{ item["name"] }}</div>
-                            <div class="item-price">{{ item["price"] }} RON</div>
-                        </div>
-                    {% endfor %}
+    <button class="add-item-button" onclick="showItemsPopup()">Add Item</button>
+    <div class="new-container">
+    {% for category, items in menu_data.items() %}
+        <div class="category">
+            <div class="category-title">{{ category | title }}</div>
+            {% for item in items %}
+                <div class="item">
+                    <div class="item-name">{{ item.name }}</div>
+                    {% if 'price' in item %}
+                        <div class="item-price">{{ item.price }} RON</div>
+                    {% endif %}
                 </div>
+                {% if 'recipe' in item %}
+                    <div class="recipe" style="font-size: smaller;">
+                        <p><strong>Ingredients:</strong>
+                            {% set ingredients_list = [] %}
+                            {% for recipe_item in item.recipe %}
+                                {% set _ = ingredients_list.append(recipe_item.ingredient) %}
+                            {% endfor %}
+                            {{ ', '.join(ingredients_list) }}
+                        </p>
+                    </div>
+                {% endif %}
             {% endfor %}
+        </div>
+    {% endfor %}
     </div>
+</div>
+
 
     <div id="popup" style="display: none;">
     <h3>Add Item</h3>
     <form id="itemForm">
         <label for="item_type">Type:</label><br>
-        <input type="text" id="item_type" name="item_type"><br><br>
+        <select id="item_type" name="item_type">
+            <option value="drinks">Drinks</option>
+            <option value="dishes">Dishes</option>
+        </select><br><br>
+
         <label for="item_name">Name:</label><br>
         <input type="text" id="item_name" name="item_name"><br><br>
+        <label for="item_price">Price:</label><br>
+        <input type="text" id="item_price" name="item_price"><br><br>
+        <label for="item_isAlcohol">Alcohol:</label><br>
+        <select id="item_isAlcohol" name="item_isAlcohol">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select><br><br>
         <label for="ingredients_name">Ingredients:</label><br>
         <input type="text" id="ingredients_name" name="ingredients_name"><br><br>
         <label for="quantities">Quantities:</label><br>
@@ -117,6 +160,8 @@
     function showItemsPopup() {
         document.getElementById('item_type').value = '';
         document.getElementById('item_name').value = '';
+        document.getElementById('item_price').value = '';
+        document.getElementById('item_isAlcohol').value = '';
         document.getElementById('ingredients_name').value = '';
         document.getElementById('quantities').value = '';
         document.getElementById('popup').style.display = 'block';
@@ -125,6 +170,8 @@
     function submitItems() {
         const type = document.getElementById('item_type').value;
         const name = document.getElementById('item_name').value;
+        const price = document.getElementById('item_price').value;
+        const isAlcohol = document.getElementById('item_isAlcohol').value;
         const ingredients = document.getElementById('ingredients_name').value.split(',').map(item => item.trim());
         const quantities = document.getElementById('quantities').value.split(',').map(item => item.trim());
 
@@ -137,6 +184,8 @@
             const itemData = {
                 "type": type,
                 "name": name,
+                "price": price,
+                "isAlcohol": isAlcohol,
                 "recipe": recipe
             };
 
