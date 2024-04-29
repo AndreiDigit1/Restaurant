@@ -1,0 +1,482 @@
+{
+    "2024-04-25": [
+        {
+            "table": 10,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 11,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 12,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 13,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 14,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        }
+    ],
+    "2024-04-26": [
+        {
+            "table": 10,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 2
+        },
+        {
+            "table": 11,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 3
+        },
+        {
+            "table": 12,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 4
+        },
+        {
+            "table": 13,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 1
+        },
+        {
+            "table": 14,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 4
+        }
+    ],
+    "2024-04-27": [
+        {
+            "table": 10,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 2
+        },
+        {
+            "table": 11,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 3
+        },
+        {
+            "table": 12,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 13,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 1
+        },
+        {
+            "table": 14,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 4
+        }
+    ],
+    "2024-04-30": [
+        {
+            "table": 10,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 11,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 12,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 13,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 14,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        }
+    ],
+    "2024-04-29": [
+        {
+            "table": 10,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 3
+        },
+        {
+            "table": 11,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 12,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 13,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 14,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        }
+    ],
+    "2024-04-16": [
+        {
+            "table": 10,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 11,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 12,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 13,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 14,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        }
+    ],
+    "2024-04-24": [
+        {
+            "table": 10,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 11,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 12,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 13,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 14,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        }
+    ],
+    "null": [
+        {
+            "table": 10,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 11,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 12,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 13,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 14,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        }
+    ],
+    "2024-05-08": [
+        {
+            "table": 10,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 4
+        },
+        {
+            "table": 11,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 3
+        },
+        {
+            "table": 12,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 13,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 1
+        },
+        {
+            "table": 14,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 2
+        }
+    ],
+    "2024-06-07": [
+        {
+            "table": 10,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 0
+        },
+        {
+            "table": 11,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 2
+        },
+        {
+            "table": 12,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 4
+        },
+        {
+            "table": 13,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 3
+        },
+        {
+            "table": 14,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 1
+        }
+    ],
+    "2024-07-06": [
+        {
+            "table": 10,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 4
+        },
+        {
+            "table": 11,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 4
+        },
+        {
+            "table": 12,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 4
+        },
+        {
+            "table": 13,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 1
+        },
+        {
+            "table": 14,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 4
+        }
+    ],
+    "2024-08-10": [
+        {
+            "table": 10,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 11,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 4
+        },
+        {
+            "table": 12,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 4
+        },
+        {
+            "table": 13,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 14,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 5
+        }
+    ],
+    "2024-08-31": [
+        {
+            "table": 10,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 3
+        },
+        {
+            "table": 11,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 1
+        },
+        {
+            "table": 12,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 1
+        },
+        {
+            "table": 13,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 1
+        },
+        {
+            "table": 14,
+            "state": false,
+            "number_seats": 5,
+            "number_seats_available": 1
+        }
+    ],
+    "2024-09-28": [
+        {
+            "table": 10,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 4
+        },
+        {
+            "table": 11,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 1
+        },
+        {
+            "table": 12,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 4
+        },
+        {
+            "table": 13,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 14,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 5
+        }
+    ],
+    "2024-10-01": [
+        {
+            "table": 10,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 11,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 1
+        },
+        {
+            "table": 12,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 13,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 5
+        },
+        {
+            "table": 14,
+            "state": true,
+            "number_seats": 5,
+            "number_seats_available": 4
+        }
+    ]
+}

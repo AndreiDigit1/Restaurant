@@ -1,0 +1,18 @@
+[
+  {
+    "id": 14,
+    "table": 14,
+    "number_clients": 1,
+    "reservation_time": "2024-10-01",
+    "clients": [
+      {
+        "id": 100,
+        "name": "Mihai",
+        "surname": "Cautis",
+        "age": 22,
+        "phone": "0755621890",
+        "email": "mihai@gmail.com"
+      }
+    ]
+  }
+]
