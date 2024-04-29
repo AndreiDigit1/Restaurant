@@ -53,13 +53,6 @@ def ratings():
 
     return render_template('ratings.html', menu=menu_data)
 
-@app.route("/menu_show")
-def show_menu():
-    response_menu = requests.get('http://127.0.0.1:5000/menu_route')
-    menu_data = response_menu.json()
-
-    return render_template('menu.html', menu_data=menu_data)
-
 @app.route("/createReservation", methods=["POST", "GET"])
 def addReservation():
     if request.method == "POST":
