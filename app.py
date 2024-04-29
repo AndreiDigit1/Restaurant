@@ -36,8 +36,13 @@ def index():
     )
 @app.route("/menu_show")
 def show_menu():
-    response_menu = requests.get('http://127.0.0.1:5000/menu_route')
-    menu_data = response_menu.json()
+    try:
+        with open("menu.json", "r") as file:
+            menu_data = json.load(file)
+    except FileNotFoundError:
+        return jsonify({"error": "Menu data not found"}), 404
+    except json.decoder.JSONDecodeError:
+        return jsonify({"error": "Invalid JSON format in menu file"}), 500
 
     return render_template('menu.html', menu_data=menu_data)
 
@@ -114,6 +119,92 @@ def users():
 
     return jsonify(all_clients)
 
+@app.route("/menu_show/add_item", methods=["POST"])
+def add_item():
+    item_data = request.json
+
+    if "name" not in item_data or "recipe" not in item_data or "price" not in item_data or "type" not in item_data:
+        return jsonify({"error": "Incomplete data"}), 400
+
+    item_type = item_data["type"]
+    item_name = item_data["name"]
+    item_isAlcohol = item_data["isAlcohol"]
+    item_price = item_data["price"]
+    item_recipe = item_data["recipe"]
+
+    ingredients = item_recipe.get("ingredients", [])
+    quantities = item_recipe.get("quantities", [])
+
+    if len(ingredients) != len(quantities):
+        return jsonify({"error": "Invalid recipe data"}), 400
+
+    recipe_list = []
+    for ingredient, quantity in zip(ingredients, quantities):
+        recipe_list.append({"ingredient": ingredient, "quantity": quantity})
+
+    recipe = {
+        "recipe": recipe_list
+    }
+
+    try:
+        with open("menu.json", "r") as file:
+            menu_data = json.load(file)
+    except (FileNotFoundError, json.decoder.JSONDecodeError):
+        menu_data = {"drinks": [], "dishes": []}
+
+    # Verificăm tipul elementului și adăugăm în lista corespunzătoare
+    if item_type == "drinks":
+        menu_data["drinks"].append({
+            "name": item_name,
+            "price": item_price,
+            "isAlcohol": item_isAlcohol,
+            **recipe
+        })
+    elif item_type == "dishes":
+        menu_data["dishes"].append({
+            "name": item_name,
+            "price": item_price,
+            "isAlcohol": item_isAlcohol,
+            **recipe
+        })
+    else:
+        return jsonify({"error": "Invalid item type"}), 400
+
+    with open("menu.json", "w") as file:
+        json.dump(menu_data, file, indent=2)
+
+    return jsonify({"message": "Item added successfully"}), 201
+
+
+@app.route("/add_ingredients", methods=["POST"])
+def ingredients():
+    # Primește datele JSON din corpul cererii
+    ingredient_data = request.json
+
+    # Verifică dacă sunt furnizate ambele câmpuri necesare
+    if "ingredient_name" not in ingredient_data or "quantity" not in ingredient_data:
+        return jsonify({"error": "Ingredient name and quantity are required"}), 400
+
+    # Extrage informațiile despre ingredient
+    ingredient_name = ingredient_data["ingredient_name"]
+    quantity = ingredient_data["quantity"]
+
+    # Încarcă datele actuale din fișierul JSON, dacă există
+    try:
+        with open("ingredients.json", "r") as file:
+            ingredients = json.load(file)
+    except FileNotFoundError:
+        ingredients = []
+
+    # Adaugă ingredientul nou la lista de ingrediente
+    ingredients.append({"ingredient_name": ingredient_name, "quantity": quantity})
+
+    # Salvează lista actualizată de ingrediente înapoi în fișierul JSON
+    with open("ingredients.json", "w") as file:
+        json.dump(ingredients, file, indent=2)
+
+    # Răspunde cu un mesaj de succes
+    return jsonify({"message": "Ingredient added successfully"}), 201
 
 @app.route("/order", methods=["POST","GET"])
 def order():
@@ -277,6 +368,7 @@ def menu_route():
     return jsonify(menu_route_data)
 
 
+
 @app.route("/tables")
 def tables():
     with open("tables_data.json", "r") as file:
@@ -369,7 +461,12 @@ class Restaurant:
         self.nr_of_tables = nr_of_tables
         self.nr_of_seats = nr_of_seats
 
+class Ingredients:
+    def __init__(self, ingredient_name, quantity):
+        self.ingredient_name = ingredient_name
+        self.quantity = quantity
 
+        
 all_clients = []
 
 @app.route('/add_client', methods=["GET", "POST"])
