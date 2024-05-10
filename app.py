@@ -46,6 +46,18 @@ def show_menu():
 
     return render_template('menu.html', menu_data=menu_data)
 
+@app.route("/index_show")
+def show_index():
+    try:
+        with open("menu.json", "r") as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        return jsonify({"error": "Menu data not found"}), 404
+    except json.decoder.JSONDecodeError:
+        return jsonify({"error": "Invalid JSON format in menu file"}), 500
+
+    return render_template('index.html', data=data)
+
 @app.route('/ratings')
 def ratings():
     response_menu = requests.get('http://127.0.0.1:5000/menu_route')
@@ -111,6 +123,13 @@ def users():
             all_clients.append(client_info)
 
     return jsonify(all_clients)
+
+@app.route('/menu_names', methods=['POST'])
+def get_menu_names():
+    data = request.json
+    item_names = data.get('itemNames', [])
+
+    return jsonify(itemNames=item_names)
 
 @app.route("/menu_show/add_item", methods=["POST"])
 def add_item():
@@ -321,42 +340,51 @@ def reservations():
 
 @app.route("/menu_route")
 def menu_route():
-    menu_route_data = {
-        "dishes": [
-            {
-                "name": "Pui",
-                "price": 10,
-                "quantity(g)": 100,
-                "nutritional_values(kcal)": 200,
-                'ratings': 4.5,
-            },
-            {
-                "name": "Orez",
-                "price": 16,
-                "quantity(g)": 200,
-                "nutritional_values(kcal)": 400,
-                'ratings': 3.8,
-            },
-        ],
-        "drinks": [
-            {
-                "name": "Cola",
-                "price": 20,
-                "quantity(ml)": 300,
-                "nutritional_values(kcal)": 80,
-                "isAlcohol": False,
-                'ratings': 4.2,
-            },
-            {
-                "name": "Vin",
-                "price": 30,
-                "quantity(ml)": 150,
-                "nutritional_values(kcal)": 100,
-                "isAlcohol": True,
-                'ratings': 4.8,
-            },
-        ]
-    }
+    # menu_route_data = {
+    #     "dishes": [
+    #         {
+    #             "name": "Pui",
+    #             "price": 10,
+    #             "quantity(g)": 100,
+    #             "nutritional_values(kcal)": 200,
+    #             'ratings': 4.5,
+    #         },
+    #         {
+    #             "name": "Orez",
+    #             "price": 16,
+    #             "quantity(g)": 200,
+    #             "nutritional_values(kcal)": 400,
+    #             'ratings': 3.8,
+    #         },
+    #     ],
+    #     "drinks": [
+    #         {
+    #             "name": "Cola",
+    #             "price": 20,
+    #             "quantity(ml)": 300,
+    #             "nutritional_values(kcal)": 80,
+    #             "isAlcohol": False,
+    #             'ratings': 4.2,
+    #         },
+    #         {
+    #             "name": "Vin",
+    #             "price": 30,
+    #             "quantity(ml)": 150,
+    #             "nutritional_values(kcal)": 100,
+    #             "isAlcohol": True,
+    #             'ratings': 4.8,
+    #         },
+    #     ]
+    # }
+
+    try:
+        with open("menu.json", "r") as file:
+            menu_route_data = json.load(file)
+    except FileNotFoundError:
+        return jsonify({"error": "Menu data not found"}), 404
+    except json.decoder.JSONDecodeError:
+        return jsonify({"error": "Invalid JSON format in menu file"}), 500
+
 
     return jsonify(menu_route_data)
 

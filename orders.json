@@ -1,20 +1,24 @@
 [
   {
     "id": 1,
-    "name": "Mihai",
-    "surname": "Cautis",
-    "age": 22,
-    "email": "mihai@gmail.com",
-    "phone": "0755621890",
+    "name": "Andreea",
+    "surname": "Fertu",
+    "age": 23,
+    "email": "andreea@gmail.com",
+    "phone": "0726809253",
     "products": {
       "dishes": [
         {
           "name": "pui",
-          "rating": 4.0
-
+          "rating": null
         }
       ],
-      "drinks": []
+      "drinks": [
+        {
+          "name": "cola",
+          "rating": null
+        }
+      ]
     }
   }
 ]
