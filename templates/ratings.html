@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ratings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .rating {
+            color: #FFD700;
+        }
+        .rating-value {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Ratings</h1>
+        <ul>
+                {% for category, items in menu.items() %}
+                    {% for item in items %}
+                        <li>
+                            {% if category == 'dishes' %}
+                                Dish: {{ item["name"] }} - Rating:
+                            {% elif category == 'drinks' %}
+                                Drink: {{ item["name"] }} - Rating:
+                            {% endif %}
+                            <span class="rating">
+                                {% set full_stars = item["ratings"]|int %}
+                                {% set half_star = (item["ratings"] - full_stars) >= 0.5 %}
+                                {% set empty_stars = 5 - full_stars - (1 if half_star else 0) %}
+                                {% for _ in range(full_stars) %}
+                                    <i class="fas fa-star"></i>
+                                {% endfor %}
+                                {% if half_star %}
+                                    <i class="fas fa-star-half-alt"></i>
+                                {% endif %}
+                                {% for _ in range(empty_stars) %}
+                                    <i class="far fa-star"></i>
+                                {% endfor %}
+                                <span class="rating-value">{{ item["ratings"] }}/5</span>
+                            </span>
+                        </li>
+                    {% endfor %}
+                {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

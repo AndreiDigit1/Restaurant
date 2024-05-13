@@ -4,6 +4,8 @@ import requests
 from flask import Flask, jsonify, render_template, request
 from flask import  flash
 
+import random
+
 app = Flask(__name__)
 #To preserve order of inserted keys
 app.json.sort_keys = False
@@ -30,6 +32,8 @@ def show_menu():
     menu_data = response_menu.json()
 
     return render_template('menu.html', menu_data=menu_data)
+
+
 
 @app.route('/ratings')
 def ratings():
@@ -195,19 +199,6 @@ def reservations():
     ]
     return jsonify(reservations_data)
 
-
-@app.route('/load_recipe', methods=['GET'])
-def load_recipe():
-    try:
-
-        with open('reteta.json', 'r') as file:
-            menu_data = json.load(file)
-        return jsonify(menu_data)
-    except Exception as e:
-
-        flash('Eroare la încărcarea meniului: {}'.format(str(e)))
-        return jsonify([])
-
 @app.route("/menu_route")
 def menu_route():
     try:
@@ -216,6 +207,16 @@ def menu_route():
         return jsonify(menu_route_data)
     except Exception as e:
         flash('Eroare la încărcarea meniului: {}'.format(str(e)))
+        return jsonify([])
+
+@app.route("/daily_menu_route")
+def daily_menu_route():
+    try:
+        with open('meniu.json', 'r') as file:
+            daily_menu_route_data = json.load(file)
+        return jsonify(daily_menu_route_data)
+    except Exception as e:
+        flash('Eroare la încărcarea meniului zilei: {}'.format(str(e)))
         return jsonify([])
 
 @app.route("/tables")

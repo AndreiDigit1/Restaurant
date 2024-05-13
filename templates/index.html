@@ -81,6 +81,12 @@
             margin-bottom: 10px;
         }
 
+        .total-price {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
          .rating {
             font-size: 24px;
             cursor: pointer;
@@ -105,19 +111,69 @@
         <a href="/ratings"><button id="btn_view_ratings">View ratings</button></a>
 
         <div class="menu-container">
-            <ul>
-                <!-- am transmis meniul din app.py( ruta '/' iar acum parcurgem ceea ce am primit din app.py-->
-                    {% for category, items in data_menu.items() %}
-                        {% for item in items %}
-                            {% if category == 'dishes' %}
-                                <li>Dish: {{ item["name"] }} - Price: {{ item["price"] }} RON - Quantity: {{ item["quantity(g)"] }}g - Nutritional Values: {{ item["nutritional_values(kcal)"] }}kcal</li>
-                            {% elif category == 'drinks' %}
-                                <li>Drink: {{ item["name"] }} - Price: {{ item["price"] }} RON - Quantity: {{ item["quantity(ml)"] }}ml - Nutritional Values: {{ item["nutritional_values(kcal)"] }}kcal - {{ "Alcohol" if item["isAlcohol"] else "Non-alcohol" }}</li>
-                            {% endif %}
-                        {% endfor %}
-                    {% endfor %}
-            </ul>
-        </div>
+    <h2>Meniul Zilei</h2>
+    <div class="daily_menu_route">
+
+
+
+    </div>
+</div>
+
+    <script>
+        fetch("/daily_menu_route")
+            .then(response => response.json())
+            .then(data => {
+                const menuContainer = document.querySelector('.menu-container');
+                let totalPrice = 0;
+
+                // Selectează doar categoriile dorite: ciorbe, feluri principale și deserturi
+                const categories = data.sortimente.filter(category =>
+                    category.nume === 'Ciorbe' || category.nume === 'Fel principal' || category.nume === 'Desert'
+                );
+
+                categories.forEach(category => {
+                    const categoryDiv = document.createElement('div');
+                    categoryDiv.classList.add('category');
+
+                    const categoryTitle = document.createElement('div');
+                    categoryTitle.classList.add('category-title');
+                    categoryTitle.textContent = category.nume.toUpperCase();
+                    categoryDiv.appendChild(categoryTitle);
+
+                    // Extrage aleatoriu un element din categoria curentă
+                    const randomIndex = Math.floor(Math.random() * category.retete.length);
+                    const randomItem = category.retete[randomIndex];
+
+                    // Adaugă prețul elementului la prețul total
+                    totalPrice += randomItem.pret;
+
+                    const itemDiv = document.createElement('div');
+                    itemDiv.classList.add('item');
+
+                    const itemName = document.createElement('div');
+                    itemName.classList.add('item-name');
+                    itemName.textContent = randomItem.nume;
+                    itemDiv.appendChild(itemName);
+
+                    const itemPrice = document.createElement('div');
+                    itemPrice.classList.add('item-price');
+                    itemPrice.textContent = randomItem.pret + ' RON';
+                    itemDiv.appendChild(itemPrice);
+
+                    categoryDiv.appendChild(itemDiv);
+
+                    menuContainer.appendChild(categoryDiv);
+                });
+
+                // Afișează prețul total
+                const totalPriceElement = document.createElement('div');
+                totalPriceElement.classList.add('total-price');
+                totalPriceElement.textContent = 'Preț total: ' + totalPrice + ' RON';
+                menuContainer.appendChild(totalPriceElement);
+            })
+            .catch(error => console.error('A apărut o eroare:', error));
+    </script>
+
         <h2>Place an order</h2>
         <p>Choose the desired products using comma(,) as separator:</p>
 
@@ -177,6 +233,11 @@
         });
     });
     </script>
+
+
+
+
+
 
 </body>
 </html>
