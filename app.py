@@ -338,6 +338,18 @@ def reservations():
     return jsonify(reservations_data)
 
 
+@app.route("/ingredients")
+def show_ingredients():
+    try:
+        with open("ingredients.json", "r") as file:
+            ingredients_data = json.load(file)
+    except FileNotFoundError:
+        return jsonify({"error": "Ingredient data not found"}), 404
+    except json.decoder.JSONDecodeError:
+        return jsonify({"error": "Invalid JSON format in file"}), 500
+
+    return jsonify(ingredients_data)
+
 @app.route("/menu_route")
 def menu_route():
     # menu_route_data = {
