@@ -395,6 +395,7 @@ reservation_details = []
 
 @app.route("/add_reservation", methods=["POST"])
 def add_reservation():
+    validation_errors = []
     number_clients = request.form['number_clients']
     reservation_time = request.form['reservation_time']
     id = request.form.get("number_table")
@@ -446,16 +447,14 @@ def add_reservation():
         age = request.form.get(f"age{i}")
         phone = request.form.get(f"phone{i}")
 
-
         if not validate_name(name):
-            return "The name must to contains only letters!"
+            validation_errors.append("The name must contain only letters!")
         if not validate_name(surname):
-            return "The surname must to contains only letters!"
-
-        if not validate_numbers(age) or int(age) < 15 or int(age) > 85:
-            return "The age must to contains only numbers or the age must be in the interval [15-85]!"
+            validation_errors.append("The surname must contain only letters!")
+        if not validate_numbers(age) or not (15 <= int(age) <= 85):
+            validation_errors.append("The age must contain only numbers or be in the interval [15-85]!")
         if not validate_numbers(phone):
-            return "Phone number must to contains only numbers!"
+            validation_errors.append("Phone number must contain only numbers!")
 
         client = {
             "id": int(request.form.get(f"id{i}")),
@@ -480,7 +479,10 @@ def add_reservation():
     with open("reservations.json", "w") as file:
         json.dump(reservation_details, file, indent=2)
 
-    return jsonify({"reservation": reservation})
+    if validation_errors:
+        return render_template('validation_errors.html', errors=validation_errors)
+
+    return render_template('interface_reservation.html', reservation=reservation)
 
 
 def validate_name(name):

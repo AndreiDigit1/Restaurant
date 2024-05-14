@@ -1,15 +1,15 @@
 [
   {
     "id": 1,
-    "name": "Mihai",
-    "surname": "Cautis",
-    "age": 22,
-    "email": "mihai@gmail.com",
-    "phone": "0755621890",
+    "name": "dsads",
+    "surname": "dsada",
+    "age": 23,
+    "email": "ssddsad@gmail.com",
+    "phone": "423423432",
     "products": {
       "dishes": [
         {
-          "name": "pui",
+          "name": "orez",
           "rating": 4.0
         }
       ],
