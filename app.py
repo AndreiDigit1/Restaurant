@@ -316,7 +316,6 @@ def order():
 
     return jsonify(dict_list_order_client)
 
-
 @app.route("/restaurant-details")
 def restaurant():
     restaurant_data = {
