@@ -187,6 +187,17 @@
           "quantity": "200"
         }
       ]
+    },
+    {
+      "name": "Orange juice",
+      "price": "20",
+      "isAlcohol": "no",
+      "recipe": [
+        {
+          "ingredient": "orange juice",
+          "quantity": "200"
+        }
+      ]
     }
   ]
 }
