@@ -272,6 +272,7 @@ def order():
     valid_items = {'dishes': valid_items_dishes, 'drinks': valid_items_drinks}
     orders_list.append({'client_id': client_id, 'order': valid_items, 'reservation_id': reservation_id})
 
+
     if errors:
         error_message = ', '.join(errors)
         return render_template('order_error.html', error_message=error_message), 400
