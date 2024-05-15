@@ -1,0 +1,192 @@
+{
+  "dishes": [
+    {
+      "name": "Grilled chicken",
+      "price": "20",
+      "isAlcohol": "no",
+      "recipe": [
+        {
+          "ingredient": "chicken breast",
+          "quantity": "200"
+        },
+        {
+          "ingredient": "salt",
+          "quantity": "5"
+        },
+        {
+          "ingredient": "olive oil",
+          "quantity": "10"
+        }
+      ]
+    },
+    {
+      "name": "French fries",
+      "price": "8",
+      "isAlcohol": "no",
+      "recipe": [
+        {
+          "ingredient": "potato",
+          "quantity": "200"
+        },
+        {
+          "ingredient": "sunflower oil",
+          "quantity": "100"
+        }
+      ]
+    },
+    {
+      "name": "Fried rice",
+      "price": "25",
+      "isAlcohol": "no",
+      "recipe": [
+        {
+          "ingredient": "rice",
+          "quantity": "70"
+        },
+        {
+          "ingredient": "eggs",
+          "quantity": "2"
+        },
+        {
+          "ingredient": "sunflower oil",
+          "quantity": "5"
+        },
+        {
+          "ingredient": "salt",
+          "quantity": "2"
+        }
+      ]
+    },
+    {
+      "name": "Grilled salmon",
+      "price": "40",
+      "isAlcohol": "no",
+      "recipe": [
+        {
+          "ingredient": "salmon",
+          "quantity": "200"
+        },
+        {
+          "ingredient": "salt",
+          "quantity": "5"
+        }
+      ]
+    },
+    {
+      "name": "grilled chicken",
+      "price": "20",
+      "isAlcohol": "no",
+      "recipe": [
+        {
+          "ingredient": "chicken",
+          "quantity": "200"
+        },
+        {
+          "ingredient": "salt",
+          "quantity": "3"
+        }
+      ]
+    },
+    {
+      "name": "hg",
+      "price": "100",
+      "isAlcohol": "no",
+      "recipe": [
+        {
+          "ingredient": "f",
+          "quantity": "200"
+        }
+      ]
+    },
+    {
+      "name": "f",
+      "price": "10",
+      "isAlcohol": "no",
+      "recipe": [
+        {
+          "ingredient": "fhb",
+          "quantity": "10"
+        }
+      ]
+    },
+    {
+      "name": "sf",
+      "price": "12",
+      "isAlcohol": "no",
+      "recipe": [
+        {
+          "ingredient": "gh",
+          "quantity": "100"
+        }
+      ]
+    },
+    {
+      "name": "SV",
+      "price": "10",
+      "isAlcohol": "no",
+      "recipe": [
+        {
+          "ingredient": "xndx",
+          "quantity": "100"
+        }
+      ]
+    },
+    {
+      "name": "Cartofi prajiti",
+      "price": "10",
+      "isAlcohol": "no",
+      "recipe": [
+        {
+          "ingredient": "cartofi",
+          "quantity": "100"
+        }
+      ]
+    }
+  ],
+  "drinks": [
+    {
+      "name": "Cola",
+      "price": 20,
+      "isAlcohol": "no",
+      "recipe": [
+        {
+          "ingredient": "cola",
+          "quantity": "250"
+        }
+      ]
+    },
+    {
+      "name": "Wine",
+      "price": "40",
+      "isAlcohol": "yes",
+      "recipe": [
+        {
+          "ingredient": "wine",
+          "quantity": "300"
+        }
+      ]
+    },
+    {
+      "name": "Lemonade",
+      "price": "25",
+      "isAlcohol": "no",
+      "recipe": [
+        {
+          "ingredient": "lemonade",
+          "quantity": "500"
+        }
+      ]
+    },
+    {
+      "name": "Orange juice",
+      "price": "20",
+      "isAlcohol": "no",
+      "recipe": [
+        {
+          "ingredient": "orange juice",
+          "quantity": "200"
+        }
+      ]
+    }
+  ]
+}
