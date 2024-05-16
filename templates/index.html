@@ -44,9 +44,11 @@
         input[type="text"]::placeholder {
             color: #999;
         }
+
         input[type="submit"], #btn_view_clients, #btn_view_menu, #btn_add_reservation,
-        #btn_restaurant_details, #btn_view_ratings, #btn_view_client_data,
+        #btn_restaurant_details, #btn_view_ratings, #btn_view_client_data, #btn_add_ingredients,
         #btn_check_client_reservation, #btn_payment_note_client, #btn_payment_note_order  {
+
             background-color: #4CAF50;
             color: white;
             padding: 10px 20px;
@@ -54,10 +56,17 @@
             border: none;
             cursor: pointer;
         }
+
         input[type="submit"]:hover, #btn_view_clients:hover, #btn_view_menu:hover,
          #btn_add_reservation:hover, #btn_restaurant_details:hover,
           #btn_view_ratings:hover, #btn_view_client_data:hover,
-           #btn_check_client_reservation:hover, #btn_payment_note_client:hover, #btn_payment_note_order:hover {
+          #btn_add_ingredients:hover,
+           #btn_check_client_reservation:hover,
+            #btn_payment_note_client:hover,
+            #btn_payment_note_order:hover,
+            #btn_add_ingredients:hover {
+    background-color: #45a049;
+}
 
             background-color: #45a049;
         }
@@ -84,9 +93,7 @@
             text-align:center;
         }
 
-        .menu-item {
-            margin-bottom: 10px;
-        }
+
 
          .rating {
             font-size: 24px;
@@ -97,8 +104,53 @@
         }
         .rating i:hover,
         .rating i.active {
-            color: #f8c102; /* Color for filled stars */
+            color: #f8c102;
         }
+
+        .menu-checkboxes {
+            border: 2px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            max-width: 300px;
+            margin-left: 138px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .menu-checkbox {
+            margin-top: 13px;
+            margin-bottom: 10px;
+            {#display: flex;#}
+            {#flex-direction: column;#}
+            display: flex;
+            align-items: center;
+            flex-direction: column
+
+        }
+
+        .checkbox-input {
+            margin-right: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        #popup {
+        display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
 
     </style>
 </head>
@@ -119,10 +171,12 @@
   
         <a href="/restaurant-details"><button id="btn_restaurant_details">View restaurant info</button></a>
         <a href="/ratings"><button id="btn_view_ratings">View ratings</button></a>
+        <a href="#"><button id="btn_add_ingredients" onclick="showPopup()">Add ingredients</button></a>
         <a href="/client-page"><button id="btn_view_client_data">View Client Data</button></a>
         <a href="/check_all_status"><button id="btn_check_client_reservation">Check client reservation</button></a>
         <a href="/payment_note_client"><button id="btn_payment_note_client">View payment client</button></a>
         <a href="/payment_note_order"><button id="btn_payment_note_order">View payment order</button></a>
+
         <div class="menu-container">
             <ul>
                 <!-- am transmis meniul din app.py( ruta '/' iar acum parcurgem ceea ce am primit din app.py-->
@@ -147,11 +201,27 @@
             <h2>Number of clients {{ reservation['number_clients'] }}</h2>
             <h2>Date {{ reservation['reservation_time'] }}</h2>
                 <!--   folosim post ca sa trimitem un request, iar in app.py preluam acel request, in metoda "/order", precum scrie si in action-->
+            <ul id="selected-options"></ul>
             <form method="post" action="/order">
                 {% for client in reservation['clients'] %}
                     <label for="order_{{ reservation['id'] }}_{{ client['id'] }}">Client ID {{ client['id'] }}: {{ client['name'] }} {{ client['surname'] }}</label><br>
                     <input type="hidden" name="age_{{ reservation['id'] }}_{{ client['id'] }}" value="{{ client['age'] }}"><br>
-                    <input type="text" id="order_{{ reservation['id'] }}_{{ client['id'] }}" name="order_{{ reservation['id'] }}_{{ client['id'] }}" placeholder="Write here..."><br><br>
+                        <select id="menuDropdown" name="menu_items[]" multiple style="display: none;">#}
+                            <input type="hidden" name="age_{{ reservation['id'] }}_{{ client['id'] }}" value="{{ client['age'] }}"><br>
+                            <input type="hidden" id="order_{{ reservation['id'] }}_{{ client['id'] }}" name="order_{{ reservation['id'] }}_{{ client['id'] }}" placeholder="Write here..."><br><br>
+                            <div class="menu-checkboxes">
+                                {% for category, items in data_menu.items() %}
+                                    <div class="menu-checkbox">
+                                    {% for item in items %}
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" class="checkbox-input" id="{{ item.name }}" name="menu_items[]" value="{{ item.name }}">
+                                            <label for="{{ item.name }}">{{ item.name }}</label><br>
+                                        </div>
+                                    {% endfor %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </select>
 
                     <div class="rating">
                        <i class="far fa-star" data-value="1"></i>
@@ -163,13 +233,60 @@
                     <p class="stars">0 stars selected</p>
                     <input type="hidden" name="rating_{{ reservation['id'] }}_{{ client['id'] }}" id="rating_{{ reservation['id'] }}_{{ client['id'] }}">
                     <br>
-
                 {% endfor %}
                 <input type="submit" value="Submit Order">
             </form>
             <hr>
         {% endfor %}
+
     </div>
+    <script>
+
+const menuDropdown = document.getElementById('menuDropdown');
+const selectAllBtn = document.getElementById('select-all-btn');
+const deselectAllBtn = document.getElementById('deselect-all-btn');
+const selectedOptions = document.getElementById('selected-options');
+
+
+menuDropdown.addEventListener('change', () => {
+    updateSelectedOptions();
+});
+
+function updateSelectedOptions() {
+    selectedOptions.innerHTML = '';
+    [...menuDropdown.selectedOptions].forEach(option => {
+        const li = document.createElement('li');
+        li.textContent = option.textContent;
+        selectedOptions.appendChild(li);
+    });
+}
+</script>
+
+
+    <script>
+    fetch('menu.json')
+  .then(response => response.json())
+  .then(data => {
+    const dropdown = document.getElementById('recipeDropdown');
+
+    data.dishes.forEach(dish => {
+      const option = document.createElement('option');
+      option.text = dish.name;
+      option.value = dish.name;
+      dropdown.appendChild(option);
+    });
+
+    data.drinks.forEach(drink => {
+      const option = document.createElement('option');
+      option.text = drink.name;
+      option.value = drink.name;
+      dropdown.appendChild(option);
+    });
+  })
+  .catch(error => {
+    console.error('Error fetching menu:', error);
+  });
+</script>
 
     <script>
     document.querySelectorAll('.rating').forEach(rating => {
@@ -205,5 +322,111 @@
     }
     </script>
 
+
+<div id="popup" style="display: none;">
+    <h3>Add Ingredients</h3>
+    <form id="ingredientForm">
+        <label for="ingredient_name">Ingredient Name:</label><br>
+        <input type="text" id="ingredient_name" name="ingredient_name"><br><br>
+        <label for="quantity">Quantity:</label><br>
+        <input type="text" id="quantity" name="quantity"><br><br>
+        <input type="button" value="Submit" onclick="submitIngredients()">
+        <button onclick="hidePopup()">Close</button>
+    </form>
+</div>
+
+<script>
+    function showPopup() {
+        document.getElementById('ingredient_name').value = '';
+        document.getElementById('quantity').value = '';
+        document.getElementById('popup').style.display = 'block';
+    }
+
+    function hidePopup() {
+        document.getElementById('popup').style.display = 'none';
+    }
+
+    function submitIngredients() {
+
+        console.log(recipeNames)
+        const ingredient_name = document.getElementById('ingredient_name').value;
+        const quantity = document.getElementById('quantity').value;
+
+        if (ingredient_name && quantity) {
+            const ingredientData = {
+                "ingredient_name": ingredient_name,
+                "quantity": quantity
+            };
+
+
+            fetch('/add_ingredients', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(ingredientData)
+            })
+            .then(response => {
+
+                console.log('Ingredient added successfully!');
+                document.getElementById('popup').style.display = 'none';
+            })
+            .catch(error => {
+
+                console.error('Error adding ingredient:', error);
+            });
+        } else {
+            console.error('Please fill in all fields.');
+        }
+    }
+</script>
+
+
+{#<script>#}
+{#    var fileName = "menu.json";#}
+{#    #}
+{#var reader = new FileReader();#}
+{#    #}
+{#reader.onload = function(event) {#}
+{#  var fileContent = event.target.result; // Obține conținutul fișierului#}
+{#  var jsonData = JSON.parse(fileContent); // Parsează conținutul ca fiind un obiect JSON#}
+{##}
+{#  // Acum poți folosi variabila jsonData pentru a accesa datele din fișierul JSON și a crea meniul dropdown#}
+{#  // Aici poți aplica același cod ca în exemplul anterior pentru a crea meniul dropdown#}
+{##}
+{#  // Exemplu:#}
+{#  var dropdown = document.getElementById("menuDropdown");#}
+{##}
+{#  jsonData.dishes.forEach(function(dish) {#}
+{#    var option = document.createElement("option");#}
+{#    option.text = dish.name;#}
+{#    dropdown.add(option);#}
+{#  });#}
+{##}
+{#  jsonData.drinks.forEach(function(drink) {#}
+{#    var option = document.createElement("option");#}
+{#    option.text = drink.name;#}
+{#    dropdown.add(option);#}
+{#  });#}
+{#};#}
+{##}
+{#// Definește funcția care va fi apelată atunci când apar erori la citirea fișierului#}
+{#reader.onerror = function(event) {#}
+{#  console.error("Eroare la citirea fișierului:", event.target.error);#}
+{#};#}
+{##}
+{#// Încarcă fișierul#}
+{#reader.readAsText(fileName);#}
+{#</script>#}
+
+<script>
+    window.onload = function() {
+        const menuDropdown = document.getElementById('menuDropdown');
+        menuDropdown.selectedIndex = -1;
+    };
+</script>
+
+
 </body>
 </html>
+

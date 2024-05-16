@@ -36,10 +36,27 @@ def index():
     )
 @app.route("/menu_show")
 def show_menu():
-    response_menu = requests.get('http://127.0.0.1:5000/menu_route')
-    menu_data = response_menu.json()
+    try:
+        with open("menu.json", "r") as file:
+            menu_data = json.load(file)
+    except FileNotFoundError:
+        return jsonify({"error": "Menu data not found"}), 404
+    except json.decoder.JSONDecodeError:
+        return jsonify({"error": "Invalid JSON format in menu file"}), 500
 
     return render_template('menu.html', menu_data=menu_data)
+
+@app.route("/index_show")
+def show_index():
+    try:
+        with open("menu.json", "r") as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        return jsonify({"error": "Menu data not found"}), 404
+    except json.decoder.JSONDecodeError:
+        return jsonify({"error": "Invalid JSON format in menu file"}), 500
+
+    return render_template('index.html', data=data)
 
 @app.route('/ratings')
 def ratings():
@@ -47,13 +64,6 @@ def ratings():
     menu_data = response_menu.json()
 
     return render_template('ratings.html', menu=menu_data)
-
-@app.route("/menu_show")
-def show_menu():
-    response_menu = requests.get('http://127.0.0.1:5000/menu_route')
-    menu_data = response_menu.json()
-
-    return render_template('menu.html', menu_data=menu_data)
 
 @app.route("/createReservation", methods=["POST", "GET"])
 def addReservation():
@@ -114,19 +124,114 @@ def users():
 
     return jsonify(all_clients)
 
+@app.route('/menu_names', methods=['POST'])
+def get_menu_names():
+    data = request.json
+    item_names = data.get('itemNames', [])
 
-@app.route("/order", methods=["POST","GET"])
+    return jsonify(itemNames=item_names)
+
+@app.route("/menu_show/add_item", methods=["POST"])
+def add_item():
+    item_data = request.json
+
+    if "name" not in item_data or "recipe" not in item_data or "price" not in item_data or "type" not in item_data:
+        return jsonify({"error": "Incomplete data"}), 400
+
+    item_type = item_data["type"]
+    item_name = item_data["name"]
+    item_isAlcohol = item_data["isAlcohol"]
+    item_price = item_data["price"]
+    item_recipe = item_data["recipe"]
+
+    ingredients = item_recipe.get("ingredients", [])
+    quantities = item_recipe.get("quantities", [])
+
+    if len(ingredients) != len(quantities):
+        return jsonify({"error": "Invalid recipe data"}), 400
+
+    recipe_list = []
+    for ingredient, quantity in zip(ingredients, quantities):
+        recipe_list.append({"ingredient": ingredient, "quantity": quantity})
+
+    recipe = {
+        "recipe": recipe_list
+    }
+
+    try:
+        with open("menu.json", "r") as file:
+            menu_data = json.load(file)
+    except (FileNotFoundError, json.decoder.JSONDecodeError):
+        menu_data = {"drinks": [], "dishes": []}
+
+    # Verificăm tipul elementului și adăugăm în lista corespunzătoare
+    if item_type == "drinks":
+        menu_data["drinks"].append({
+            "name": item_name,
+            "price": item_price,
+            "isAlcohol": item_isAlcohol,
+            **recipe
+        })
+    elif item_type == "dishes":
+        menu_data["dishes"].append({
+            "name": item_name,
+            "price": item_price,
+            "isAlcohol": item_isAlcohol,
+            **recipe
+        })
+    else:
+        return jsonify({"error": "Invalid item type"}), 400
+
+    with open("menu.json", "w") as file:
+        json.dump(menu_data, file, indent=2)
+
+    return jsonify({"message": "Item added successfully"}), 201
+
+
+@app.route("/add_ingredients", methods=["POST"])
+def ingredients():
+    # Primește datele JSON din corpul cererii
+    ingredient_data = request.json
+
+    # Verifică dacă sunt furnizate ambele câmpuri necesare
+    if "ingredient_name" not in ingredient_data or "quantity" not in ingredient_data:
+        return jsonify({"error": "Ingredient name and quantity are required"}), 400
+
+    # Extrage informațiile despre ingredient
+    ingredient_name = ingredient_data["ingredient_name"]
+    quantity = ingredient_data["quantity"]
+
+    # Încarcă datele actuale din fișierul JSON, dacă există
+    try:
+        with open("ingredients.json", "r") as file:
+            ingredients = json.load(file)
+    except FileNotFoundError:
+        ingredients = []
+
+    # Adaugă ingredientul nou la lista de ingrediente
+    ingredients.append({"ingredient_name": ingredient_name, "quantity": quantity})
+
+    # Salvează lista actualizată de ingrediente înapoi în fișierul JSON
+    with open("ingredients.json", "w") as file:
+        json.dump(ingredients, file, indent=2)
+
+    # Răspunde cu un mesaj de succes
+    return jsonify({"message": "Ingredient added successfully"}), 201
+
+
+
+@app.route("/order", methods=["POST", "GET"])
 def order():
     global LIMIT_AGE
     reservations_response = requests.get("http://127.0.0.1:5000/reservations")
     reservations = reservations_response.json()
 
-    menu_response = requests.get("http://127.0.0.1:5000/menu_route")
-    menu_data = menu_response.json()
+    with open("menu.json", "r") as menu_file:
+        menu_data = json.load(menu_file)
 
-    orders_list = []
+    orders_list = []  # Inițializăm lista în afara buclei
+
     errors = []
-    # accesam form-ul din index.html: <form method="post" action="/order">
     for key in request.form:
         if key.startswith("order_"):
             parts = key.split("_")
@@ -134,13 +239,15 @@ def order():
             client_id = parts[2]
             order = request.form[key]
             client_age = request.form.get("age_" + reservation_id + "_" + client_id)
-            items = [item.strip() for item in order.split(",")]
+
+            if request.method == 'POST':
+                selected_items = request.form.getlist('menu_items[]')
 
             ratings = request.form.get('rating_' + reservation_id + '_' + client_id)
 
             valid_items_dishes = []
             valid_items_drinks = []
-            for product in items:
+            for product in selected_items:
                 found = False
                 for category, items_data in menu_data.items():
                     for item in items_data:
@@ -163,11 +270,11 @@ def order():
                                         'rating': float(ratings) if ratings else None
                                     })
                             break
-            if not found:
-                errors.append(f"Invalid order: {product}")
+                if not found:
+                    errors.append(f"Invalid order: {product}")
 
-    valid_items = {'dishes': valid_items_dishes, 'drinks': valid_items_drinks}
-    orders_list.append({'client_id': client_id, 'order': valid_items, 'reservation_id': reservation_id})
+            valid_items = {'dishes': valid_items_dishes, 'drinks': valid_items_drinks}
+            orders_list.append({'client_id': client_id, 'order': valid_items, 'reservation_id': reservation_id})
 
     if errors:
         error_message = ', '.join(errors)
@@ -214,6 +321,7 @@ def order():
     return jsonify(dict_list_order_client)
 
 
+
 @app.route("/restaurant-details")
 def restaurant():
     restaurant_data = {
@@ -235,46 +343,68 @@ def reservations():
     return jsonify(reservations_data)
 
 
+@app.route("/ingredients")
+def show_ingredients():
+    try:
+        with open("ingredients.json", "r") as file:
+            ingredients_data = json.load(file)
+    except FileNotFoundError:
+        return jsonify({"error": "Ingredient data not found"}), 404
+    except json.decoder.JSONDecodeError:
+        return jsonify({"error": "Invalid JSON format in file"}), 500
+
+    return jsonify(ingredients_data)
+
 @app.route("/menu_route")
 def menu_route():
-    menu_route_data = {
-        "dishes": [
-            {
-                "name": "Pui",
-                "price": 10,
-                "quantity(g)": 100,
-                "nutritional_values(kcal)": 200,
-                'ratings': 4.5,
-            },
-            {
-                "name": "Orez",
-                "price": 16,
-                "quantity(g)": 200,
-                "nutritional_values(kcal)": 400,
-                'ratings': 3.8,
-            },
-        ],
-        "drinks": [
-            {
-                "name": "Cola",
-                "price": 20,
-                "quantity(ml)": 300,
-                "nutritional_values(kcal)": 80,
-                "isAlcohol": False,
-                'ratings': 4.2,
-            },
-            {
-                "name": "Vin",
-                "price": 30,
-                "quantity(ml)": 150,
-                "nutritional_values(kcal)": 100,
-                "isAlcohol": True,
-                'ratings': 4.8,
-            },
-        ]
-    }
+    # menu_route_data = {
+    #     "dishes": [
+    #         {
+    #             "name": "Pui",
+    #             "price": 10,
+    #             "quantity(g)": 100,
+    #             "nutritional_values(kcal)": 200,
+    #             'ratings': 4.5,
+    #         },
+    #         {
+    #             "name": "Orez",
+    #             "price": 16,
+    #             "quantity(g)": 200,
+    #             "nutritional_values(kcal)": 400,
+    #             'ratings': 3.8,
+    #         },
+    #     ],
+    #     "drinks": [
+    #         {
+    #             "name": "Cola",
+    #             "price": 20,
+    #             "quantity(ml)": 300,
+    #             "nutritional_values(kcal)": 80,
+    #             "isAlcohol": False,
+    #             'ratings': 4.2,
+    #         },
+    #         {
+    #             "name": "Vin",
+    #             "price": 30,
+    #             "quantity(ml)": 150,
+    #             "nutritional_values(kcal)": 100,
+    #             "isAlcohol": True,
+    #             'ratings': 4.8,
+    #         },
+    #     ]
+    # }
+
+    try:
+        with open("menu.json", "r") as file:
+            menu_route_data = json.load(file)
+    except FileNotFoundError:
+        return jsonify({"error": "Menu data not found"}), 404
+    except json.decoder.JSONDecodeError:
+        return jsonify({"error": "Invalid JSON format in menu file"}), 500
+
 
     return jsonify(menu_route_data)
+
 
 
 @app.route("/tables")
@@ -369,7 +499,12 @@ class Restaurant:
         self.nr_of_tables = nr_of_tables
         self.nr_of_seats = nr_of_seats
 
+class Ingredients:
+    def __init__(self, ingredient_name, quantity):
+        self.ingredient_name = ingredient_name
+        self.quantity = quantity
 
+        
 all_clients = []
 
 @app.route('/add_client', methods=["GET", "POST"])

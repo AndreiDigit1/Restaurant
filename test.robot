@@ -25,14 +25,23 @@ Test Create Reservation Route
     Should Be Equal As Strings    ${response.status_code}    200
     Log    ${response.content}
 
-Test Create Reservation Invalid Route
-    [Documentation]    creare de rezervare cu date invalide
+Test Create Reservation Invalid Data Route
+    [Documentation]    creare de rezervare cu peste 5 clienti
     Create Session    reservation    ${BASE_URL}
-    ${data}=    Create Dictionary    number_clients=7    reservation_time=2023-01-01
+    ${data}=    Create Dictionary    number_clients=7    reservation_time=2024-07-07
     ${response}=    POST    ${BASE_URL}/createReservation    data=${data}    expected_status=any
-    Should Not Be Equal As Strings    ${response.status_code}    200
-    Log    ${response.content}
-    Should Contain    ${response.content}    "Maxim five clients for a reservation!"
+    Log To Console    ${response.content}
+    ${content}=    Convert To String    ${response.content}
+    Should Contain    ${content}    Maxim five clients for a reservation!
+
+Test Create Reservation Invalid Data Route
+    [Documentation]    creare de rezervare cu o data invalida
+    Create Session    reservation    ${BASE_URL}
+    ${data}=    Create Dictionary    number_clients=3    reservation_time=2023-02-01
+    ${response}=    POST    ${BASE_URL}/createReservation    data=${data}    expected_status=any
+    Log To Console    ${response.content}
+    ${content}=    Convert To String    ${response.content}
+    Should Contain    ${content}    The date must be greater than the current date!
 
 
 Test Users Route
@@ -56,3 +65,4 @@ Test Ratings Route
     Log    ${response_content}
     Should Contain    ${response_content}    <h1>Ratings</h1>
     [Teardown]    Delete All Sessions
+
