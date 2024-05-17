@@ -124,13 +124,6 @@ def users():
 
     return jsonify(all_clients)
 
-@app.route('/menu_names', methods=['POST'])
-def get_menu_names():
-    data = request.json
-    item_names = data.get('itemNames', [])
-
-    return jsonify(itemNames=item_names)
-
 @app.route("/menu_show/add_item", methods=["POST"])
 def add_item():
     item_data = request.json
@@ -186,6 +179,36 @@ def add_item():
         json.dump(menu_data, file, indent=2)
 
     return jsonify({"message": "Item added successfully"}), 201
+
+@app.route("/add_ingredients", methods=["POST"])
+def ingredients():
+    # Primește datele JSON din corpul cererii
+    ingredient_data = request.json
+
+    # Verifică dacă sunt furnizate ambele câmpuri necesare
+    if "ingredient_name" not in ingredient_data or "quantity" not in ingredient_data:
+        return jsonify({"error": "Ingredient name and quantity are required"}), 400
+
+    # Extrage informațiile despre ingredient
+    ingredient_name = ingredient_data["ingredient_name"]
+    quantity = ingredient_data["quantity"]
+
+    # Încarcă datele actuale din fișierul JSON, dacă există
+    try:
+        with open("ingredients.json", "r") as file:
+            ingredients = json.load(file)
+    except FileNotFoundError:
+        ingredients = []
+
+    # Adaugă ingredientul nou la lista de ingrediente
+    ingredients.append({"ingredient_name": ingredient_name, "quantity": quantity})
+
+    # Salvează lista actualizată de ingrediente înapoi în fișierul JSON
+    with open("ingredients.json", "w") as file:
+        json.dump(ingredients, file, indent=2)
+
+    # Răspunde cu un mesaj de succes
+    return jsonify({"message": "Ingredient added successfully"}), 201
 
 
 @app.route("/add_ingredients", methods=["POST"])

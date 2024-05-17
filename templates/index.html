@@ -151,6 +151,19 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
 
+        #popup {
+        display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
 
     </style>
 </head>
@@ -347,8 +360,6 @@ function updateSelectedOptions() {
     }
 
     function submitIngredients() {
-
-        console.log(recipeNames)
         const ingredient_name = document.getElementById('ingredient_name').value;
         const quantity = document.getElementById('quantity').value;
 
@@ -358,7 +369,6 @@ function updateSelectedOptions() {
                 "quantity": quantity
             };
 
-
             fetch('/add_ingredients', {
                 method: 'POST',
                 headers: {
@@ -367,12 +377,12 @@ function updateSelectedOptions() {
                 body: JSON.stringify(ingredientData)
             })
             .then(response => {
-
+                // Aici poți gestiona răspunsul de la server
                 console.log('Ingredient added successfully!');
-                document.getElementById('popup').style.display = 'none';
+                document.getElementById('popup').style.display = 'none'; // Ascunde pop-up-ul după adăugarea ingredientului
             })
             .catch(error => {
-
+                // Aici poți gestiona cazul în care apare o eroare
                 console.error('Error adding ingredient:', error);
             });
         } else {
@@ -380,7 +390,6 @@ function updateSelectedOptions() {
         }
     }
 </script>
-
 
 {#<script>#}
 {#    var fileName = "menu.json";#}
@@ -425,7 +434,6 @@ function updateSelectedOptions() {
         menuDropdown.selectedIndex = -1;
     };
 </script>
-
 
 </body>
 </html>
