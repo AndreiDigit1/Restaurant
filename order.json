@@ -1,0 +1,15 @@
+{
+  "products": {
+    "dishes": [
+      {
+        "name": "Grilled salmon",
+        "rating": null
+      },
+      {
+        "name": "Wine",
+        "rating": null
+      }
+    ],
+    "drinks": []
+  }
+}
