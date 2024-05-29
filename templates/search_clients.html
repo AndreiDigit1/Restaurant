@@ -12,32 +12,34 @@
 <body>
     <h1>Search Results</h1>
 
-    {% if search_query %}
-    <p>Showing search results for: {{ search_query }}</p>
+    {% if search_name %}
+    <p>Showing search results for name: {{ search_name }}</p>
+    {% elif search_reservations %}
+    <p>Showing search results for number of reservations: {{ search_reservations }}</p>
+    {% elif search_phone %}
+    <p>Showing search results for phone number: {{ search_phone }}</p>
     {% endif %}
 
     {% if search_results %}
     <table>
         <tr>
-            <th>Client ID</th>
+            <th>Table Number</th>
+            <th>Reservation Time</th>
             <th>Name</th>
             <th>Surname</th>
             <th>Age</th>
             <th>Email</th>
             <th>Phone</th>
-            <th>Number of Reservations</th>
-            <th>Status</th>
         </tr>
         {% for client in search_results %}
         <tr>
-            <td>{{ client.id }}</td>
+            <td>{{ client.table_number }}</td>
+            <td>{{ client.reservation_time }}</td>
             <td>{{ client.name }}</td>
             <td>{{ client.surname }}</td>
             <td>{{ client.age }}</td>
             <td>{{ client.email }}</td>
             <td>{{ client.phone }}</td>
-            <td>{{ client.num_reservations }}</td>
-            <td>{% if client.num_reservations > 0 %}Active{% else %}Inactive{% endif %}</td>
         </tr>
         {% endfor %}
     </table>

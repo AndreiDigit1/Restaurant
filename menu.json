@@ -1,0 +1,308 @@
+{
+    "sortimente": [
+        {
+            "nume": "Mic dejun",
+            "retete": [
+                {
+                    "nume": "Omletă",
+                    "pret": 12.0,
+                    "descriere": "Omletă simplă cu ouă și brânză.",
+                    "timp_preparare": 15
+                },
+                {
+                    "nume": "Clătite cu gem",
+                    "pret": 10.0,
+                    "descriere": "Clătite umplute cu gem de fructe.",
+                    "timp_preparare": 20
+                },
+                {
+                    "nume": "Ouă ochiuri",
+                    "pret": 14.0,
+                    "descriere": "Ouă ochiuri prăjite în pâine, servite cu roșii și cașcaval.",
+                    "timp_preparare": 10
+                }
+            ]
+        },
+        {
+            "nume": "Aperitive",
+            "retete": [
+                {
+                    "nume": "Bruschete",
+                    "pret": 18.0,
+                    "descriere": "Feliciori de pâine prăjită acoperiți cu roșii, usturoi și busuioc.",
+                    "timp_preparare": 25
+                },
+                {
+                    "nume": "Mini chifteluțe",
+                    "pret": 15.0,
+                    "descriere": "Chifteluțe prăjite, servite cu sos de roșii.",
+                    "timp_preparare": 30
+                },
+                {
+                    "nume": "Ardei copti umpluti",
+                    "pret": 20.0,
+                    "descriere": "Ardei copti umpluți cu brânză și mirodenii.",
+                    "timp_preparare": 40
+                },
+                {
+                    "nume": "Vinete prajite cu rosii si usturoi",
+                    "pret": 22.0,
+                    "descriere": "Vinete prăjite în ulei de măsline, servite cu roșii și usturoi.",
+                    "timp_preparare": 35
+                },
+                {
+                    "nume": "Salata de vinete cu paine prajita",
+                    "pret": 16.0,
+                    "descriere": "Salată de vinete cu bucăți de pâine prăjită și dressing de usturoi.",
+                    "timp_preparare": 20
+                },
+                {
+                    "nume": "Mușchiuleț de porc afumat",
+                    "pret": 25.0,
+                    "descriere": "Mușchiuleț de porc afumat și feliat, servit cu murături.",
+                    "timp_preparare": 15
+                }
+            ]
+        },
+        {
+            "nume": "Ciorbe",
+            "retete": [
+                {
+                    "nume": "Ciorbă de burtă",
+                    "pret": 20.0,
+                    "descriere": "O ciorbă tradițională românească, cu burtă și smântână.",
+                    "timp_preparare": 60
+                },
+                {
+                    "nume": "Ciorbă de legume",
+                    "pret": 15.0,
+                    "descriere": "Ciorbă de legume proaspete, servită cu smântână.",
+                    "timp_preparare": 40
+                },
+                {
+                    "nume": "Ciorba de vacuta",
+                    "pret": 22.0,
+                    "descriere": "Ciorba de vacuta traditionala, servita cu smantana si ardei iute.",
+                    "timp_preparare": 75
+                },
+                {
+                    "nume": "Ciorba de fasole in paine",
+                    "pret": 25.0,
+                    "descriere": "Ciorba de fasole gatita in paine proaspata, servita cu usturoi si ardei iute.",
+                    "timp_preparare": 45
+                }
+            ]
+        },
+        {
+            "nume": "Salate",
+            "retete": [
+                {
+                    "nume": "Salată Caesar",
+                    "pret": 22.0,
+                    "descriere": "Salată cu crutoane, parmezan și sos Caesar.",
+                    "timp_preparare": 20
+                },
+                {
+                    "nume": "Salată Grecească",
+                    "pret": 18.0,
+                    "descriere": "Salată tradițională grecească cu roșii, castraveți, ardei gras, ceapă roșie, masline și brânză feta.",
+                    "timp_preparare": 15
+                }
+            ]
+        },
+        {
+            "nume": "Fel principal",
+            "retete": [
+                {
+                    "nume": "Pui la grătar",
+                    "pret": 25.0,
+                    "descriere": "Piept de pui fraged gătit la grătar, servit cu garnitură și sos.",
+                    "timp_preparare": 40
+                },
+                {
+                    "nume": "Ciolan de porc",
+                    "pret": 30.0,
+                    "descriere": "Ciolan de porc la cuptor, servit cu garnitură și sos.",
+                    "timp_preparare": 60
+                },
+                {
+                    "nume": "Tochitură moldovenească cu mămăliguță și ou",
+                    "pret": 25.0,
+                    "descriere": "Fel de mâncare specific zonei Moldovei, acompaniat de mămăliguță și ou.",
+                    "timp_preparare": 40
+                },
+                {
+                    "nume": "Șnițel de pui cu piure",
+                    "pret": 25.0,
+                    "descriere": "Piept de pui pane, servit cu piure de cartofi.",
+                    "timp_preparare": 30
+                },
+                {
+                    "nume": "Pastrav prăjit cu mămăliguță și usturoi",
+                    "pret": 35.0,
+                    "descriere": "Pastrav prăjit la tigaie, servit cu mămăliguță și usturoi.",
+                    "timp_preparare": 25
+                },
+                {
+                    "nume": "Ceafă de porc cu cartofi natur",
+                    "pret": 28.0,
+                    "descriere": "Ceafă de porc la grătar, servită cu cartofi natur și sos de usturoi.",
+                    "timp_preparare": 40
+                },
+                {
+                    "nume": "Mici cu cartofi prăjiți",
+                    "pret": 20.0,
+                    "descriere": "Mici rumeniți la grătar, serviti cu cartofi prajiti.",
+                    "timp_preparare": 35
+                }
+            ]
+        },
+        {
+            "nume": "Garnituri",
+            "retete": [
+                {
+                    "nume": "Cartofi prăjiți",
+                    "pret": 10.0,
+                    "descriere": "Cartofi tăiați subțire și prăjiți, serviți cu sos de usturoi.",
+                    "timp_preparare": 20
+                },
+                {
+                    "nume": "Legume la grătar",
+                    "pret": 15.0,
+                    "descriere": "Legume proaspete la grătar, condimentate și servite calde.",
+                    "timp_preparare": 30
+                },
+                {
+                    "nume": "Dovlecei pane cu usturoi",
+                    "pret": 18.0,
+                    "descriere": "Bucăți de dovlecei pane, servite cu sos de usturoi.",
+                    "timp_preparare": 25
+                },
+                {
+                    "nume": "Cartofi rustici",
+                    "pret": 12.0,
+                    "descriere": "Cartofi tăiați în cuburi și copti la cuptor, condimentați.",
+                    "timp_preparare": 35
+                }
+            ]
+        },
+        {
+            "nume": "Răcoritoare",
+            "retete": [
+                {
+                    "nume": "Limonadă",
+                    "pret": 12.0,
+                    "descriere": "Băutură răcoritoare și revigorantă, preparată din suc de lămâie, apă și zahăr.",
+                    "timp_preparare": 10
+                },
+                {
+                    "nume": "Cola",
+                    "pret": 10.0,
+                    "descriere": "Băutură răcoritoare carbogazoasă, cu aromă de cola.",
+                    "timp_preparare": 5
+                },
+                {
+                    "nume": "Fanta",
+                    "pret": 10.0,
+                    "descriere": "Băutură răcoritoare carbogazoasă, cu aromă de portocală.",
+                    "timp_preparare": 5
+                },
+                {
+                    "nume": "Sprite",
+                    "pret": 10.0,
+                    "descriere": "Băutură răcoritoare carbogazoasă, cu aromă de lămâie-limeta.",
+                    "timp_preparare": 5
+                }
+            ]
+        },
+        {
+            "nume": "Băuturi",
+            "retete": [
+                {
+                    "nume": "Cocktail Mojito",
+                    "pret": 15.0,
+                    "descriere": "Băutură răcoritoare și revigorantă, cu mentă și lămâie.",
+                    "timp_preparare": 5
+                },
+                {
+                    "nume": "Aperol",
+                    "pret": 20.0,
+                    "descriere": "Aperitiv italian ușor amărui, cu note de portocală, ierburi și condimente.",
+                    "timp_preparare": 5
+                },
+                {
+                    "nume": "Alexandrion",
+                    "pret": 15.0,
+                    "descriere": "Băutură spirtoasă românească, fină și distinsă.",
+                    "timp_preparare": 5
+                },
+                {
+                    "nume": "Whiskey Sour",
+                    "pret": 20.0,
+                    "descriere": "Cocktail bogat în arome, cu whiskey, suc de lămâie și sirop simplu.",
+                    "timp_preparare": 5
+                },
+                {
+                    "nume": "Margarita",
+                    "pret": 18.0,
+                    "descriere": "Cocktail răcoritor și revigorant, cu tequila, Cointreau și suc de lămâie.",
+                    "timp_preparare": 5
+                },
+                {
+                    "nume": "Martini",
+                    "pret": 18.0,
+                    "descriere": "Cocktail clasic, cu gin și vermut, servit cu o măslină.",
+                    "timp_preparare": 5
+                }
+            ]
+        },
+        {
+            "nume": "Cafele",
+            "retete": [
+                {
+                    "nume": "Espresso",
+                    "pret": 8.0,
+                    "descriere": "Cafea concentrată, preparată prin trecerea apei fierbinți printr-o cantitate mică de cafea măcinată.",
+                    "timp_preparare": 5
+                },
+                {
+                    "nume": "Cappuccino",
+                    "pret": 10.0,
+                    "descriere": "Cafea espresso combinată cu lapte aburit și spumă de lapte.",
+                    "timp_preparare": 7
+                },
+                {
+                    "nume": "Latte Macchiato",
+                    "pret": 12.0,
+                    "descriere": "Cafea espresso combinată cu lapte aburit și puțină spumă de lapte.",
+                    "timp_preparare": 7
+                }
+
+            ]
+        },
+        {
+            "nume": "Desert",
+            "retete": [
+                {
+                    "nume": "Tiramisu",
+                    "pret": 15.0,
+                    "descriere": "Desert italian clasic, cu straturi de biscuiți înmuiați în cafea, cremă de mascarpone și cacao.",
+                    "timp_preparare": 30
+                },
+                {
+                    "nume": "Cheesecake cu fructe de pădure",
+                    "pret": 18.0,
+                    "descriere": "Cheesecake cremos cu topping de fructe de pădure și sos de fructe roșii.",
+                    "timp_preparare": 40
+                },
+                {
+                    "nume": "Panna Cotta",
+                    "pret": 14.0,
+                    "descriere": "Desert italian din budincă de smântână, servită cu sos de fructe de pădure.",
+                    "timp_preparare": 25
+                }
+            ]
+        }
+
+    ]
+}

@@ -3,107 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clients</title>
+    <title>Client Details</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-    <!-- Back button -->
-    <a href="/">Back</a>
-    <h1>All Clients</h1>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Age</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Number_of_Reservation</th>
-            <th>Action</th>
-        </tr>
-        {% for client in clients %}
-        <tr>
-            <td>{{ client.name }}</td>
-            <td>{{ client.surname }}</td>
-            <td>{{ client.age }}</td>
-            <td>{{ client.email }}</td>
-            <td>{{ client.phone }}</td>
-            <td>{{ client.num_reservations }}</td>
-            <td>
-                <!-- Button to trigger delete client method -->
-                <button class="delete-btn" data-id="{{ client.id }}">Delete</button>
-                <!-- Button to trigger update client modal -->
-                <button class="update-btn" data-id="{{ client.id }}">Update</button>
-            </td>
-        </tr>
-        {% endfor %}
+    <!-- Bootstrap navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/check_all_status">Check Reservations</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1>All Client Details</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Table Number</th>
+                <th>Reservation Time</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Age</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in client_details %}
+            <tr>
+                <td>{{client.id }}</td>
+                <td>{{ client.table_number }}</td>
+                <td>{{ client.reservation_time }}</td>
+                <td>{{ client.name }}</td>
+                <td>{{ client.surname }}</td>
+                <td>{{ client.age }}</td>
+                <td>{{ client.email }}</td>
+                <td>{{ client.phone }}</td>
+                <td>
+                    <!-- Button to trigger delete client method -->
+                    <button class="delete-btn btn btn-danger" data-id="{{ client.id }}">Delete</button>
+                    <!-- Button to trigger update client modal -->
+                    <button class="update-btn btn btn-warning" data-id="{{ client.id }}">Update</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
-
-    <!-- JavaScript to handle the AJAX request -->
-    <script>
-        $(document).ready(function() {
-            $(".delete-btn").click(function() {
-                var client_id = $(this).data("id");
-                // Confirm deletion
-                var confirmDelete = confirm("Are you sure you want to delete this client?");
-                if (confirmDelete) {
-                    // Send DELETE request to delete client
-                    $.ajax({
-                        type: "DELETE",
-                        url: "/api/delete_client/" + client_id,
-                        success: function(response) {
-                            // Refresh the page after successful deletion
-                            window.location.reload();
-                        },
-                        error: function(xhr, status, error) {
-                            alert("Error deleting client: " + error);
-                        }
-                    });
-                }
-            });
-        });
-    </script>
-
- <!-- JavaScript to handle the update button click event -->
-    <script>
-    $(document).ready(function() {
-        $(".update-btn").click(function() {
-            var client_id = $(this).data("id");
-
-            // Ask the user which attribute they want to change
-            var attributeToChange = prompt("Which attribute would you like to change? (name, surname, age, email, phone)");
-
-            // If the user cancels or provides an invalid attribute, do nothing
-            if (!attributeToChange || !["name", "surname", "age", "email", "phone"].includes(attributeToChange.toLowerCase())) {
-                return;
-            }
-
-            // Prompt for the new value of the selected attribute
-            var newValue = prompt("Enter new value for " + attributeToChange + ":");
-
-            // Prepare the data to be sent in the PUT request
-            var updateData = {};
-            updateData[attributeToChange] = newValue;
-
-            // Send PUT request to update client
-            $.ajax({
-                type: "PUT",
-                url: "/api/update_client/" + client_id,
-                contentType: "application/json",
-                data: JSON.stringify(updateData),
-                success: function(response) {
-                    alert(response.message);
-                    // Refresh the page after successful update
-                    window.location.reload();
-                },
-                error: function(xhr, status, error) {
-                    alert("Error updating client: " + error);
-                }
-            });
-        });
-    });
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- JavaScript to handle the update button click event -->
+    <script src="{{ url_for('static', filename='DeleteAndUpdate.js') }}"></script>
 </body>
 </html>

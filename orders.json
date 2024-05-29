@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1,
+    "name": "dsads",
+    "surname": "dsada",
+    "age": 23,
+    "email": "ssddsad@gmail.com",
+    "phone": "423423432",
+    "products": {
+      "dishes": [
+        {
+          "name": "orez",
+          "rating": 4.0
+        }
+      ],
+      "drinks": []
+    }
+  }
+]

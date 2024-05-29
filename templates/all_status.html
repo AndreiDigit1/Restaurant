@@ -9,55 +9,86 @@
     <!-- Link to custom CSS -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles_allstatus.css') }}">
 </head>
-    <!-- Back button -->
-    <a href="/">Back</a>
 <body>
-    <h1>All Clients Status</h1>
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Home</a>
+        <a class="navbar-brand" href="/users">Modify Reservation</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Search By
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#" onclick="showSearchForm('name')">Name</a>
+                        <a class="dropdown-item" href="#" onclick="showSearchForm('reservations')">Number of Reservations</a>
+                        <a class="dropdown-item" href="#" onclick="showSearchForm('phone')">Phone</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-    <!-- Search by Name Form -->
-    <form action="/search_clients" method="get">
-        <label for="search_name">Search by Name:</label>
-        <input type="text" id="search_name" name="search_name">
-        <input type="submit" value="Search by Name">
-    </form>
+    <!-- Search forms -->
+    <div id="search-form-container">
+        <form id="search_name_form" action="/search_clients" method="get" style="display:none;">
+            <label for="search_name">Search by Name:</label>
+            <input type="text" id="search_name" name="search_name" class="form-control">
+            <input type="submit" value="Search by Name" class="btn btn-primary mt-2">
+        </form>
 
-    <!-- Search by Number of Reservations Form -->
-    <form action="/search_clients" method="get">
-        <label for="search_reservations">Search by Number of Reservations:</label>
-        <input type="number" id="search_reservations" name="search_reservations">
-        <input type="submit" value="Search by Number of Reservations">
-    </form>
+        <form id="search_reservations_form" action="/search_clients" method="get" style="display:none;">
+            <label for="search_reservations">Search by Number of Reservations:</label>
+            <input type="number" id="search_reservations" name="search_reservations" class="form-control">
+            <input type="submit" value="Search by Number of Reservations" class="btn btn-primary mt-2">
+        </form>
 
-    <!-- Search by Number of Reservations Form -->
-    <form action="/search_clients" method="get">
-        <label for="search_phone">Search by Phone:</label>
-        <input type="number" id="search_phone" name="search_phone">
-        <input type="submit" value="Search by phone number">
-    </form>
+        <form id="search_phone_form" action="/search_clients" method="get" style="display:none;">
+            <label for="search_phone">Search by Phone:</label>
+            <input type="number" id="search_phone" name="search_phone" class="form-control">
+            <input type="submit" value="Search by Phone" class="btn btn-primary mt-2">
+        </form>
+    </div>
 
-    <table>
-        <tr>
-            <th>Client ID</th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Age</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Number of Reservations</th>
-            <th>Status</th>
-        </tr>
-        {% for item in status_list %}
-        <tr>
-            <td>{{ item.client.id }}</td>
-            <td>{{ item.client.name }}</td>
-            <td>{{ item.client.surname }}</td>
-            <td>{{ item.client.age }}</td>
-            <td>{{ item.client.email }}</td>
-            <td>{{ item.client.phone }}</td>
-            <td>{{ item.client.num_reservations }}</td>
-            <td>{{ item.status }}</td>
-        </tr>
-        {% endfor %}
+    <!-- Display search results -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Table Number</th>
+                <th>Reservation Time</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Age</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in status_list %}
+            <tr>
+                <td>{{ client.table_number }}</td>
+                <td>{{ client.reservation_time }}</td>
+                <td>{{ client.name }}</td>
+                <td>{{ client.surname }}</td>
+                <td>{{ client.age }}</td>
+                <td>{{ client.email }}</td>
+                <td>{{ client.phone }}</td>
+                <td>{{ client.status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
+
+    <!-- Bootstrap and jQuery scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="{{ url_for('static', filename='showforms.js') }}"></script>
 </body>
 </html>

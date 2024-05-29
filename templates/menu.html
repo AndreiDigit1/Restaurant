@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meniu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Poziționarea imaginii în spatele conținutului */
+            background-image: url('/static/background.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        .menu-header {
+            background-image: url('/static/menu.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 200px; /* Înălțimea imaginii */
+            margin: 50px auto;
+            text-align: center;
+            padding: 20px;
+        }
+        .menu-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-top: 0;
+        }
+        .category {
+            margin-bottom: 20px;
+        }
+        .category-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .item-name {
+            flex: 1;
+        }
+        .item-price {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-image"></div>
+    <div class="menu-header">
+        <h1>Meniu</h1>
+    </div>
+    <div class="menu-container">
+
+    </div>
+
+    <script src="{{ url_for('static', filename='ShowMenu.js') }}"></script>
+    <div class="daily-menu-container">
+        <h2>Meniul Zilei</h2>
+        <ul id="daily-menu-content"></ul>
+    </div>
+
+
+
+</body>
+</html>
